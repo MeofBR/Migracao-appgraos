@@ -1,0 +1,155 @@
+<mvc:View 
+	xmlns:mvc="sap.ui.core.mvc" 
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.schedule.Index"
+	xmlns="sap.m" 
+	xmlns:layout="sap.ui.layout" 
+	xmlns:unified="sap.ui.unified" 
+	xmlns:core="sap.ui.core" 
+	xmlns:vbm="sap.ui.vbm" 
+	xmlns:f="sap.f">
+	<SplitApp id="SplitContDemo" mode="ShowHideMode" initialDetail="detail" initialMaster="masterPage"
+		xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" afterDetailNavigate="onDetailNavigate">
+		<detailPages>
+			<Page id="detail" class="sapUiStdPage" showNavButton="true" navButtonPress="backToTheMaster">
+				<content>
+					<SinglePlanningCalendar startDate="{path: 'planningCalendarModel>/startDate'}"
+						appointments="{path: 'planningCalendarModel>/appointments'}" appointmentSelect="handleAppointmentSelect">
+						<actions>
+							<Button id="addButton" icon="sap-icon://add" press="handleAppointmentCreate" tooltip="Adicionar compromisso"/>
+						</actions>
+						<views>
+							<SinglePlanningCalendarDayView key="DayView" title="Dia"/>
+							<SinglePlanningCalendarWeekView key="WeekView" title="Semana"/>
+							<SinglePlanningCalendarWorkWeekView key="WorkWeekView" title="Comercial"/>
+						</views>
+						<appointments>
+							<unified:CalendarAppointment
+								title="{=${planningCalendarModel>Appoint_Prospect} !== null ? ${planningCalendarModel>Appoint_Commit/HCP_COMMITMENT_DESC} : ${planningCalendarModel>Appoint_Partner} !== null ? ${planningCalendarModel>Appoint_Commit/HCP_COMMITMENT_DESC}: 'Outros Compromissos'}"
+								text="{= ${planningCalendarModel>Appoint_IntTyp/HCP_INT_TYPE_DESC} ? ${planningCalendarModel>Appoint_IntTyp/HCP_INT_TYPE_DESC} : ${planningCalendarModel>HCP_COMMENTS}}"
+								type="{=${planningCalendarModel>Appoint_Prospect} !== null ? 'Type07' : ${planningCalendarModel>Appoint_Partner} !== null ? 'Type07' : 'Type10' }" icon="{planningCalendarModel>pic}"
+								color="{color}" fullDay="false" startDate="{planningCalendarModel>HCP_START_DATE}" endDate="{planningCalendarModel>HCP_END_DATE}" />
+						</appointments>
+					</SinglePlanningCalendar>
+				</content>
+			</Page>
+			<Page id="outlookLoginID" class="sapUiStdPage" title="Outlook">
+				<content>
+					<HBox alignContent="Center" alignItems="Center" fitContainer="true">
+						<layout:VerticalLayout class="VerticalCentered">
+							<layout:content>
+								<Title level="H1" text="Clique para Fazer Login no Outlook"/>
+								<Button text="Login Outlook" type="Emphasized" press="onOutlookLoginPress" class="outlookButton"/>
+							</layout:content>
+						</layout:VerticalLayout>
+					</HBox>
+				</content>
+			</Page>
+			<Page id="map" showHeader="true" title="Gestão Agenda Comercial" showFooter="false" showNavButton="true" navButtonPress="navBack">
+				<content>
+					<HBox alignItems="Stretch" direction="Row" fitContainer="false" width="auto" height="auto" justifyContent="Start" renderType="Div"
+						visible="true" displayInline="false" class="thingPanel">
+						<items>
+							<f:Avatar src="{pic}" initials="" displayShape="Circle" displaySize="M" imageFitType="Cover" class="sapUiTinyMargin"/>
+							<VBox alignItems="Stretch" direction="Column" fitContainer="false" width="auto" height="auto" justifyContent="Start" renderType="Div"
+								visible="true" displayInline="false" class="sapUiTinyMargin">
+								<items>
+									<Title text="{= ${Appoint_Prospect/NAME1} ? ${Appoint_Prospect/NAME1} : ${Appoint_Partner/NAME1}}" titleStyle="H4" width="auto"
+										textAlign="Begin" visible="true" wrapping="false"/>
+									<Text text="{Appoint_Commit/HCP_COMMITMENT_DESC}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Label
+										text="{Appoint_IntTyp/HCP_INT_TYPE_DESC} - {path: 'HCP_START_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/yyyy HH:mm' }}"
+										design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button text="Iniciar Visita" type="Accept" iconFirst="true" width="228px" enabled="true" visible="{= ${HCP_STATUS} === '1' ? true : false}"
+										iconDensityAware="false" press="_onCheckInPress"/>
+									<Button text="Finalizar Visita" type="Reject" iconFirst="true" width="228px" enabled="true"
+										visible="{= ${HCP_STATUS} === '2' ? true : false}" iconDensityAware="false" press="_onCheckOutPress"/>
+								</items>
+							</VBox>
+						</items>
+					</HBox>
+					<vbm:GeoMap id="GeoMap" legendVisible="true" scaleVisible="true" width="1000px" height="1000px"
+						centerPosition="{planningCalendarModel>/long};{planningCalendarModel>/lat}" initialZoom="13" zoomlevel="13" enableAnimation="true"
+						refMapLayerStack="Default" disableZoom="false" disablePan="false" navcontrolVisible="false">
+						<vbm:resources>
+							<vbm:Resource name="ref1" src="/webapp/resources/pin.png"/>
+						</vbm:resources>
+						<vbm:legend/>
+						<vbm:vos>
+							<vbm:Spots>
+								<vbm:items>
+									<vbm:Spot position="{planningCalendarModel>/long};{planningCalendarModel>/lat}" text="" image="ref1" alignment="5"/>
+								</vbm:items>
+							</vbm:Spots>
+							<vbm:Circles>
+								<vbm:items/>
+							</vbm:Circles>
+							<vbm:Routes>
+								<vbm:items/>
+							</vbm:Routes>
+						</vbm:vos>
+					</vbm:GeoMap>
+				</content>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page id="masterPage" class="sapUiStdPage" showNavButton="true" navButtonPress="backToIndex" title="Gestão Agenda Comercial">
+				<headerContent>
+					<ToolbarSpacer/>
+					<Button id="addAppointmentMasterID" visible="{device>/support/touch}" icon="sap-icon://add" press="handleAppointmentCreate"
+						tooltip="Adicionar Compromisso"/>
+				</headerContent>
+				<content>
+					<!--<PullToRefresh id="pullToRefreshID" visible="{device>/support/touch}" refresh="refreshData"/>-->
+					<!--<unified:CalendarDateInterval class="firstCalendar" id="dateIntervalID" days="5" intervalSelection="false" visible="true"-->
+					<!--	singleSelection="true" select="_onCalendarDateIntervalSelect">-->
+					<!--	<unified:selectedDates/>-->
+					<!--	<unified:specialDates/>-->
+					<!--</unified:CalendarDateInterval>-->
+					<unified:Calendar id="dateIntervalID" class="firstCalendar" months="1" select="_onCalendarDateIntervalSelect" intervalSelection="false"/>
+					<!--<unified:Calendar id="calendar" select="_onCalendarDateIntervalSelect"/>-->
+					<List headerText="Compromissos do dia {planningCalendarModel>/selectedDate}" id="feedListId" growing="false" growingThreshold="20"
+						growingScrollToLoad="false" backgroundDesign="Solid" items="{planningCalendarModel>/DailyAppointments}" modeAnimationOn="true"
+						noDataText="Sem Compromissos">
+						<items>
+							<ObjectListItem icon="{planningCalendarModel>pic}"
+								title="{=${planningCalendarModel>HCP_NAME_DESC} !== null ? ${planningCalendarModel>HCP_NAME_DESC} : ${planningCalendarModel>HCP_NAME_DESC} !== null ? ${planningCalendarModel>HCP_NAME_DESC} : ${planningCalendarModel>HCP_SUBJECT} }"
+								type="Active" press="onFeedListPress">
+								<firstStatus>
+									<ObjectStatus visible="{= ${planningCalendarModel>HCP_FROM_APP} ? true : false}" icon="sap-icon://map"
+										text="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleStatus' }"
+										state="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleState'}"/>
+								</firstStatus>
+								<attributes>
+									<ObjectAttribute
+										text="{path: 'planningCalendarModel>HCP_START_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM HH:mm' }}"/>
+									<ObjectAttribute
+										text="{path: 'planningCalendarModel>HCP_END_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM HH:mm' }}"/>
+								</attributes>
+								<ObjectAttribute text="{=${planningCalendarModel>Appoint_Prospect} !== null ? ${planningCalendarModel>Appoint_Commit/HCP_COMMITMENT_DESC} : ${planningCalendarModel>Appoint_Partner} !== null ? ${planningCalendarModel>Appoint_Commit/HCP_COMMITMENT_DESC}: 'Outros Compromissos'}" class="CommitmentTypeContainer"/>
+							</ObjectListItem>
+							<!--<FeedListItem icon="{pic}" sender="{name}" text="{text}" info="{commitmentDesc}"-->
+							<!--	timestamp="{path: 'start', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy hh:mm' }}"-->
+							<!--	iconPress="onFeedListPress"/>-->
+						</items>
+					</List>
+				</content>
+				<footer>
+					<OverflowToolbar id="otbFooter">
+						<ToolbarSpacer/>
+						<MessageStrip visible="{indexModel>/isMobile}" class="sapUiTinyMarginEnd" text="Atualizado em {indexModel>/lastUpdate}" showIcon="false"></MessageStrip>
+						<Button type="Emphasized" icon="sap-icon://synchronize" visible="{indexModel>/isMobile}" press="refreshDataBase">
+							<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+						</Button>
+						<Button visible="{indexModel>/isMobile}" type="Emphasized" icon="sap-icon://email" press="refreshData">
+							<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+						</Button>
+						<Button  visible="{indexModel>/isWeb}" text="Sincronizar com Outlook" type="Emphasized" icon="sap-icon://email" press="refreshData">
+							<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+						</Button>
+					</OverflowToolbar>
+				</footer>
+			</Page>
+		</masterPages>
+	</SplitApp>
+</mvc:View>

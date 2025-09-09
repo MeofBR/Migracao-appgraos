@@ -1,0 +1,128 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.price.tablePrice.Filter"
+	xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Page title="Consulta Tabela de preço" showNavButton="true" navButtonPress="navBack" showFooter="{indexModel>/isMobile}">
+		<headerContent></headerContent>
+		<content>
+			<VBox>
+				<Panel class="panel-expansive-default" width="auto" expandable="true" expanded="true" headerText="Filtros Selecionados">
+					<l:VerticalLayout width="100%" class="gridWrapper">
+						<form:SimpleForm class="editableForm" id="filterTablePriceForm" layout="ResponsiveGridLayout">
+						<form:content>
+								<VBox>
+									<VBox>
+										<Label width="100%" text="{i18n>labelbuyerGroup}" design="Standard" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<custom:CustomComboBox class="sapUiTinyMarginTop" width="100%"
+											items="{ path: '/Buyer_Groups', length: 999999999 , sorter: { path: 'EKGRP',descending: false}}" placeholder="{i18n>placeHolderGroup}"
+											selectedKey="{filters>/EKGRP}" editable="true" enabled="true" visible="true" valueState="None" change="_validateForm">
+											<custom:items>
+												<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+											</custom:items>
+										</custom:CustomComboBox>
+									</VBox>
+									<VBox>
+										<Label class="sapUiTinyMarginTop" text="{i18n>labelMaterial}" design="Standard" width="100%" required="true" textAlign="Begin"
+											textDirection="Inherit" visible="{filters>/showMateriais}"/>
+										<custom:CustomComboBox id="MATERIAL" class="sapUiTinyMarginTop" width="100%"
+											items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false}}" placeholder="{i18n>placeholderMaterial}"
+											selectedKey="{filters>/MATNR}" editable="true" enabled="true" visible="{filters>/showMateriais}" valueState="None" change="_validateForm">
+											<custom:items>
+												<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}-{MAKTX}"/>
+											</custom:items>
+										</custom:CustomComboBox>
+									</VBox>
+								</VBox>
+								<VBox>
+									<VBox>
+										<Label width="100%" text="{i18n>labelPlant}" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<custom:CustomComboBox class="sapUiTinyMarginTop" width="100%"
+											items="{ path: '/View_Center', length: 999999 , sorter: { path: 'WERKS',descending: false}}" placeholder="{i18n>placeholderPlant}"
+											id="PLANT" visible="true" change="_validateForm" selectedKey="{filters>/WERKS}" showSecondaryValues="true" valueState="None">
+											<custom:items>
+												<core:Item text="{WERKS} - {NAME1}" enabled="true" key="{WERKS}"/>
+											</custom:items>
+										</custom:CustomComboBox>
+									</VBox>
+									<VBox>
+										<Label class="sapUiTinyMarginTop" text="{i18n>labelCereal}" design="Standard" required="true" width="100%" textAlign="Begin"
+											textDirection="Inherit" visible="{filters>/showMateriais}"/>
+										<custom:CustomComboBox id="CEREAL" class="sapUiTinyMarginTop" width="100%"
+											items="{ path: '/View_Material_Type', length: 999999 , sorter: { path: 'TPCEREAL',descending: false}}"
+											placeholder="{i18n>placeHolderCereal}" selectedKey="{filters>/TPCEREAL}" editable="true" enabled="true" visible="{filters>/showMateriais}"
+											valueState="None" change="_validateForm">
+											<custom:items>
+												<core:Item text="{TPCEREAL} - {DETPCEREAL}" enabled="true" key="{TPCEREAL}"/>
+											</custom:items>
+										</custom:CustomComboBox>
+									</VBox>
+								</VBox>
+							</form:content>
+						</form:SimpleForm>
+						<l:Grid containerQuery="true" defaultSpan="XL12 L12 M12 S12">
+							<VBox id="tabsFilter">
+							</VBox>
+						</l:Grid>
+					</l:VerticalLayout>
+				</Panel>
+			</VBox>
+			<Table alternateRowColors="true" showNoData="true" id="table" sticky="ColumnHeaders,InfoToolbar" width="auto" showSeparators="All" growing="true" growingThreshold="20"
+				growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				items="{path:'filterTable>/ItemPrice', sorter: { path: 'ano', descending: false, group: true}}">
+				<infoToolbar>
+                  <Toolbar class="toolbarTablePrice">
+                    <Text class="fontSizeMatnrDesc" text="{filters>/MATNR_DESC}" />
+                   	<OverflowToolbarButton class="buttonTablePrice" press="sortButtonPressed" type="Default" icon="sap-icon://sort" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+                  </Toolbar>
+                  </infoToolbar>
+               
+			
+				<columns>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Mês" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Preço {filters>/medidatipo}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Volume (ton)" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{filterTable>mes}"/>
+							<ObjectNumber
+								number="{ parts:[{path:'filterTable>precoCompra'}, {path:'filterTable>moedatipo'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+								unit="BRL" state="Success" visible="true"/>
+								
+							<ObjectNumber
+								number="{ path: 'filterTable>volumeCompra' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+								/>
+						
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+				<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Ultima atualização {indexModel>/lastUpdate}" showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -1,0 +1,50 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.warehouseMap.Map"
+	xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:unified="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:vbm="sap.ui.vbm" xmlns:f="sap.f">
+	<Page id="map" class="sapUiStdPage" showHeader="true" title="Check-In Armazém" showFooter="false" showNavButton="true"
+		navButtonPress="_onCancelPress">
+		<content>
+			<HBox alignItems="Stretch" direction="Row" fitContainer="false" width="auto" height="auto" justifyContent="Start" renderType="Div"
+				visible="true" displayInline="false" class="thingPanel">
+				<items>
+					<VBox alignItems="Stretch" direction="Column" fitContainer="false" width="auto" height="auto" justifyContent="Start" renderType="Div"
+						visible="true" displayInline="false" class="sapUiTinyMargin">
+						<items>
+							
+							<Label text="{warehouseMapModel>/textCreatedDate}" visible="{warehouseMapModel>/visibleEdit}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"/>
+							<Input visible="{warehouseMapModel>/visibleEdit}" editable="false" enabled="false" type="Text" value="{warehouseMapModel>/createdDate}"/>
+							<Label text="{warehouseMapModel>/textCreated}" visible="{warehouseMapModel>/visibleEdit}"  design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"/>
+							<Input visible="{warehouseMapModel>/visibleEdit}" editable="false" enabled="false" type="Text" value="{warehouseMapModel>/created}"/>
+							<Label visible="{warehouseMapModel>/visibleEdit}" text="Fornecedor:" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"/>
+							<Input visible="{warehouseMapModel>/visibleEdit}" editable="false" enabled="false" type="Text" value="{warehouseMapModel>/provider}"/>
+							<Button class="buttonCheckIn" text="{warehouseMapModel>/textButtonCheckIn}" type="Accept" iconFirst="true" width="260px"
+								enabled="{warehouseMapModel>/checkInOn}" visible="true" iconDensityAware="false" press="_onCheckInPress"/>
+							<Button class="buttonCheckIn" text="Voltar" type="Reject" iconFirst="true" width="260px" enabled="true" visible="true"
+								iconDensityAware="false" press="_onCancelPress"/>
+						</items>
+					</VBox>
+				</items>
+			</HBox>
+			<vbm:GeoMap id="GeoMap" legendVisible="true" scaleVisible="true" width="100%" height="100%"
+				centerPosition="{warehouseMapModel>/long};{warehouseMapModel>/lat}" initialZoom="13" zoomlevel="13" enableAnimation="true"
+				refMapLayerStack="Default" disableZoom="false" disablePan="false" navcontrolVisible="false">
+				<vbm:resources>
+					<vbm:Resource name="ref1" src="/webapp/resources/pin.png"/>
+				</vbm:resources>
+				<vbm:legend/>
+				<vbm:vos>
+					<vbm:Spots>
+						<vbm:items>
+							<vbm:Spot position="{warehouseMapModel>/long};{warehouseMapModel>/lat}" text="" image="ref1" alignment="5"/>
+						</vbm:items>
+					</vbm:Spots>
+					<vbm:Circles>
+						<vbm:items/>
+					</vbm:Circles>
+					<vbm:Routes>
+						<vbm:items/>
+					</vbm:Routes>
+				</vbm:vos>
+			</vbm:GeoMap>
+		</content>
+	</Page>
+</mvc:View>

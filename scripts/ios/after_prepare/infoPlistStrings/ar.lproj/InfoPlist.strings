@@ -1,0 +1,24 @@
+/* Message asking permission to access the camera. */
+"NSCameraUsageDescription" = "سيتيح لك ذلك التقاط صورة أو مسح رمز الاستجابة السريعة.";
+
+/* Message asking permission to access the microphone */
+"NSMicrophoneUsageDescription" = "سيتيح لنا ذلك الوصول إلى الميكروفون.";
+
+/* Message asking permission to access the calendar */
+"NSCalendarsUsageDescription" = "سيتيح لنا ذلك الوصول إلى التقويم.";
+
+/* Message asking permission to access photo library */
+"NSPhotoLibraryUsageDescription" = "سيتيح لنا ذلك الوصول إلى المكتبة.";
+
+/* Message asking permission to access contacts */
+"NSContactsUsageDescription" = "سيتيح لنا ذلك الوصول إلى جهات الاتصال.";
+
+/* Message asking permission to access location */
+"NSLocationWhenInUseUsageDescription" = "سيتيح لنا ذلك الوصول إلى موقعك عندما تكون قيد الاستخدام.";
+
+/* Message asking permission to access location at any time */
+"NSLocationAlwaysUsageDescription" = "سيتيح لنا ذلك الوصول إلى موقعك في كل الأوقات.";
+
+/* Message asking permission to access Face ID */
+"NSFaceIDUsageDescription" = "سيتيح لنا ذلك الوصول إلى Face ID للمصادقة.";
+

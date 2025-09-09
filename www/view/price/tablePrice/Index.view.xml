@@ -1,0 +1,17 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.price.tablePrice.Index"
+	xmlns="sap.m">
+	<Page title="Preços" showNavButton="true" navButtonPress="navBack" showFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<PullToRefresh id="pullToRefreshID" visible="{device>/support/touch}" refresh="refreshData"/>
+			<List mode="None" width="100%" backgroundDesign="Solid" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+				visible="true">
+				<items>
+					<StandardListItem icon="sap-icon://heatmap-chart" title="Tabela de Preços" type="Navigation" press="_onCreateTablePricePress"/>
+				</items>
+			</List>
+		</content>
+	</Page>
+</mvc:View>

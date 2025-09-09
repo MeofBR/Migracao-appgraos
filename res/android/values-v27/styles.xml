@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ActivityTheme" parent="Theme.App.SplashScreen">
+        <item name="android:windowLayoutInDisplayCutoutMode">never</item>
+        <item name="android:actionBarStyle">@style/Theme.AppCompat.DayNight.DarkActionBar</item>
+    </style>
+</resources>

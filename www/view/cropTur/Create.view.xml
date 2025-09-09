@@ -1,0 +1,188 @@
+<mvc:View controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.cropTur.Create" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core" xmlns="sap.uxap" xmlns:m="sap.m" xmlns:f="sap.ui.layout.form" xmlns:ui="sap.ui.table" xmlns:l="sap.ui.layout"
+	xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" alwaysShowContentHeader="true" preserveHeaderStateOnScroll="true"
+		headerContentPinnable="true" isChildPage="true" enableLazyLoading="false">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle class="displayArrow">
+				<breadcrumbs>
+					<m:OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="navBack"/>
+				</breadcrumbs>
+				<expandedHeading>
+					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center" visible="{createModel>/headerExpanded}">
+						<m:Title text="CropTour" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</m:FlexBox>
+				</expandedHeading>
+				<snappedHeading>
+					<!-- Título quando header está recolhido -->
+					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center" visible="{= !${createModel>/headerExpanded} }">
+						<m:Title text="Cadastrar Coleta" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop" level="H3"/>
+					</m:FlexBox>
+				</snappedHeading>
+				<expandedContent>
+					<m:VBox visible="{createModel>/headerExpanded}">
+						<m:Title text="País: {createModel>/decodeURIComp/HCP_COUNTRY_NAME}" wrapping="true"/>
+			            <m:Title text="Estado: {createModel>/decodeURIComp/HCP_STATE}" wrapping="true" />
+			            <m:Title text="Região: {createModel>/decodeURIComp/HCP_REGIO_NAME}" wrapping="true"/>
+			            <m:Title id="lat-long" text=" " wrapping="true" visible="false"/>
+			            <m:Title text="Material: {createModel>/decodeURIComp/HCP_MATERIAL_COD_NAME} - {createModel>/decodeURIComp/HCP_CROP_DESC}" wrapping="true" />
+					</m:VBox>
+				</expandedContent>
+				<snappedContent></snappedContent>
+				<navigationActions>
+					<m:Button 
+						icon="{= ${createModel>/headerExpanded} ? 'sap-icon://slim-arrow-up' : 'sap-icon://slim-arrow-down'}" 
+						tooltip="{= ${createModel>/headerExpanded} ? 'Recolher Header' : 'Expandir Header'}"
+						type="Transparent" 
+						visible="{= !${createModel>/isMobile} }"
+						press="onToggleHeader"/>
+					<m:Button class="button_blue" text="Check-In" icon="sap-icon://map" iconFirst="true" width="auto" enabled="true"
+					visible="true" iconDensityAware="false" press="onMapIconPress"/>
+					<m:Button text="Salvar" type="Emphasized" iconFirst="true" width="auto" enabled="{createModel>/enableSaveCreate}" visible="true"
+						iconDensityAware="false" press="onSave"/>
+				</navigationActions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<sections>
+			<ObjectPageSection showTitle="{createModel>/headerExpanded}" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="{= ${createModel>/headerExpanded} ? 'Cadastrar Coleta' : '' }" mode="Expanded">
+						<blocks>
+							<m:VBox>
+								<ui:Table rows="{createModel>/sampleRows}" id="tableCropTur" enableColumnReordering="false" selectionMode="None" visibleRowCount="3">
+								
+									<ui:extension>
+								
+										<m:OverflowToolbar style="Clear">
+											<m:ToolbarSpacer/>
+											<m:Button
+												icon="sap-icon://add"
+												tooltip="Adicionar nova amostra"
+												press="addNewSample"
+												enabled="{createModel>/toggleAdd}" 
+												/>
+										</m:OverflowToolbar>
+										<m:VBox id="html-table"/>
+									</ui:extension>
+										
+									<ui:columns>
+										<ui:Column width="14%" resizable="false">
+											<ui:label>
+												<m:Text text="Amostra"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{createModel>HCP_SAMPLE_TYPE}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column width="14%" resizable="false">
+											<ui:label>
+												<m:Text text="{createModel>/textColumn1}"/>
+											</ui:label>
+											<ui:template>
+												<m:Input
+													id="inputEspigaLinha"
+												  value="{ path: 'createModel>HCP_PER_LINE', 
+												           type: 'sap.ui.model.type.Text' }"
+												  change="recalculateProductivity" />
+											</ui:template>
+										</ui:Column>
+										<ui:Column width="14%" resizable="false">
+											<ui:label>
+												<m:Text text="{createModel>/textColumn2}"/>
+											</ui:label>
+											<ui:template>
+												<m:Input
+													id="inputEspigaLinhas2m"
+												  value="{ path: 'createModel>HCP_PER_LINE_M2', 
+												           type: 'sap.ui.model.type.Text' }"
+												  change="recalculateProductivity" />
+											</ui:template>
+										</ui:Column>
+										<ui:Column width="14%" resizable="false" visible="false">
+											<ui:label>
+												<m:Text text="Quantidade"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{createModel>HCP_QUANTITY}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column width="14%" resizable="false">
+											<ui:label>
+												<m:Text text="{createModel>/textColumn3}"/>
+											</ui:label>
+											<ui:template>
+												<m:Input
+												id="inputGraosH"
+												  value="{ path: 'createModel>HCP_ROW_COUNT', 
+												           type: 'sap.ui.model.type.Text' }"
+												  change="recalculateProductivity" />
+											</ui:template>
+										</ui:Column>
+										<ui:Column width="14%" resizable="false">
+											<ui:label>
+												<m:Text text="{createModel>/textColumn4}"/>
+											</ui:label>
+											<ui:template>
+												<m:Input
+												id="inputGraosV"
+												  value="{ path: 'createModel>HCP_GRAIN_COUNT_PER_ROW', 
+												           type: 'sap.ui.model.type.Text' }"
+												  change="recalculateProductivity" />
+											</ui:template>
+										</ui:Column>
+										<ui:Column width="13%" resizable="false" visible="false">
+											<ui:label>
+												<m:Text text="Nº Total de Grãos"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{createModel>HCP_GRAIN_TOTAL}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column width="13%" resizable="false" visible="true">
+											<ui:label>
+												<m:Text text="Sacas/Hectare"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{createModel>HCP_PRODUCTIVITY}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column width="13%" resizable="false" visible="true">
+											<ui:label>
+												<m:Text text="Produtividade da Coleta"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{createModel>PROD_MEDIA_COLETA}"/>
+											</ui:template>
+										</ui:Column>
+										
+										<ui:Column  width="4%">
+											<m:Label text="Deletar" />
+											<ui:template>
+												<m:Button
+													icon="sap-icon://delete"
+													press="onDeletePress"
+												/>
+											</ui:template>
+										</ui:Column>
+									</ui:columns>
+								</ui:Table>
+								<m:VBox class="sapUiSmallMargin">
+								    <m:Label labelFor="rbgPrevisaoColheita" text="Previsão de Colheita:" />
+								    <m:RadioButtonGroup id="rbgPrevisaoColheita" 
+								                       valueState="Information" 
+								                       selectedIndex="-1"
+								                       columns="5"
+								                       select="onPrevisaoColheitaSelect">
+								        <m:RadioButton id="rb10" text="10 dias" />
+								        <m:RadioButton id="rb15" text="15 dias" />
+								        <m:RadioButton id="rb30" text="30 dias" />
+								    </m:RadioButtonGroup>
+								</m:VBox>
+							</m:VBox>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

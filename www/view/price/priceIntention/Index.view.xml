@@ -1,0 +1,101 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.price.priceIntention.Index"
+	xmlns="sap.m">
+	<Page showHeader="true" title="Intenção de Preços" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress">
+			<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+		<!--<PullToRefresh id="pullToRefreshID" visible="{device>/support/touch}" refresh="refreshData"/>-->
+		<IconTabBar
+		id="idIconTabBarMulti"
+		expanded="true"
+		class="sapUiResponsiveContentPadding gridIntencao"
+		select="handleIconTabBarSelect"
+		expandable="false">
+		<items>
+			<IconTabFilter
+				icon="sap-icon://complete" key="Ativo" text="Ativo" iconColor="Positive">
+				<List id="listIntention"
+				items="{ path: 'priceIntention>/ItemIntention', sorter: { path: 'priceIntention>HCP_STATE', descending: false, group: true }}">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="Intenção de Preços"/>
+							<content>
+					<ToolbarSpacer/>
+				<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+				</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<ObjectListItem intro="{priceIntention>View_Intention_Material_Type/DETPCEREAL}"  press="_onRowPress" title="{= ${priceIntention>HCP_PARTNER_TYPE} === 2 ? ${priceIntention>View_Prospect/NAME1} : ${priceIntention>View_Intention_Suppliers/NAME1} }" number="{= parseFloat(${priceIntention>HCP_PRICE}).toFixed(2) }" numberUnit="{priceIntention/HCP_MOEDA}" numberState="Success" type="Active" selected="true">
+                        <attributes>
+                        	<ObjectAttribute text="Id: {priceIntention>HCP_PRICE_INTENTION_ID}" active="false" visible="true"/>
+                            <ObjectAttribute text="Mês Entrega: {priceIntention>HCP_MONTH}" active="false" visible="true"/>
+                            <ObjectAttribute text="Volume: {priceIntention>HCP_VOLUME}" active="false" visible="true"/>
+                        </attributes>
+                         <firstStatus>
+                            <ObjectStatus text="Preço de Alerta: {= parseFloat(${priceIntention>HCP_MIN_PRICE}).toFixed(2) }" state="None" visible="true"/>
+                        </firstStatus>
+                        <secondStatus>
+                            <ObjectStatus text="" state="None" visible="true"/>
+                        </secondStatus>
+                    </ObjectListItem>
+				</items>
+			</List>
+			</IconTabFilter>
+			<IconTabFilter
+				icon="sap-icon://collapse"
+				text="Inativo" key="Inativo" iconColor="Negative">
+				<List id="listIntentionInactive"
+				items="{ path: 'priceIntention>/ItemIntentionInactive', sorter: { path: 'priceIntention>HCP_STATE', descending: false, group: true }}">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="Intenção de Preços"/>
+						<content>
+					<ToolbarSpacer/>
+				<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+				</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<ObjectListItem intro="{priceIntention>View_Intention_Material_Type/DETPCEREAL}"  press="_onRowPress" title="{= ${priceIntention>HCP_PARTNER_TYPE} === 2 ? ${priceIntention>View_Prospect/NAME1} : ${priceIntention>View_Intention_Suppliers/NAME1} }" number="{ parts:[{path:'priceIntention>HCP_PRICE'}, 'BRL'], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }" numberUnit="{priceIntention/HCP_MOEDA}" numberState="Success" type="Active" selected="true">
+                        <attributes>
+                        	<ObjectAttribute text="Id: {priceIntention>HCP_PRICE_INTENTION_ID}" active="false" visible="true"/>
+                            <ObjectAttribute text="Mês Entrega: {priceIntention>HCP_MONTH}" active="false" visible="true"/>
+                            <ObjectAttribute text="Volume: {priceIntention>HCP_VOLUME}" active="false" visible="true"/>
+                        </attributes>
+                         <firstStatus>
+                            <ObjectStatus text="Preço de Alerta: {= parseFloat(${priceIntention>HCP_MIN_PRICE}).toFixed(2) }" state="None" visible="true"/>
+                        </firstStatus>
+                        <secondStatus>
+                            <ObjectStatus text="" state="None" visible="true"/>
+                        </secondStatus>
+                    </ObjectListItem>
+				</items>
+			</List>
+			</IconTabFilter>
+			
+		</items>
+	</IconTabBar>
+		</content>
+		<footer>
+			<OverflowToolbar width="100%" height="46px" design="Auto" enabled="true" visible="true">
+				<content>
+					<ToolbarSpacer width=""/>
+					<MessageStrip class="sapUiTinyMarginEnd" visible="{indexModel>/isMobile}" text="Atualizado em {indexModel>/lastUpdate}" showIcon="false"></MessageStrip>
+					<Button visible="{indexModel>/isMobile}" type="Emphasized" press="refreshData">
+						<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+					</Button>
+					<Button type="Emphasized" visible="{indexModel>/isMobile}" icon="sap-icon://add" press="_onButtonPress1"/>
+					<Button text="Criar Intenção" type="Emphasized" iconFirst="true" width="120px" enabled="true" visible="{indexModel>/isWeb}" iconDensityAware="false"
+						press="_onButtonPress1"/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

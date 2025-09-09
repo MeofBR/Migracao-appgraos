@@ -1,0 +1,22 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.offerMap.OfferMapChart" xmlns="sap.m" xmlns:chart="sap.chart" xmlns:data="sap.chart.data">
+    <Page showHeader="true" title="Ofertas Status" showFooter="true" showNavButton="true" navButtonPress="_onCancel">
+      	<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true" />
+		</headerContent>
+        <content>
+            <chart:Chart id="offerMapChart" width="auto" height="450px" visibleDimensions="__id" visibleMeasures="Quantidade" vizProperties="{offerMapChart>/offerMapChart/vizProperties}" chartType="column" selectionMode="Single" uiConfig="{}">
+                <chart:dimensions>
+                    <data:Dimension name="__id" label="Status" role="series" textProperty="Status"/>
+                </chart:dimensions>
+                <chart:measures>
+                    <data:Measure name="Quantidade" label="" role="axis1"/>
+                </chart:measures>
+            </chart:Chart>
+            <Button text="Visualizar Ofertas" press="_onOfferMapFormTile" type="Emphasized" iconFirst="false" width="226px" enabled="true" visible="true" iconDensityAware="false" class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiLargeMarginBegin sapUiTinyMarginEnd"/>
+        </content>
+        <footer/>
+        <headerContent/>
+        <subHeader/>
+        <customHeader/>
+    </Page>
+</mvc:View>

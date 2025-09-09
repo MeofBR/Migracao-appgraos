@@ -1,0 +1,120 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:g="sap.ui.layout.Grid" xmlns:t="sap.ui.table">
+	<Dialog 
+    id="OfferMap"
+    title="{i18n>titleOfferMapDialog}"
+    contentWidth="80%">
+
+    <content>  
+        <VBox fitContainer="true">
+            <items> 
+                <Table items="{path: 'indexModel>/oTableDialog'}" alternateRowColors="true" id="idCockpitTable" width="auto" showSeparators="All" growing="true" growingThreshold="5" growingScrollToLoad="false" fixedLayout="false" class="sapUiSizeCompact">
+						<infoToolbar>
+							<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+								<content>
+									<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</content>
+							</Toolbar>
+						</infoToolbar>
+						<headerToolbar>
+							<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+								<content>
+									<ToolbarSpacer/>
+									<OverflowToolbar style="Clear">
+			                            <ToolbarSpacer />
+			                            <Button text="{i18n>btnCreateOffer}" iconFirst="false" type="Transparent" enabled="true" press="handleCreate" />
+			                        </OverflowToolbar>
+								</content>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textProvider}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>labelPlant}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>labelMaterial}" width="auto" maxLines="1" wrapping="false" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textQuantity}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textFreight}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textDateDelivery}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textPriceOffer}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header></header>
+								<footer/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem type="Active" press="_onRowPress">
+								<cells>
+									<!--Fornecedor-->
+									<Text text="{indexModel>HCP_PARTNER_NAME}" width="auto" maxLines="1" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<!--Centro-->
+									<Text text="{indexModel>HCP_WERKS}" wrapping="false" maxLines="1" width="auto"/>
+									<!--Material-->
+									<Text text="{indexModel>Offer_Material/MAKTX}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<!--Volume-->
+									<Text text="{indexModel>HCP_VOLUME}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<!--Inco-->
+									<Text text="{= ${indexModel>HCP_INCOTERM} === 1 ? 'CIF' : ${indexModel>HCP_INCOTERM} === 2 ? 'FOB' : 'CPT'}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<!--Data Entrega-->
+									<Text text="{
+										    path: 'indexModel>HCP_DATE_START',
+										    type: 'sap.ui.model.odata.type.DateTimeOffset',
+										    formatOptions: {
+										        pattern: 'dd/MM/yyyy',
+										        UTC: true,
+										        source: {
+										            pattern: 'timestamp'
+										        }
+										    }
+										}" wrapping="false" maxLines="1" width="auto"/>
+									<!--Final Oferta-->
+									<Text text="{= ${path:'indexModel>HCP_PRICE', type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<!--Button-->
+									<Button press="handleEdit" icon="sap-icon://edit" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+            </items>
+        </VBox>
+    </content>
+    <buttons>
+      <Button
+        text="{i18n>buttonCancel}"
+        press="handleCancel"
+        />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

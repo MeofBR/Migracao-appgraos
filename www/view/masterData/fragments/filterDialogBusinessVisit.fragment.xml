@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ResponsivePopover title="Filtro Visita Fornecedor" placement="Bottom">
+		<content>
+			<form:Form width="100%" editable="true" visible="true">
+				<form:title/>
+				<form:formContainers>
+					<form:FormContainer visible="true">
+						<form:formElements>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Ano" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<DatePicker id="yearDatePicker" value="{path: 'businessVisitModel>/oFormDataFilter/dateYear', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy' }}" displayFormat="yyyy" change="_validateDate" required="true" />
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:fields>
+									<Button text="{i18n>btnsearch}" type="Emphasized" press="submitFilterList"/>
+								</form:fields>
+							</form:FormElement>
+						</form:formElements>
+						<form:title/>
+					</form:FormContainer>
+				</form:formContainers>
+				<form:layout>
+					<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+				</form:layout>
+			</form:Form>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

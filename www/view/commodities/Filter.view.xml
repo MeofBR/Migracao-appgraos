@@ -1,0 +1,116 @@
+<mvc:View xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified"
+	xmlns:semantic="sap.m.semantic" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:uxap="sap.uxap"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.commodities.Filter" xmlns:mvc="sap.ui.core.mvc">
+	<uxap:ObjectPageLayout subSectionLayout="TitleOnTop" showFooter="true" showAnchorBar="true" showHeaderContent="true"
+		showTitleInHeaderContent="true">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton press="onCancelPress" tooltip="copy" icon="sap-icon://nav-back" type="Transparent"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox alignItems="Center" fitContainer="true" wrap="Wrap">
+						<Title class="sapUiTinyMarginEnd sapUiTinyMarginTop" wrapping="true" text="{i18n>textConsultCommodities}"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent/>
+				<uxap:snappedContent/>
+				<uxap:navigationActions>
+					<Button press="onConsultPress" type="Emphasized" text="Consultar" iconDensityAware="false" visible="true"
+						enabled="{filterCommMapFormModel>/enableConsult}" width="auto" iconFirst="true"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection title="{i18n>textRegister}" visible="true" titleUppercase="true" showTitle="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="{i18n>textRegister}" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}" class="editableForm"
+								minWidth="1024" maxContainerCols="2" layout="ResponsiveGridLayout" labelSpanM="3" labelSpanL="3" id="newEntitySimpleForm" emptySpanM="4"
+								emptySpanL="4" editable="true" columnsM="1" columnsL="1">
+								<form:content>
+									<!--Tipo de Pedido-->
+									<Label text="{i18n>textOrderType}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="true" design="Standard"/>
+									<custom:CustomComboBox visible="true" enabled="true" width="auto" editable="true" required="true" selectionChange="_validateForm"
+										change="onInputOrderTypeFormSelect" maxWidth="100%" valueState="None" selectedKey="{filterCommMapFormModel>/HCP_ORDER_TYPE}"
+										placeholder="{i18n>placeSelectOrderType}">
+										<custom:items>
+											<core:Item text="{i18n>optionBuyFixedPrice}" enabled="true" key="1"/>
+											<core:Item text="{i18n>optionBuyDepositi}" enabled="true" key="2"/>
+											<core:Item text="{i18n>optionTransfer}" enabled="true" key="3"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Período de Criação-->
+									<Label text="{i18n>textCreatePeriod}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="false"
+										design="Standard"/>
+									<DateRangeSelection visible="true" enabled="true" width="auto" id="DT_CREATE" change="_onDateCreateRangeSelectionChange"
+										placeholder="{i18n>placeSelectCreatePeriod}" displayFormat="medium"/>
+									<!--Período de Remessa-->
+									<Label text="{i18n>textShippingPeriod}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="false"
+										design="Standard"/>
+									<DateRangeSelection visible="true" enabled="true" width="auto" id="DT_SHIPPING" change="_onDateShippingRangeSelectionChange"
+										placeholder="{i18n>textShippingPeriod}" displayFormat="medium"/>
+									<!--Comprador-->
+									<Label text="{i18n>textBuyer}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="true" design="Standard"/>
+									<custom:CustomComboBox visible="true" enabled="true" width="auto" editable="true" required="true" selectionChange="_validateForm"
+										maxWidth="100%" valueState="None" selectedKey="{filterCommMapFormModel>/HCP_EKGRP}" placeholder="{i18n>placeSelectBuyer}"
+										items="{ path: '/View_Account_Groups', length: 999999, sorter: { path: 'EKGRP',descending: false}}">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Centro-->
+									<Label text="{i18n>textCenter}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="false" design="Standard"/>
+									<custom:CustomComboBox visible="true" enabled="true" width="auto" editable="true" required="false" selectionChange="_validateForm"
+										maxWidth="100%" valueState="None" selectedKey="{filterCommMapFormModel>/HCP_WERKS}" placeholder="{i18n>placeSelectCenter}"
+										items="{ path: '/View_Center', length: 999999, sorter: { path: 'WERKS',descending: false}}" name="HCP_WERKS">
+										<custom:items>
+											<core:Item text="{WERKS} - {NAME1}" enabled="true" key="{WERKS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Fornecedor-->
+									<Label text="{i18n>textVendor}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="false" design="Standard"/>
+									<Input type="Text" visible="true" enabled="true" id="yesPartner" editable="true" required="false" change="_validateForm"
+										placeholder="{i18n>placeSelectVendor}" valueHelpRequest="_handlePartnerFilterPress" valueHelpOnly="true"
+										description="{filterCommMapFormModel>/PROVIDER_DESC}" value="{filterCommMapFormModel>/HCP_LIFNR}" showValueHelp="true"/>
+									<!--Material-->
+									<Label text="{i18n>textMaterial}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="false" design="Standard"/>
+									<custom:CustomComboBox visible="true" enabled="true" width="auto" editable="true" required="false" selectionChange="_validateForm"
+										maxWidth="100%" valueState="None" selectedKey="{filterCommMapFormModel>/HCP_MATNR}" placeholder="{i18n>placeMaterial}"
+										items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false}}" name="HCP_MATNR">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Oferta-->
+									<Label text="{i18n>textOfferNumber}" visible="{filterCommMapFormModel>/visibleOffer}" width="100%" textDirection="Inherit" textAlign="Begin"
+										required="false" design="Standard"/>
+									<Input type="Text" visible="{filterCommMapFormModel>/visibleOffer}" enabled="true" width="auto" placeholder="{i18n>placeEnterOffer}"
+										change="_validateForm" valueHelpOnly="false" value="{filterCommMapFormModel>/HCP_OFFER_NUMBER}" showValueHelp="false" maxLength="0"/>
+									<!--Status-->
+									<Label text="{i18n>textStatus}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="false" design="Standard"/>
+									<custom:CustomComboBox visible="true" enabled="true" width="auto" editable="true" required="false" selectionChange="_validateForm"
+										change="_validateForm" maxWidth="100%" valueState="None" selectedKey="{filterCommMapFormModel>/HCP_STATUS}"
+										placeholder="{i18n>placeSelectStates}">
+										<custom:items>
+											<core:Item text="{i18n>placeSelectPending}" enabled="true" key="1"/>
+											<core:Item text="{i18n>placeSelectprocessed}" enabled="true" key="2"/>
+											<core:Item text="{i18n>placeSelectCanceled}" enabled="true" key="3"/>
+											<core:Item text="{i18n>textAll}" enabled="true" key="4"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Usuário-->
+									<Label text="{i18n>textUser}" visible="true" width="100%" textDirection="Inherit" textAlign="Begin" required="false" design="Standard"/>
+									<Input type="Text" visible="true" enabled="true" width="auto" placeholder="{i18n>placeUser}" valueHelpOnly="false" change="_validateForm"
+										value="{filterCommMapFormModel>/HCP_CREATED_BY}" showValueHelp="false" maxLength="0"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

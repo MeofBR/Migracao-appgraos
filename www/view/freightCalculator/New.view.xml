@@ -1,0 +1,106 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.freightCalculator.New"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancelPress"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+				
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="{i18n>buttonCalculateFreight}" type="Emphasized" iconFirst="true" width="auto" enabled="{freightCalculatorFormModel>/enableCalculate}"
+						visible="true" iconDensityAware="false" press="_calculatePriceFreight"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="{i18n>textFreightCalculator}" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+										<Label  text="" design="Standard" visible="{freightCalculatorFormModel>/noPricesCalculator}" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit"/>
+									<MessageStrip class="sapUiTinyMarginBottom" text="Tabela de frete não encontrada, por favor verifique os dados."
+										visible="{freightCalculatorFormModel>/noPricesCalculator}" type="Warning" showIcon="true" showCloseButton="false"
+									></MessageStrip>
+											<Label class="sapUiTinyMarginBottom" text="" design="Standard" visible="{freightCalculatorFormModel>/hasFreight}" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit"/>
+									    <Title class="sapUiTinyMarginBottom" text="Resultado do Cálculo de Frete:" level="Auto" visible="{freightCalculatorFormModel>/hasFreight}"/>	
+									    
+									    <Label text="" design="Standard" visible="{freightCalculatorFormModel>/hasFreight}" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit"/>
+										
+                            <Title class="sapUiTinyMarginBottom" text="Valor (R$/Ton): { path: 'freightCalculatorFormModel>/FREIGHT' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}" visible="{freightCalculatorFormModel>/hasFreight}" level="H4"/>
+                       
+                            <Title class="sapUiTinyMarginBottom" text="Valor (R$/SC): { path: 'freightCalculatorFormModel>/FREIGHTSC' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}" visible="{freightCalculatorFormModel>/hasFreight}" level="H4"/>
+
+									<Label text="{i18n>textHomeState}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<ComboBox
+										items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: false} }"
+										placeholder="{i18n>placeSelectHomeState}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{freightCalculatorFormModel>/REGIO_ORIGEM}" selectionChange="_changeState" change="_changeState">
+										<items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</items>
+									</ComboBox>
+									<Label text="{i18n>textDestinationState}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: false} }"
+										placeholder="{i18n>placeSelectDestinationState}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{freightCalculatorFormModel>/REGIO_DESTINO}" selectionChange="_changeState" change="_changeState">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textMileage}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input name="KM" placeholder="{i18n>placeEnterKm}"
+										value="{ path: 'freightCalculatorFormModel>/KM' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_validateForm" change="_validateForm"/>
+									<Label text="{i18n>labelMonth}" design="Standard" required="true" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeHolderMonth}" name="TABLE_PRICE" id="comboMes" selectedKey="{freightCalculatorFormModel>/MES}"
+										editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm"
+										change="_validateForm"></custom:CustomComboBox>
+									<Label text="{i18n>labelYear}" design="Standard" required="true" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="comboAno" name="TABLE_PRICE" placeholder="{i18n>placeHolderYear}" selectedKey="{freightCalculatorFormModel>/ANO}"
+										editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm"
+										change="_validateForm"></custom:CustomComboBox>
+									<Label text="{i18n>questionUnpavedStretch}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true"
+										visible="true"/>
+									<SegmentedButton selectedKey="{freightCalculatorFormModel>/STRETCH}" selectionChange="_validateStretch" width="100%" visible="true">
+										<items>
+											<SegmentedButtonItem text="{i18n>textYes}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textNo}" key="2"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textStretchKm}" design="Standard" width="100%" required="{freightCalculatorFormModel>/hasStretch}" textAlign="Begin"
+										textDirection="Inherit" visible="{freightCalculatorFormModel>/hasStretch}"/>
+									<Input name="TRECHO" placeholder="{i18n>placeEnterKm}"
+										value="{ path: 'freightCalculatorFormModel>/TRECHO' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="{freightCalculatorFormModel>/hasStretch}" width="100%"
+										valueHelpOnly="false" maxLength="0" liveChange="_valideInputNumber" change="_valideInputNumber"/>
+								
+									
+								</form:content>
+							</form:SimpleForm>
+							
+						
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+		
+	</uxap:ObjectPageLayout>
+</mvc:View>

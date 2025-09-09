@@ -1,0 +1,309 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.visitForm.EditGrainsVisitForm" xmlns:uxap="sap.uxap" xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="Voltar" press="onCancelPress"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Ficha de Visitas Grãos" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title
+							text="{i18n>textVendorProspect}: {editGrainsVisitModel>/HCP_PROVIDER_ID} - {= ${editGrainsVisitModel>/HCP_NAME_REGISTERED} !== null ? ${editGrainsVisitModel>/HCP_NAME_REGISTERED} : ${editGrainsVisitModel>/NAME_LIFNR} !== null ? ${editGrainsVisitModel>/NAME_LIFNR} : ${editGrainsVisitModel>/NAME_PROSPECT}}"
+							width="100%" textAlign="Begin" textDirection="Inherit" wrapping="true"/>
+					</FlexBox>
+				</uxap:expandedContent>
+				<uxap:snappedContent>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title
+							text="{i18n>textVendorProspect}: {editGrainsVisitModel>/HCP_PROVIDER_ID} - {= ${editGrainsVisitModel>/HCP_NAME_REGISTERED} !== null ? ${editGrainsVisitModel>/HCP_NAME_REGISTERED} : ${editGrainsVisitModel>/NAME_LIFNR} !== null ? ${editGrainsVisitModel>/NAME_LIFNR} : ${editGrainsVisitModel>/NAME_PROSPECT}}"
+							width="100%" textAlign="Begin" textDirection="Inherit" wrapping="true"/>
+					</FlexBox>
+				</uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${editGrainsVisitModel>/enableSave} &amp;&amp; ${editGrainsVisitModel>/enableCreateRegioValid} &amp;&amp; ${profileModel>/edit}}"
+						visible="true" iconDensityAware="false" press="onSavePress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Cadastro" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Cadastro" mode="Expanded">
+						<uxap:blocks>
+							<VBox>
+								<form:SimpleForm class="simpleForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4" emptySpanXL="4"
+									id="newEntitySimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048">
+									<form:content>
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="{= ${profileModel>/edit} === true ? false : true}"/>
+										<MessageStrip text="Você não tem permissão para editar Ficha de Visitas" type="Error" showIcon="true" showCloseButton="false"
+											visible="{= ${profileModel>/edit} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="{= ${editGrainsVisitModel>/enableCreateRegioValid} === true ? false : true}"/>
+										<MessageStrip text="Estado não permitido para o seu perfil" type="Error" showIcon="true" showCloseButton="false"
+											visible="{= ${editGrainsVisitModel>/enableCreateRegioValid} === true ? false : true}" class="sapUiMediumMarginTop"/>
+										<Label text="UF" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<custom:CustomComboBox placeholder="Selecione o Estado" selectedKey="{editGrainsVisitModel>/HCP_UF}" editable="true"
+											enabled="{editGrainsVisitModel>/isEnable}" visible="true" required="true" width="100%" valueState="None" maxWidth="100%"
+											change="_onInputUfFormSelect" selectionChange="_onInputUfFormSelect"
+											items="{ path: '/View_States', length: 999999 , filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'}, sorter: { path: 'BLAND',descending: false}}">
+											<custom:items>
+												<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+											</custom:items>
+										</custom:CustomComboBox>
+										<Label id="countyLabel" text="Município" design="Standard" width="100%" required="{editGrainsVisitModel>/yesCity}" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<custom:CustomComboBox id="county" items="{ path: '/View_City', length: 999999, sorter: { path: 'TAXJURCODE',descending: false}}"
+											placeholder="Selecione o Município" editable="{editGrainsVisitModel>/isEnable}" enabled="{editGrainsVisitModel>/enableCounty}"
+											visible="true" width="auto" valueState="None" maxWidth="100%" required="{editGrainsVisitModel>/yesCity}"
+											selectedKey="{editGrainsVisitModel>/HCP_CITY}" selectionChange="_validateForm">
+											<custom:items>
+												<core:Item text="{TEXT}" enabled="true" key="{TAXJURCODE}"/>
+											</custom:items>
+										</custom:CustomComboBox>
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<form:SimpleForm class="simpleForm" width="100%" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="0"
+											emptySpanXL="0" id="newMaterialSimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2"
+											minWidth="2048">
+											<form:content></form:content>
+										</form:SimpleForm>
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<Button text="Adicionar Novo Material" type="Emphasized" iconFirst="true" enabled="{editGrainsVisitModel>/isEnable}" visible="true"
+											iconDensityAware="false" press="_onAddNewForm">
+											<customData>
+												<core:CustomData key="id" value="newMaterialSimpleForm"/>
+											</customData>
+											<layoutData>
+												<l:GridData span="L5 M5 S12"/>
+											</layoutData>
+										</Button>
+										<Label text="Tipo de Contato" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<custom:CustomComboBox placeholder="Selecione o Tipo de Contato" selectedKey="{editGrainsVisitModel>/HCP_CONTACT_TYPE}" editable="true"
+											enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm">
+											<custom:items>
+												<core:Item text="Presencial" enabled="true" key="presencial"/>
+												<core:Item text="Telefone" enabled="true" key="telefone"/>
+												<core:Item text="Mensagem via Telefone" enabled="true" key="mensagemtelefone"/>
+												<core:Item text="Skype" enabled="true" key="skype"/>
+												<core:Item text="E-mail" enabled="true" key="email"/>
+												<core:Item text="Outros" enabled="true" key="outros"/>
+											</custom:items>
+										</custom:CustomComboBox>
+										<Label text="Quais são os tipos de negociação feitas pelo fornecedor?" design="Standard" width="100%" required="true" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<MultiComboBox
+											items="{ path: '/Visit_Tools', length: 999999 , filters: {path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, sorter: { path: 'HCP_ID',descending: false}}"
+											placeholder="Selecione os Tipos de Negociação" required="true" editable="true" selectedKeys="{editGrainsVisitModel>/toolsInputs}"
+											enabled="{editGrainsVisitModel>/isEnable}" valueState="None" selectionChange="_validateToolsInputs">
+											<items>
+												<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+											</items>
+										</MultiComboBox>
+										<Label text="Outras" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" value="{editGrainsVisitModel>/HCP_OTHERS_TOOLS}" liveChange="_validateForm"
+											placeholder="Descritivo de Outras Negociações" cols="20" maxLength="255" wrapping="None" enabled="{editGrainsVisitModel>/isEnable}"
+											required="false" visible="{editGrainsVisitModel>/yesOthersTools}"/>
+										<Label text="Descreva as modalidades de contrato mais utilizadas" design="Standard" width="100%" required="false" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" placeholder="Ex: (CBOT x 70% x BRL; BM&amp;F - 5)" visible="true" value="{editGrainsVisitModel>/HCP_CONTRACT_MODALITY}"
+											cols="20" maxLength="255" wrapping="None" required="false" enabled="{editGrainsVisitModel>/isEnable}" liveChange="_validateForm"/>
+										<Label text="Qual o Principal Mês de negociação antecipada?" design="Standard" width="100%" required="true" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<MultiComboBox placeholder="Selecione o Mês" required="true" editable="true" selectedKeys="{editGrainsVisitModel>/negotiationFramesInputs}"
+											enabled="{editGrainsVisitModel>/isEnable}" valueState="None" selectionChange="_validateForm" change="_validateForm">
+											<items>
+												<core:Item text="Janeiro" enabled="true" key="HCP_JANUARY"/>
+												<core:Item text="Fevereiro" enabled="true" key="HCP_FEBRUARY"/>
+												<core:Item text="Março" enabled="true" key="HCP_MARCH"/>
+												<core:Item text="Abril" enabled="true" key="HCP_APRIL"/>
+												<core:Item text="Maio" enabled="true" key="HCP_MAY"/>
+												<core:Item text="Junho" enabled="true" key="HCP_JUNE"/>
+												<core:Item text="Julho" enabled="true" key="HCP_JULY"/>
+												<core:Item text="Agosto" enabled="true" key="HCP_AUGUST"/>
+												<core:Item text="Setembro" enabled="true" key="HCP_SEPTEMBER"/>
+												<core:Item text="Outubro" enabled="true" key="HCP_OCTOBER"/>
+												<core:Item text="Novembro" enabled="true" key="HCP_NOVEMBER"/>
+												<core:Item text="Dezembro" enabled="true" key="HCP_DECEMBER"/>
+											</items>
+										</MultiComboBox>
+										<Label text="Possui Estrutura de Armazenagem?" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<SegmentedButton width="100%" class="sapUiSmallMarginBottom" selectedKey="{editGrainsVisitModel>/HCP_STORAGE_STRUCTURE}"
+											selectionChange="_onInputStorageStructure">
+											<items>
+												<SegmentedButtonItem text="Sim" key="1"/>
+												<SegmentedButtonItem text="Não" key="0"/>
+											</items>
+										</SegmentedButton>
+										<Label text="Tipo de Armazenagem" design="Standard" width="100%" required="{editGrainsVisitModel>/yesStorage}" textAlign="Begin"
+											textDirection="Inherit" visible="{editGrainsVisitModel>/yesStorage}"/>
+										<MultiComboBox
+											items="{ path: '/Storage_Type', length: 999999 , filters: [{path: 'HCP_TYPE', operator: 'EQ', value1: 'Grains'}, {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], sorter: { path: 'HCP_ID',descending: false}}"
+											visible="{editGrainsVisitModel>/yesStorage}" placeholder="Selecione o Tipo de Armazenagem" required="{editGrainsVisitModel>/yesStorage}"
+											editable="true" selectedKeys="{editGrainsVisitModel>/negotiationInputs}" enabled="true" valueState="None" selectionChange="_validateForm"
+											change="_validateForm">
+											<items>
+												<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+											</items>
+										</MultiComboBox>
+										<Label text="{i18n>textWhatsCapacity}" design="Standard" width="100%" required="{editGrainsVisitModel>/yesStorage}" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<Input placeholder="{i18n>textWhatsCapacityField}" name="HCP_CAPACITY"
+											value="{ path: 'editGrainsVisitModel>/HCP_CAPACITY' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+											type="Tel" showValueHelp="false" enabled="true" required="{editGrainsVisitModel>/yesStorage}" visible="{editGrainsVisitModel>/yesStorage}"
+											width="100%" valueHelpOnly="false" maxLength="0" liveChange="_valideInputNumber" change="_valideInputNumber"/>
+										<Label text="{i18n>textWhatsSilosBag}" design="Standard" width="100%" required="{editGrainsVisitModel>/yesStorage}" textAlign="Begin"
+											textDirection="Inherit" visible="{editGrainsVisitModel>/yesStorage}"/>
+										<SegmentedButton width="100%" class="sapUiSmallMarginBottom" selectedKey="{editGrainsVisitModel>/HCP_SILOS_BAG}"
+											selectionChange="_onInputSilosStructure" visible="{editGrainsVisitModel>/yesStorage}">
+											<items>
+												<SegmentedButtonItem text="{i18n>textYes}" key="1"/>
+												<SegmentedButtonItem text="{i18n>textNo}" key="0"/>
+											</items>
+										</SegmentedButton>
+										<Label text="{i18n>textWhatsSilosVolume}" design="Standard" width="100%" required="{editGrainsVisitModel>/yesSilosBag}" textAlign="Begin"
+											textDirection="Inherit" visible="{editGrainsVisitModel>/yesSilosBag}"/>
+										<Input placeholder="{i18n>textWhatsSilosVolumeField}" name="HCP_SILO_VOLUME"
+											value="{ path: 'editGrainsVisitModel>/HCP_SILO_VOLUME' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+											type="Tel" showValueHelp="false" enabled="true" required="{editGrainsVisitModel>/yesSilosBag}" visible="{editGrainsVisitModel>/yesSilosBag}"
+											width="100%" valueHelpOnly="false" maxLength="0" liveChange="_valideInputNumber" change="_valideInputNumber"/>
+										<Label text="Possui programa de Barter com seus fornecedores/produtores?" design="Standard" width="100%" required="true" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<SegmentedButton width="100%" class="sapUiSmallMarginBottom" selectedKey="{editGrainsVisitModel>/HCP_PARTNER_PRODUCERS}"
+											enabled="{editGrainsVisitModel>/isEnable}" selectionChange="_onbarterExchangeFormSelect">
+											<items>
+												<SegmentedButtonItem text="Sim" key="1"/>
+												<SegmentedButtonItem text="Não" key="0"/>
+											</items>
+										</SegmentedButton>
+										<Label text="Descrição do Programa Barter" design="Standard" width="100%" required="{editGrainsVisitModel>/yesBartner}" textAlign="Begin"
+											textDirection="Inherit" visible="{editGrainsVisitModel>/yesBartner}"/>
+										<TextArea rows="2" placeholder="Observação sobre o programa de Barter" visible="{editGrainsVisitModel>/yesBartner}"
+											value="{editGrainsVisitModel>/HCP_OTHER_BARTER}" cols="20" maxLength="255" wrapping="None" required="{editGrainsVisitModel>/yesBartner}"
+											enabled="{editGrainsVisitModel>/isEnable}" liveChange="_validateForm"/>
+										<Label text="Possui Frota Própria para Transporte de Material?" design="Standard" width="100%" required="false" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<SegmentedButton width="100%" class="sapUiSmallMarginBottom" selectedKey="{editGrainsVisitModel>/HCP_OWN_FLEET}"
+											enabled="{editGrainsVisitModel>/isEnable}" selectionChange="_onOwnFleetFormSelect">
+											<items>
+												<SegmentedButtonItem text="Sim" key="1"/>
+												<SegmentedButtonItem text="Não" key="0"/>
+											</items>
+										</SegmentedButton>
+										<Label text="Qual o % de transporte com a frota própria?" design="Standard" width="100%" required="{editGrainsVisitModel>/yesOwnFleet}"
+											textAlign="Begin" textDirection="Inherit" visible="{editGrainsVisitModel>/yesOwnFleet}"/>
+										<custom:CustomSlider min="0" max="100" value="{editGrainsVisitModel>/HCP_PERCENT_OWN_FLEET}" step="1"
+											enabled="{editGrainsVisitModel>/isEnable}" visible="{editGrainsVisitModel>/yesOwnFleet}" width="auto" progress="true" change="_validateForm"
+											showAdvancedTooltip="false">
+											<custom:layoutData>
+												<l:GridData span="L4 M4 S9"/>
+											</custom:layoutData>
+										</custom:CustomSlider>
+										<NumericContent animateTextChange="true" value="{editGrainsVisitModel>/HCP_PERCENT_OWN_FLEET}" width="" scale="%"
+											class="percentageIndicator" withMargin="true" visible="{editGrainsVisitModel>/yesOwnFleet}">
+											<layoutData>
+												<l:GridData span="L1 M1 S3"/>
+											</layoutData>
+										</NumericContent>
+										<Label text="O que Falta para Aumentar o Volume de Comercialização com a BRF?" design="Standard" width="100%" required="true"
+											textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<MultiComboBox
+											items="{ path: '/Visit_Criterion', length: 999999 , filters: {path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, sorter: { path: 'HCP_ID',descending: false}}"
+											placeholder="Seleção do Critério" required="true" editable="true" selectedKeys="{editGrainsVisitModel>/criterionsInputs}"
+											enabled="{editGrainsVisitModel>/isEnable}" valueState="None" selectionChange="_validateCriterionInputs">
+											<items>
+												<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+											</items>
+										</MultiComboBox>
+										<Label text="{i18n>textOthers}" design="Standard" width="100%" required="{editGrainsVisitModel>/yesOthersCriterion}" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" placeholder="Descritivo em caso de outros" visible="{editGrainsVisitModel>/yesOthersCriterion}"
+											value="{editGrainsVisitModel>/HCP_OTHER_CRITERION}" cols="20" maxLength="255" wrapping="None"
+											required="{editGrainsVisitModel>/yesOthersCriterion}" enabled="{editGrainsVisitModel>/isEnable}" liveChange="_validateForm"/>
+										<Label text="Qual o Fator mais Relevante para a Tomada de Decisão de Comercialização Anual?" design="Standard" width="auto" required="true"
+											textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" placeholder="Descritivo do Fator" visible="true" value="{editGrainsVisitModel>/HCP_DECISION_FACTOR}" cols="20"
+											maxLength="255" wrapping="None" enabled="{editGrainsVisitModel>/isEnable}" required="true" liveChange="_validateForm"/>
+										<Label text="Certificações?" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<MultiComboBox
+											items="{ path: '/Visit_Certifications', length: 999999 , filters: [{path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'} ], sorter: { path: 'HCP_ID',descending: false}}"
+											placeholder="Selecione as Certificações" required="false" editable="true" selectedKeys="{editGrainsVisitModel>/certificationsInputs}"
+											enabled="{editGrainsVisitModel>/isEnable}" valueState="None" selectionChange="_validateInputCertification">
+											<items>
+												<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+											</items>
+										</MultiComboBox>
+										<Label text="{i18n>textOthers}" design="Standard" width="100%" required="{editGrainsVisitModel>/yesOthersCertication}" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" placeholder="Descritivo para outros" visible="{editGrainsVisitModel>/yesOthersCertication}"
+											value="{editGrainsVisitModel>/HCP_OTHERS}" cols="20" maxLength="255" wrapping="None" required="{editGrainsVisitModel>/yesOthersCertication}"
+											enabled="{editGrainsVisitModel>/isEnable}" liveChange="_validateForm"/>
+										<Label text="Indique o Principal Parceiro de Insumos:" design="Standard" width="99%" required="true" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<SegmentedButton selectedKey="{editGrainsVisitModel>/partnerProspect}" width="100%" class="sapUiSmallMarginBottom"
+											selectionChange="_onInputFormSelect" enabled="{editGrainsVisitModel>/isEnable}">
+											<items>
+												<SegmentedButtonItem text="Fornecedor" key="Fornecedor"/>
+												<SegmentedButtonItem text="Prospect" key="Prospect"/>
+											</items>
+										</SegmentedButton>
+										<Label text="Base de Fornecedores BRF?" design="Standard" width="99%" required="{editGrainsVisitModel>/yesPartnerBRF}" textAlign="Begin"
+											textDirection="Inherit" visible="{editGrainsVisitModel>/yesPartnerBRF}"/>
+										<SegmentedButton width="100%" class="sapUiSmallMarginBottom" selectedKey="{editGrainsVisitModel>/HCP_PARTNER_BRF_SUP}"
+											enabled="{editGrainsVisitModel>/isEnable}" selectionChange="_onInputPartnerFormSelect" visible="{editGrainsVisitModel>/yesPartnerBRF}">
+											<items>
+												<SegmentedButtonItem text="Sim" key="1"/>
+												<SegmentedButtonItem text="Não" key="0"/>
+											</items>
+										</SegmentedButton>
+										<Label text="Parceiro" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<Input id="yesPartner" visible="{editGrainsVisitModel>/yesPartner}" required="{editGrainsVisitModel>/yesPartner}" liveChange="_validateForm"
+											change="_validateForm" editable="true" enabled="{editGrainsVisitModel>/isEnable}" placeholder="Selecione o Parceiro" showValueHelp="true"
+											type="Text" value="{editGrainsVisitModel>/HCP_PARTNER}" description="{editGrainsVisitModel>/partnerDesc}" valueHelpOnly="true"
+											valueHelpRequest="_handlePartnerFilterPress"/>
+										<Label text="Parceiro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<Input id="noPartner" placeholder="Digite o Parceiro" type="Text" value="{editGrainsVisitModel>/HCP_PARTNER}" showValueHelp="false"
+											required="false" enabled="{editGrainsVisitModel>/isEnable}" visible="{editGrainsVisitModel>/noPartner}" width="100%"
+											liveChange="_validateForm" change="_validateForm" valueHelpOnly="false" maxLength="0"/>
+										<Label text="Prospect" design="Standard" width="100%" required="{editGrainsVisitModel>/yesProspect}" textAlign="Begin"
+											textDirection="Inherit" visible="{editGrainsVisitModel>/yesProspect}"/>
+										<custom:CustomComboBox id="yesProspect" placeholder="Selecione o Prospect" selectedKey="{editGrainsVisitModel>/HCP_PARTNER}" editable="true"
+											enabled="{editGrainsVisitModel>/isEnable}" visible="{editGrainsVisitModel>/yesProspect}" required="{editGrainsVisitModel>/yesProspect}"
+											width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm"
+											items="{ path: '/Prospects', length: 999999, filters: [{path: 'HCP_STATUS', operator: 'EQ', value1: '1'}, {path: 'HCP_STATUS', operator: 'EQ', value1: '2'}] }">
+											<custom:items>
+												<core:Item text="{NAME1} {NAME2}" enabled="{editGrainsVisitModel>/isEnable}" key="{HCP_PROSP_ID}"/>
+											</custom:items>
+										</custom:CustomComboBox>
+										<!--<Label text="Deseja agendar a próxima visita?" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"-->
+										<!--	visible="true" class="sapUiSmallMarginBegin"/>-->
+										<!--<SegmentedButton width="auto" class="sapUiSmallMarginBottom" selectedKey="{editGrainsVisitModel>/HCP_SCHEDULE_NEXT_VISIT}">-->
+										<!--	<items>-->
+										<!--		<SegmentedButtonItem text="Sim" key="1"/>-->
+										<!--		<SegmentedButtonItem text="Não" key="0"/>-->
+										<!--	</items>-->
+										<!--</SegmentedButton>-->
+										<Label text="Relato da Visita?" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<TextArea rows="3" placeholder="{i18n>textDescriptive}" visible="true" value="{editGrainsVisitModel>/HCP_REPORT_VISIT}" cols="20"
+											maxLength="10000" wrapping="None" enabled="{editGrainsVisitModel>/isEnable}" required="true" liveChange="_validateForm"/>
+									</form:content>
+								</form:SimpleForm>
+							</VBox>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

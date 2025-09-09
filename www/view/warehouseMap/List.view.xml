@@ -1,0 +1,108 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.warehouseMap.List"
+	xmlns="sap.m">
+	<Page title="Mapa Armazém/Consulta" showNavButton="true" navButtonPress="_onCancel" showFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<Table width="auto" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				id="table"
+				items="{ path: 'wareHouseIndexModel>/ItemsWareHouseMaps', sorter : { path : 'HCP_WAREHOUSE_ID' , descending:true }, parameters: { expand: 'Warehouse_Regions,Warehouse_Suppliers,Warehouse_Prospects' }}">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar>
+					<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+						<content>
+							<Title text="Armazéns ({wareHouseIndexModel>/count})" titleStyle="Auto" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+							<ToolbarSpacer width=""/>
+							<OverflowToolbarButton text="Sort" press="sortButtonPressed" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+							<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"
+								enabled="true" visible="false" iconDensityAware="false"/>
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Cód. Armazém" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="25%" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Fornecedor/Prospect" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Estado" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Região" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Data Criação" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Criado por" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Ações" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active" press="_onRowPress">
+						<cells>
+							<ObjectStatus icon="sap-icon://monitor-payments" text="{path:'wareHouseIndexModel>HCP_WAREHOUSE_ID'}"/>
+							<Text text="{ parts: [ {path: 'wareHouseIndexModel>NAME1'}, {path: 'wareHouseIndexModel>HCP_NAME_REGISTERED'} ], formatter: '.formatter.formatSupplierName' }"
+								width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{path:'wareHouseIndexModel>HCP_STATE'}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{path:'wareHouseIndexModel>HCP_BEZEI'}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text
+								text="{ path: 'wareHouseIndexModel>HCP_CREATED_AT', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+								width="103px" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+							<Text text="{path: 'wareHouseIndexModel>HCP_CREATED_BY'}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+								textDirection="Inherit" visible="true"/>
+							<Button visible="true" width="auto" text="Remover" type="Reject" iconDensityAware="false" enabled="true" iconFirst="true"
+								press="_onRemoveWareHouse"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<footer>
+			<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+				<content>
+					<Button text="Cancelar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+						press="_onCancel"/>
+					<ToolbarSpacer width=""/>
+					<Button text="Cadastrar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+						press="_onCreateWareHouseMapPress"/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

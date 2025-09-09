@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Dialog showHeader="true" title="{i18n>textOrderStatus}" type="Standard">
+		<content>
+			<Panel width="auto">
+				<form:SimpleForm class="simpleFormCommerc" editable="true" maxContainerCols="1">
+					<form:content>
+						<!--Pedido/Item-->
+						<Label text="{i18n>textOrderItem}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input placeholder="" type="Text" value="{orderStatusFormModel>/HCP_Z5110_EBELN} / {orderStatusFormModel>/HCP_Z5110_EBELP}"
+							showValueHelp="false" required="false" enabled="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+						<!--Status-->
+						<Label text="{i18n>textStatus}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input placeholder="" type="Text" value="{orderStatusFormModel>/HCP_Z5110_ZSTATUS}" showValueHelp="false" required="false" enabled="false"
+							visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+						<!--Dt.Criação Solicitação-->
+						<Label text="{i18n>textCreationRequest}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+							visible="true"/>
+						<Input enabled="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+							value="{path: 'orderStatusFormModel>/HCP_ZCRDAT', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy HH:mm:ss' } }"/>
+						<!--Usuário-->
+						<Label text="{i18n>textUser}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input placeholder="" type="Text" value="{orderStatusFormModel>/HCP_Z5110_ERNAM}" showValueHelp="false" required="false" enabled="false"
+							visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+						<!--Dt.Criação PC-->
+						<Label text="{i18n>textPCCreation}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input enabled="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+							value="{path: 'orderStatusFormModel>/HCP_ZPCXDAT', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy HH:mm:ss' } }"/>
+						<!--Usuário-->
+						<Label text="{i18n>textUser}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input placeholder="" type="Text" value="{orderStatusFormModel>/HCP_Z5110_ZERNAM}" showValueHelp="false" required="false" enabled="false"
+							visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+						<!--Dt.Estorno Solicitação-->
+						<Label text="{i18n>textRefundRequest}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="true"/>
+						<Input enabled="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+							value="{path: 'orderStatusFormModel>/HCP_ZESTDAT', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy HH:mm:ss' } }"/>
+						<!--Usuário-->
+						<Label text="{i18n>textUser}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input placeholder="" type="Text" value="{orderStatusFormModel>/HCP_Z5110_ZESTERN}" showValueHelp="false" required="false" enabled="false"
+							visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+						<!--Dt.Aprovação-->
+						<Label text="{i18n>textApprovalAmount}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input enabled="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+							value="{path: 'orderStatusFormModel>/HCP_ZAPDAT', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy HH:mm:ss' } }"/>
+						<!--Usuário-->
+						<Label text="{i18n>textUser}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input placeholder="" type="Text" value="{orderStatusFormModel>/HCP_Z5110_ZAPERN}" showValueHelp="false" required="false" enabled="false"
+							visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+					</form:content>
+				</form:SimpleForm>
+			</Panel>
+		</content>
+		<buttons>
+			<Button text="OK" press="_onOkOrderStatusPress" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true"
+				iconDensityAware="false"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

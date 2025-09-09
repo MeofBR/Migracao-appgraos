@@ -1,0 +1,86 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.crop.Filter"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="navBack"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="{i18n>titleCrop}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:navigationActions>
+					<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+					<Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${filterPageModel>/enableCreate} &amp;&amp; ${filterPageModel>/enableCreateRegioValid}}" visible="true" iconDensityAware="false"
+						press="_onConfirm"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="false" title="" titleUppercase="false" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="">
+						<uxap:blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="cropTrackKeysForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+								<f:content>
+									<Label text="Safra" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: 'filterPageModel>/itemsCropYear'}"
+										placeholder="Selecione Safra" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" id="cropYear"
+										selectedKey="{filterPageModel>/HCP_CROP_ID}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{filterPageModel>HCP_CROP_DESC}" enabled="true" key="{filterPageModel>HCP_CROP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Estado" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: false} }"
+										placeholder="Selecione Estado" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filterPageModel>/HCP_STATE}" selectionChange="_validateStates">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}-{BEZEI}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Região" design="Standard" width="100%" required="{= ${BLAND} !== ' ' ? true : false }" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="regions" items="{ path: '/Regions',filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], length: 999999}"
+										placeholder="Selecione a Região" editable="true" enabled="{filterPageModel>/regionEnabled}" visible="true" width="auto" valueState="None"
+										maxWidth="100%" selectedKey="{filterPageModel>/HCP_REGIO}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_BEZEI}" enabled="true" key="{HCP_ID}-{HCP_BEZEI}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Material" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Material', length: 999999, sorter: { path: 'MATNR',descending: false} }"
+										placeholder="Selecione o Material" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filterPageModel>/HCP_MATERIAL}" value="{filterPageModel>/HCP_MATERIAL_COD_NAME}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${filterPageModel>/enableCreateRegioValid} === true ? false : true}"/>
+									<MessageStrip text="Estado não permitido para o seu perfil" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${filterPageModel>/enableCreateRegioValid} === true ? false : true}" class="sapUiMediumMarginTop"/>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${filterPageModel>/enableCropYear}}"/>
+									<MessageStrip text="{i18n>invalidCropYear}" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${filterPageModel>/enableCropYear}}" class="sapUiMediumMarginTop"/>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,321 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.commodities.EditDepositTransf" xmlns:uxap="sap.uxap" xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<!--<OverflowToolbar class="sapUiResponsiveMargin">-->
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancelPress"/>
+					<!--<ToolbarSpacer/>-->
+					<!--<OverflowToolbarButton type="Transparent" icon="sap-icon://paging" tooltip="copy" press="onCancelPress"/>-->
+					<!--</OverflowToolbar>-->
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="{purchaseFormModel>/textOption}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button icon="sap-icon://message-popup" iconFirst="true" width="auto" enabled="{purchaseFormModel>/enabledMessage}" visible="true"
+						iconDensityAware="false" press="onMessagePress"/>
+					<Button text="{i18n>textCadence}" iconFirst="true" width="auto"
+						enabled="{= ${purchaseFormModel>/enabledCadence} &amp;&amp; ${purchaseFormModel>/enableEditWerksValid} &amp;&amp; ${profileModel>/edit}}"
+						visible="true" iconDensityAware="false" press="onCadencePress"/>
+					<Button text="{i18n>buttonSave}" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${purchaseFormModel>/enabledConfirm} &amp;&amp; ${purchaseFormModel>/noOfferThreshold} &amp;&amp; ${purchaseFormModel>/enableEditWerksValid}}"
+						visible="true" iconDensityAware="false" press="onSavePress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="{i18n>textRegister}" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="{i18n>textRegister}" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${profileModel>/edit} === true ? false : true}"/>
+									<MessageStrip text="Você não tem permissão para editar Compra de Commodities" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${profileModel>/edit} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<!--Pedido Depósito/Transf.-->
+									<Label text="{i18n>textOriginalOrder}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{purchaseFormModel>/visibleOrder}"/>
+									<Input placeholder="" type="Text" value="{= parseFloat(${purchaseFormModel>/HCP_PEDIDO_DEP}) }" showValueHelp="false" required="false"
+										enabled="false" visible="{purchaseFormModel>/visibleOrder}" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<!--Oferta-->
+									<Label text="{i18n>textOfferNumber}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{purchaseFormModel>/visibleOffer}"/>
+									<Input placeholder="" type="Text" value="{purchaseFormModel>/HCP_OFFER_NUMBER}" showValueHelp="false" required="false" enabled="false"
+										visible="{purchaseFormModel>/visibleOffer}" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<!--Fornecedor-->
+									<Label text="{i18n>textVendor}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPartner" visible="true" required="true" change="_validateForm" editable="true"
+										enabled="{= ${purchaseFormModel>/enabled} &amp;&amp; ${purchaseFormModel>/enableHeaderFields} &amp;&amp; ${purchaseFormModel>/lockFieldsFromOffer}}"
+										placeholder="{i18n>placeSelectVendor}" showValueHelp="true" type="Text" value="{purchaseFormModel>/HCP_LIFNR}"
+										description="{purchaseFormModel>/PROVIDER_DESC}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress"/>
+									<!--Material-->
+									<Label text="{i18n>textMaterial}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeMaterial}" selectedKey="{purchaseFormModel>/HCP_MATNR}" editable="true"
+										enabled="{= ${purchaseFormModel>/enabled} &amp;&amp; ${purchaseFormModel>/enableHeaderFields} &amp;&amp; ${purchaseFormModel>/lockFieldsFromOffer}}"
+										visible="true" required="true" width="auto" valueState="None" maxWidth="100%" selectionChange="onInputMaterialFormSelect"
+										items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false}}">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Tipo de Cereal-->
+									<Label text="{i18n>textComCerealType}" design="Standard" width="100%" required="{purchaseFormModel>/matCereal}" textAlign="Begin"
+										textDirection="Inherit" visible="{purchaseFormModel>/matCereal}"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectCerealType}" selectedKey="{purchaseFormModel>/HCP_TPCEREAL}" editable="true"
+										enabled="{purchaseFormModel>/enabled}" visible="{purchaseFormModel>/matCereal}" required="{purchaseFormModel>/matCereal}" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateCadence"
+										items="{ path: '/View_Material_Type_Price', length: 999999, sorter: { path: 'TPCEREAL',descending: false}}" name="HCP_TPCEREAL">
+										<custom:items>
+											<core:Item text="{TPCEREAL} - {DETPCEREAL}" enabled="true" key="{TPCEREAL}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Centro-->
+									<Label text="{i18n>textCenter}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectCenter}" selectedKey="{purchaseFormModel>/HCP_WERKS}" editable="true"
+										enabled="{= ${purchaseFormModel>/enabled} &amp;&amp; ${purchaseFormModel>/enableHeaderFields} &amp;&amp; ${purchaseFormModel>/lockFieldsFromOffer}}"
+										visible="true" required="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateInputWerks"
+										items="{ path: '/View_Center', length: 999999, sorter: { path: 'WERKS',descending: false}}">
+										<custom:items>
+											<core:Item text="{WERKS} - {NAME1}" enabled="true" key="{WERKS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${purchaseFormModel>/enableEditWerksValid} === true ? false : true}"/>
+									<MessageStrip text="Centro não permitido para o seu perfil" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${purchaseFormModel>/enableEditWerksValid} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<!--Quantidade Entrega(KG)-->
+									<Label text="{i18n>textDeliveryQuantity}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input placeholder="{i18n>placeEnterDeliveryQuantity}" name="HCP_MENGE_ENTR"
+										value="{ path: 'purchaseFormModel>/HCP_MENGE_ENTR' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{= ${purchaseFormModel>/enableHeaderFields} &amp;&amp; ${purchaseFormModel>/lockFieldsFromOffer}}"
+										required="true" visible="true" width="100%" valueHelpOnly="false" maxLength="0" change="_valideInputNumber"/>
+									<!--Periodo Entrega-->
+									<Label text="{i18n>textDateDelivery}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<DateRangeSelection placeholder="{i18n>placeSelectDeliveryPeriod}" visible="true" width="auto" enabled="true" displayFormat="medium"
+										dateValue="{purchaseFormModel>/HCP_DT_ENTR_INI}" change="_onDateCreateRangeSelectionChange"
+										secondDateValue="{purchaseFormModel>/HCP_DT_ENTR_FIM}"/>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{purchaseFormModel>/visibleDelivery}"/>
+									<MessageStrip text="{purchaseFormModel>/messageDelivery}" type="Warning" showIcon="true" showCloseButton="false"
+										visible="{purchaseFormModel>/visibleDelivery}" class="sapUiMediumMarginBottom"/>
+									<Label text="" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{purchaseFormModel>/visibleCadence}"/>
+									<MessageStrip text="{purchaseFormModel>/messageCadence}" type="Warning" showIcon="true" showCloseButton="false"
+										visible="{purchaseFormModel>/visibleCadence}" class="sapUiMediumMarginBottom"/>
+									<!--Comprador-->
+									<Label text="{i18n>textBuyer}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectBuyer}" selectedKey="{purchaseFormModel>/HCP_EKGRP}" editable="true"
+										enabled="{${purchaseFormModel>/lockFieldsFromOffer}}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm" items="{ path: '/View_Account_Groups', length: 999999, sorter: { path: 'EKGRP',descending: false}}">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Condição de Pagamento-->
+									<!-- //Pacote de melhorias 02/06/2022 adicionado filtro para condições de pagamento dinamico. 
+									<Label text="{i18n>textPaymentTerms}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placePaymentTerms}" selectedKey="{purchaseFormModel>/HCP_COND_PGTO}" editable="true"
+										enabled="true" visible="true" required="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm"
+										items="{ path: '/View_Payment_Conditions', length: 999999, filters: [ {path: 'MANDT', operator: 'EQ', value1: '110'} , {path: 'SPRAS', operator: 'EQ', value1: 'P'} ], sorter: { path: 'ZTERM',descending: false} }">
+										<custom:items>
+											<core:Item text="{ZTERM} - {TEXT1}" enabled="true" key="{ZTERM}"/>
+										</custom:items>
+									</custom:CustomComboBox>-->
+									<Label text="{i18n>paymentTerms}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPaymentTerm" visible="true" required="{purchaseFormModel>/yesPartner}" change="_validateForm" editable="true" enabled="{true}"
+										placeholder="{i18n>placeSelectPaymentTerms}" showValueHelp="true" type="Text" value="{purchaseFormModel>/HCP_COND_PGTO}"
+										description="{purchaseFormModel>/HCP_TEXT1}" valueHelpOnly="true" valueHelpRequest="_handlePaymentTermFilterPress"/>
+									<!--Incoterms-->
+									<Label text="{i18n>textIncoterms}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>textSeleectIncoterms}" selectedKey="{purchaseFormModel>/HCP_INCOTERMS}" editable="true"
+										enabled="{${purchaseFormModel>/lockFieldsFromOffer}}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_onInputIncotermsFormSelect"
+										items="{ path: '/Incoterms', filters: [ {path: 'MANDT', operator: 'EQ', value1: '110'}, {path: 'SPRAS', operator: 'EQ', value1: 'P'} ], sorter: { path: 'INCO1' } }">
+										<custom:items>
+											<core:Item text="{INCO1} - {BEZEI}" enabled="true" key="{INCO1}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Frete(TON)-->
+									<Label text="{i18n>textTonFreight}" design="Standard" width="100%" required="{purchaseFormModel>/yesFob}" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterTonFreight}" name="HCP_FRETE"
+										value="{ path: 'purchaseFormModel>/HCP_FRETE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="{purchaseFormModel>/yesFob}" visible="true" width="100%" valueHelpOnly="false"
+										maxLength="0" change="_valideInputNumber"/>
+									<!--Local de Retirada-->
+									<Label text="{i18n>textlLocalWithdrawal}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<TextArea placeholder="{i18n>placeEnterLocalWithdrawal}" rows="2" value="{purchaseFormModel>/HCP_LOC_RET}" liveChange="_validateForm"
+										cols="20" maxLength="255" wrapping="None" visible="true" enabled="true" required="false"/>
+									<!--Quantidade Pedido Depósito(KG)-->
+									<Label text="{i18n>textQntOrderDep}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterDeliveryQuantity}" name="HCP_MENGE_PED_DEP"
+										value="{ path: 'purchaseFormModel>/HCP_MENGE_PED_DEP' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="true" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										change="_onInputMengeDepFormSelect"/>
+									<Label text="" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{purchaseFormModel>/errorQntCadence}"/>
+									<MessageStrip text="{i18n>messageErrorQntCadence}" type="Error" showIcon="true" showCloseButton="false"
+										visible="{purchaseFormModel>/errorQntCadence}" class="sapUiMediumMarginBottom"/>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{purchaseFormModel>/errorQntOffer}"/>
+									<MessageStrip text="{i18n>messageNotQuantityoffer}" type="Error" showIcon="true" showCloseButton="false"
+										visible="{purchaseFormModel>/errorQntOffer}" class="sapUiMediumMarginBottom"/>
+									<!--Base-->
+									<Label text="{i18n>textBase}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{purchaseFormModel>/visibleBase}"/>
+									<custom:CustomComboBox placeholder="{i18n>textSelectBase}" selectedKey="{purchaseFormModel>/HCP_BASE_PRECIF}" editable="true"
+										enabled="{${purchaseFormModel>/lockFieldsFromOffer}}" visible="{purchaseFormModel>/visibleBase}" required="false" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_onInputBaseFormSelect"
+										items="{ path: '/View_Domain', filters: {path: 'DOMNAME', operator: 'EQ', value1: 'ZZBASE_PRECIF'} , sorter: { path: 'VALPOS' } }">
+										<custom:items>
+											<core:Item text="{DDTEXT}" enabled="true" key="{DOMVALUE_L}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Unidade-->
+									<Label text="{i18n>textUnity}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{purchaseFormModel>/yesDeposit}"/>
+									<custom:CustomComboBox placeholder="{i18n>textSelectUnity}" selectedKey="{purchaseFormModel>/HCP_UNID_PRECIF}" editable="true"
+										enabled="true" visible="{purchaseFormModel>/yesDeposit}" required="false" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_onInputUnityFormSelect"
+										items="{ path: '/View_Domain', filters: {path: 'DOMNAME', operator: 'EQ', value1: 'ZZUNID_PRECIF'} , sorter: { path: 'VALPOS' } }">
+										<custom:items>
+											<core:Item text="{DDTEXT}" enabled="true" key="{DOMVALUE_L}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Valor %-->
+									<Label text="Valor %" design="Standard" width="100%" required="{purchaseFormModel>/yesPercent}" textAlign="Begin" textDirection="Inherit"
+										visible="{purchaseFormModel>/yesPercent}"/>
+									<StepInput value="{purchaseFormModel>/HCP_VALOR_PERCENTUAL}" step="00.1" displayValuePrecision="1" min="0.1" max="99.9" width="120px"
+										visible="{purchaseFormModel>/yesPercent}" change="_validateForm"/>
+									<!--Valor Montante-->
+									<Label text="{i18n>textAmount}" design="Standard" width="100%" required="{purchaseFormModel>/noPercent}" textAlign="Begin"
+										textDirection="Inherit" visible="{purchaseFormModel>/noPercent}"/>
+									<Input placeholder="{i18n>textEnterAmount}" name="HCP_VALOR_PRECIF"
+										value="{ path: 'purchaseFormModel>/HCP_VALOR_PRECIF' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="{purchaseFormModel>/noPercent}" width="100%" valueHelpOnly="false"
+										maxLength="0" liveChange="_validateAmountField" change="_validateAmountField"/>
+									<!--Observações de Preço-->
+									<Label text="{i18n>textPriceObs}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<TextArea placeholder="{i18n>placeEnterPriceObs}" rows="2" value="{purchaseFormModel>/HCP_OBS_PRECO}" liveChange="_validateForm" cols="20"
+										maxLength="255" wrapping="None" visible="true" enabled="true" required="false"/>
+									<!--Cadência(KG)-->
+									<Label text="{i18n>textCadence}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterCadence}" name="HCP_CADENCIA"
+										value="{ path: 'purchaseFormModel>/HCP_CADENCIA' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber" change="_valideInputNumber"/>
+									<!--Pedido Finalizado-->
+									<Label text="{i18n>textOrderCompleted}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<CheckBox selected="{purchaseFormModel>/HCP_PEDIDO_FIM}" visible="true" editable="true" width="auto" textDirection="Inherit" text=""
+										enabled="true" useEntireWidth="true" wrapping="false" select="_validateForm"/>
+									<!--Aprovador-->
+									<Label text="{i18n>textApprover}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectApprover}" selectedKey="{purchaseFormModel>/HCP_BEDNR}" editable="true" enabled="true"
+										visible="true" required="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm"
+										items="{ path: 'purchaseFormModel>/tableApprover', length: 999999}">
+										<custom:items>
+											<core:Item text="{path:'purchaseFormModel>ID_USER'} - {path:'purchaseFormModel>NAME_TEXT'}" enabled="true"
+												key="{path:'purchaseFormModel>ID_USER'}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Troca de NF Removido Incidente: 8000056673
+									<Label text="{i18n>textnNfExchange}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true" visible="true"/>
+									<SegmentedButton selectedKey="{purchaseFormModel>/HCP_IDTR_NF}" width="100%" selectionChange="_onInputNfExchangeFormSelect">
+										<items>
+											<SegmentedButtonItem text="{i18n>textYes}" key="S"/>
+											<SegmentedButtonItem text="{i18n>textNo}" key="N"/>
+										</items>
+									</SegmentedButton>
+									-->
+									<!--Centro Destino Removido Incidente: 8000056673
+									<Label text="{i18n>textDestinationCenter}" design="Standard" width="100%" required="{purchaseFormModel>/yesNfExchange}" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectDestinationCenter}" selectedKey="{purchaseFormModel>/HCP_IDLC_NF}" editable="true"
+										enabled="true" visible="true" required="{purchaseFormModel>/yesNfExchange}" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm" items="{ path: '/View_Center', length: 999999, sorter: { path: 'WERKS',descending: false}}">
+										<custom:items>
+											<core:Item text="{WERKS} - {NAME1}" enabled="true" key="{WERKS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									-->
+									<!--Cidade Embarque-->
+									<Label text="{i18n>textCityShipment}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<TextArea placeholder="{i18n>placeSelectCityShipment}" rows="2" value="{purchaseFormModel>/HCP_CITY_EMB}" liveChange="_validateForm"
+										cols="20" maxLength="255" wrapping="None" visible="true" enabled="true" required="true"/>
+									<!--Ref. Local Embarque-->
+									<Label text="{i18n>testRefLocalShipment}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<TextArea placeholder="{i18n>placeEnterRefLocalShipment}" rows="2" value="{purchaseFormModel>/HCP_REFER_EMB}" liveChange="_validateForm"
+										cols="20" maxLength="255" wrapping="None" visible="true" enabled="true" required="false"/>
+									<!--Quantidade KM Sem Pavimentação-->
+									<Label text="{i18n>textKmUnpaved}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterKmUnpaved}" name="HCP_KMSPAVIM"
+										value="{ path: 'purchaseFormModel>/HCP_KMSPAVIM' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber" change="_valideInputNumber"/>
+									<!--Dias Embarque-->
+									<Label text="{i18n>textDaysBoarding}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true"
+										visible="true"/>
+									<MultiComboBox placeholder="{i18n>textSelectDaysBoarding}" required="true" editable="true"
+										selectedKeys="{purchaseFormModel>/daysBoardingInputs}" enabled="true" valueState="None" selectionChange="_validateForm">
+										<items>
+											<core:Item text="{i18n>textMonday}" enabled="true" key="HCP_MONDAY"/>
+											<core:Item text="{i18n>textTuesday}" enabled="true" key="HCP_TUESDAY"/>
+											<core:Item text="{i18n>textWednesday}" enabled="true" key="HCP_WEDNESDAY"/>
+											<core:Item text="{i18n>textThursday}" enabled="true" key="HCP_THURSDAY"/>
+											<core:Item text="{i18n>textFriday}" enabled="true" key="HCP_FRIDAY"/>
+											<core:Item text="{i18n>textSaturday}" enabled="true" key="HCP_SATURDAY"/>
+											<core:Item text="{i18n>textSunday}" enabled="true" key="HCP_SUNDAY"/>
+										</items>
+									</MultiComboBox>
+									<!--Horário Embarque-->
+									<Label text="{i18n>textShipmentSchedule}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input placeholder="{i18n>textEnterShipmentSchedule}" value="{purchaseFormModel>/HCP_HORAEMB}" type="Tel" showValueHelp="false"
+										enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0" liveChange="_validateForm"
+										change="_validateForm"/>
+									<!--Embarque com chuva-->
+									<Label text="{i18n>textEmbarkOnRain}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true"
+										visible="true"/>
+									<SegmentedButton selectedKey="{purchaseFormModel>/HCP_EMBCHUVA}" width="100%" selectionChange="_validateForm">
+										<items>
+											<SegmentedButtonItem text="{i18n>textYes}" key="S"/>
+											<SegmentedButtonItem text="{i18n>textNo}" key="N"/>
+										</items>
+									</SegmentedButton>
+									<!--Capacidade Embarque Dia(KG)-->
+									<Label text="{i18n>textShipmentCapacityDay}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input placeholder="{i18n>textEnterShipmentCapacityDay}" name="HCP_CAPEMBDIA"
+										value="{ path: 'purchaseFormModel>/HCP_CAPEMBDIA' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber" change="_valideInputNumber"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

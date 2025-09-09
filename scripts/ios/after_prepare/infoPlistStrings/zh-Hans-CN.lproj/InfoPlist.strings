@@ -1,0 +1,24 @@
+/* Message asking permission to access the camera. */
+"NSCameraUsageDescription" = "这将允许拍照或扫描二维码。";
+
+/* Message asking permission to access the microphone */
+"NSMicrophoneUsageDescription" = "这将允许访问麦克风。";
+
+/* Message asking permission to access the calendar */
+"NSCalendarsUsageDescription" = "这将允许访问日历。";
+
+/* Message asking permission to access photo library */
+"NSPhotoLibraryUsageDescription" = "这将允许访问图库。";
+
+/* Message asking permission to access contacts */
+"NSContactsUsageDescription" = "这将允许访问联系人。";
+
+/* Message asking permission to access location */
+"NSLocationWhenInUseUsageDescription" = "这将允许在使用时访问所处位置。";
+
+/* Message asking permission to access location at any time */
+"NSLocationAlwaysUsageDescription" = "这将允许随时访问所处位置。";
+
+/* Message asking permission to access Face ID */
+"NSFaceIDUsageDescription" = "这将允许访问脸部标识进行验证。";
+

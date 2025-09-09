@@ -1,0 +1,58 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Dialog showHeader="true" title="{commoditiesFormModel>/textCommodities}" type="Standard">
+		<content>
+			<Panel width="auto">
+				<form:SimpleForm class="simpleFormCommerc" editable="true" maxContainerCols="1">
+					<form:content>
+						<Label text="{i18n>textDestinationCenter}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="true"/>
+						<custom:CustomComboBox placeholder="{i18n>placeSelectDestinationCenter}" selectedKey="{commoditiesFormModel>/HCP_WERKS}" editable="true"
+							enabled="{commoditiesFormModel>/enabledCenter}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+							selectionChange="_validateFormCommodities"
+							items="{ path: 'commoditiesFormModel>/ItemWerks', length: 999999 , sorter : { path : 'commoditiesFormModel>WERKS'}}">
+							<custom:items>
+								<core:Item text="{path:'commoditiesFormModel>WERKS'} - {path:'commoditiesFormModel>NAME1'}" key="{path:'commoditiesFormModel>WERKS'}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						<Label text="{i18n>textLocalOrigin}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox placeholder="{i18n>placeLocalOrigin}" selectedKey="{commoditiesFormModel>/HCP_LOCAL}" editable="true" enabled="true"
+							visible="true" required="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateFormCommodities"
+							items="{ path: 'commoditiesFormModel>/ItemLocal', length: 999999 , sorter : { path : 'commoditiesFormModel>NAME1' }}">
+							<custom:items>
+								<core:Item
+									text="{= parseFloat(${path:'commoditiesFormModel>LIFNR'}) } - {path:'commoditiesFormModel>NAME1'} - {path:'commoditiesFormModel>STCDX'} - {path:'commoditiesFormModel>REGIO'} - {path:'commoditiesFormModel>ORT01'} "
+									enabled="true" key="{path:'commoditiesFormModel>LIFNR'}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						
+						<Label text="{i18n>textQuantityTotal}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="{commoditiesFormModel>/enabledOtherVol}"/>
+						<Input
+							value="{ path: 'commoditiesFormModel>/HCP_VOLUME' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+							type="Tel" showValueHelp="false" enabled="false" visible="{commoditiesFormModel>/enabledOtherVol}" width="100%" valueHelpOnly="false"
+							maxLength="0"/>
+						<Label text="{i18n>textQuantityCommercialized}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="{commoditiesFormModel>/enabledOtherVol}"/>
+						<Input
+							value="{ path: 'commoditiesFormModel>/HCP_VOLUME_COMMERCIALIZED' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+							type="Tel" showValueHelp="false" enabled="false" visible="{commoditiesFormModel>/enabledOtherVol}" width="100%" valueHelpOnly="false"
+							maxLength="0"/>
+						<Label text="{i18n>textQuantityForCommercialization}" design="Standard" width="100%" required="true" textAlign="Begin"
+							textDirection="Inherit" visible="true"/>
+						<Input placeholder="{i18n>placeQuantity}" name="HCP_MENGE"
+							value="{ path: 'commoditiesFormModel>/HCP_MENGE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+							type="Tel" showValueHelp="false" enabled="true" required="true" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+							liveChange="_valideInputNumber" change="_valideInputNumber"/>
+					</form:content>
+				</form:SimpleForm>
+			</Panel>
+		</content>
+		<buttons>
+			<Button text="{i18n>buttonCancel}" press="_onCancelComPress" type="Transparent" iconFirst="true" width="auto" enabled="true" visible="true"
+				iconDensityAware="false"/>
+			<Button text="{i18n>buttonConfirm}" press="_onConfirComPress" type="Emphasized" iconFirst="true" width="auto"
+				enabled="{commoditiesFormModel>/enabledConfir}" visible="true" iconDensityAware="false"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,67 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ResponsivePopover title="Filtro Contato Simplificado" placement="Bottom">
+		<content>
+			<form:Form width="100%" editable="true" visible="true">
+				<form:title/>
+				<form:formContainers>
+					<form:FormContainer visible="true">
+						<form:formElements>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="CNPJ/CPF" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<Input placeholder="{filters>/HCP_STCD1}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto"
+										valueHelpOnly="false" maxLength="0" value="{filters>/HCP_STCD1}"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="{i18n>textProviderName}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<Input placeholder="{filters>/HCP_PARTNER_NAME}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto"
+										valueHelpOnly="false" maxLength="0" value="{filters>/HCP_PARTNER_NAME}"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="{i18n>labelbuyerGroup}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<Input placeholder="{filters>/HCP_EKGRP}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto"
+										valueHelpOnly="false" maxLength="0" value="{filters>/HCP_EKGRP}"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Ranking" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<custom:CustomComboBox placeholder="Ranking" selectedKey="{filters>/HCP_RANK}" editable="true" enabled="true"
+									visible="true" width="auto" valueState="None" maxWidth="100%">
+									<custom:items>
+										<core:Item text="" enabled="true" key=""/>
+										<core:Item text="Bronze" enabled="true" key="1"/>
+										<core:Item text="{i18n>textSilver}" enabled="true" key="2"/>
+										<core:Item text="{i18n>textGold}" enabled="true" key="3"/>
+										<core:Item text="{i18n>textDiamond}" enabled="true" key="4"/>
+									</custom:items>
+								</custom:CustomComboBox>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:fields>
+									<Button text="{i18n>btnsearch}" type="Emphasized" press="submitFilterList"/>
+								</form:fields>
+							</form:FormElement>
+						</form:formElements>
+						<form:title/>
+					</form:FormContainer>
+				</form:formContainers>
+				<form:layout>
+					<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+				</form:layout>
+			</form:Form>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

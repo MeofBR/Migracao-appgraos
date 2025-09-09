@@ -1,0 +1,142 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.offerMap.FilterOfferMap"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancelPress"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="{i18n>textConsultOfferMap}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+					<Button text="Consultar" type="Emphasized" iconFirst="true" width="auto" enabled="{filterOfferMapFormModel>/enableConsult}" visible="true"
+						iconDensityAware="false" press="onConsultPress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="{i18n>textRegister}" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="{i18n>textRegister}" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="editableForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4"
+								id="newEntitySimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="{i18n>textCreatePeriod}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<DateRangeSelection id="DT_CREATE" placeholder="{i18n>placeSelectCreatePeriod}" visible="true" width="auto"
+										change="_onDateCreateRangeSelectionChange" enabled="true" displayFormat="medium"/>
+									<Label text="{i18n>textDeliveryPeriod}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<DateRangeSelection id="DT_DELIVERY" placeholder="{i18n>placeSelectDeliveryPeriod}" visible="true" width="auto"
+										change="_onDateDeliveryRangeSelectionChange" enabled="true" displayFormat="medium"/>
+									<Label text="{i18n>textPurchGroup}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectPurchGroup}" selectedKey="{filterOfferMapFormModel>/HCP_EKGRP}" editable="true"
+										enabled="true" visible="true" required="false" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm"
+										items="{ path: '/View_Account_Groups', length: 999999, sorter: { path: 'EKGRP',descending: false}}">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textVendorProspect}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="true"/>
+									<SegmentedButton selectedKey="{filterOfferMapFormModel>/HCP_PARTNER_TYPE}" width="100%" selectionChange="_onInputPartnerFormSelect">
+										<items>
+											<SegmentedButtonItem text="{i18n>textVendor}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textProspect}" key="2"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textVendor}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPartner" visible="{filterOfferMapFormModel>/yesPartner}" required="false" change="_validateForm" editable="true"
+										enabled="true" placeholder="{i18n>placeSelectVendor}" showValueHelp="true" type="Text" value="{filterOfferMapFormModel>/HCP_PARTNER}"
+										description="{filterOfferMapFormModel>/PROVIDER_DESC}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress"/>
+									<Label text="{i18n>textProspect}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="yesProspect" placeholder="{i18n>placeProspect}" selectedKey="{filterOfferMapFormModel>/HCP_PARTNER}"
+										editable="true" enabled="true" visible="{filterOfferMapFormModel>/yesProspect}" required="false" width="auto" valueState="None"
+										maxWidth="100%"
+										items="{ path: '/Prospects', length: 999999, filters: [{path: 'HCP_STATUS', operator: 'EQ', value1: '1'}, {path: 'HCP_STATUS', operator: 'EQ', value1: '2'}], sorter: { path: 'NAME1',descending: false} }"
+										selectionChange="_onInputProspect">
+										<custom:items>
+											<core:Item text="{HCP_PROSP_ID} - {NAME1} {NAME2}" enabled="true" key="{HCP_PROSP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textIncoterms}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true" visible="true"/>
+									<SegmentedButton selectedKey="{filterOfferMapFormModel>/HCP_INCOTERM}" width="100%">
+										<items>
+											<SegmentedButtonItem text="{i18n>textCIF}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textFOB}" key="2"/>
+											<SegmentedButtonItem text="{i18n>textCPT}" key="3"/>
+											<SegmentedButtonItem text="{i18n>textAll}" key="4"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textDestinationCenter}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectDestinationCenter}" selectedKey="{filterOfferMapFormModel>/HCP_WERKS}" editable="true"
+										enabled="true" visible="true" required="false" width="auto" valueState="None" maxWidth="100%"
+										items="{ path: '/View_Center', length: 999999, sorter: { path: 'WERKS',descending: false}}">
+										<custom:items>
+											<core:Item text="{WERKS}- {NAME1}" enabled="true" key="{WERKS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textModality}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true" visible="true"/>
+									<SegmentedButton selectedKey="{filterOfferMapFormModel>/HCP_MODALITY}" width="100%">
+										<items>
+											<SegmentedButtonItem text="{i18n>textFixed}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textDeposit}" key="2"/>
+											<SegmentedButtonItem text="{i18n>textAll}" key="3"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textMaterial}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeMaterial}" selectedKey="{filterOfferMapFormModel>/HCP_MATNR}" editable="true" enabled="true"
+										visible="true" required="false" width="auto" valueState="None" maxWidth="100%" items="{ path: '/View_Material', length: 999999}">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textStatus}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectStates}" selectedKey="{filterOfferMapFormModel>/HCP_STATES_OFFER}" editable="true"
+										enabled="true" visible="true" required="true" width="auto" valueState="None" maxWidth="100%" change="_validateForm"
+										selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{i18n>textOpened}" enabled="true" key="1"/>
+											<core:Item text="{i18n>textPartiallyRequested}" enabled="true" key="2"/>
+											<core:Item text="{i18n>textFinished}" enabled="true" key="3"/>
+											<core:Item text="{i18n>textCanceled}" enabled="true" key="4"/>
+											<core:Item text="{i18n>textError}" enabled="true" key="5"/>
+											<core:Item text="{i18n>textReactivate}" enabled="true" key="6"/>
+											<core:Item text="{i18n>textAll}" enabled="true" key="7"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textUser}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeUser}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="0" value="{filterOfferMapFormModel>/HCP_CREATED_BY}"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+		<!--<uxap:footer>-->
+		<!--	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">-->
+		<!--		<content>-->
+		<!--			<Button text="Voltar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"-->
+		<!--				press="onCancelPress"/>-->
+		<!--			<ToolbarSpacer width=""/>-->
+		<!--			<Button text="Cadastrar" type="Emphasized" iconFirst="true" width="auto" enabled="{visitFormModel>/enableConfirm}" visible="true"-->
+		<!--				iconDensityAware="false" press="onConfirmPress"/>-->
+		<!--		</content>-->
+		<!--	</OverflowToolbar>-->
+		<!--</uxap:footer>-->
+	</uxap:ObjectPageLayout>
+</mvc:View>

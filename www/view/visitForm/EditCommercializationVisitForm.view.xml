@@ -1,0 +1,89 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.visitForm.EditCommercializationVisitForm" xmlns:uxap="sap.uxap"
+	xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="Voltar" press="navBack"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="{i18n>textCommercialization}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+						press="onSavePress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Cadastro" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Cadastro" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="simpleForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4"
+								id="newEntitySimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048">
+								<form:content>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<form:SimpleForm class="simpleForm" width="100%" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="0"
+										emptySpanXL="0" id="ufPlantingDataSimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout"
+										maxContainerCols="2" minWidth="2048">
+										<form:content></form:content>
+									</form:SimpleForm>
+									<Label text="{i18n>textIDCommercialization}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input type="Text" value="{editCommercializationVisitModel>/HCP_COMMERCIALIZATION_ID}" showValueHelp="false" required="false"
+										enabled="False" visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textVendor}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input type="Text" value="{editCommercializationVisitModel>/HCP_PARTNER}" showValueHelp="false" required="false" enabled="False"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textTypeCommercialization}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input type="Text" value="{editCommercializationVisitModel>/HCP_TYPE_COMMERCIALIZATION}" showValueHelp="false" required="false"
+										enabled="False" visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textDateCreation}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input type="Text" value="{editCommercializationVisitModel>/HCP_CREATED_AT}" showValueHelp="false" required="false" enabled="False"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textUser}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input type="Text" value="{editCommercializationVisitModel>/HCP_CREATED_BY}" showValueHelp="false" required="false" enabled="False"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textHarvest}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input type="Text" value="{editCommercializationVisitModel>/HCP_CROP_ID}" showValueHelp="false" required="false" enabled="False"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textCultureType}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input type="Text" value="{editCommercializationVisitModel>/HCP_CULTURE_TYPE} - {editCommercializationVisitModel>/providerName}" showValueHelp="false" required="false" enabled="False"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textTotProductivity}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input type="Text" value="{path: 'editCommercializationVisitModel>/HCP_PRODUCTIVITY_TOTAL', type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}" showValueHelp="false" required="false" enabled="False"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textVolumeRemaining}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input type="Text" value="{path: 'editCommercializationVisitModel>/HCP_NEW_CROP', type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}" showValueHelp="false" required="false" enabled="False"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									
+									<Label text="{i18n>textCommercializationVolume}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input type="Text" value="{editCommercializationVisitModel>/HCP_COMMERCIALIZED_CROP} %" showValueHelp="false" required="false" enabled="False"
+									visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									
+									<Label text="{i18n>textVisitReport}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<TextArea rows="3" placeholder="{i18n>textDescriptive}" visible="true" value="{editCommercializationVisitModel>/HCP_DESCRIPTION}" cols="20"
+										maxLength="5000" wrapping="None" enabled="true" required="true" liveChange="_validateForm"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

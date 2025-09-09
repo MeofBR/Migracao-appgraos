@@ -1,0 +1,541 @@
+<mvc:View controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.crop.MultiCommercialization" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core" xmlns="sap.uxap" xmlns:m="sap.m" xmlns:f="sap.ui.layout.form" xmlns:ui="sap.ui.table" xmlns:l="sap.ui.layout"
+	xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" alwaysShowContentHeader="true" preserveHeaderStateOnScroll="true"
+		headerContentPinnable="true" isChildPage="true" enableLazyLoading="false">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle class="displayArrow">
+				<breadcrumbs>
+					<m:OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="navBack"/>
+				</breadcrumbs>
+				<expandedHeading>
+					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<m:Title text="{i18n>titleMultiFollowUp}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</m:FlexBox>
+				</expandedHeading>
+				<snappedHeading></snappedHeading>
+				<expandedContent>
+					<m:VBox>
+						<m:Title text="Estado: {MultiCommercializationModel>/oURLparameter/HCP_STATE}" wrapping="true"/>
+						<m:Title text="Material: {MultiCommercializationModel>/oURLparameter/HCP_MATERIAL_COD_NAME}" wrapping="true"/>
+					</m:VBox>
+				</expandedContent>
+				<snappedContent></snappedContent>
+				<navigationActions>
+					<m:Button text="Salvar" type="Emphasized" iconFirst="true" width="auto" enabled="{MultiCommercializationModel>/enableSave}" visible="true"
+						iconDensityAware="false" press="onSave"/>
+				</navigationActions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<sections>
+			<ObjectPageSection showTitle="true" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>titleProduction}" mode="Expanded">
+						<blocks>
+							<m:VBox>
+								<ui:Table rows="{MultiCommercializationModel>/oWindowDataRegion}" visibleRowCount="1" selectionMode="None" enableColumnReordering="false">
+									<ui:columns>
+										<ui:Column resizable="false" width="150px">
+											<ui:label>
+												<m:Text text="{i18n>lblRegion}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_BEZEI}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false" width="230px">
+											<ui:label>
+												<m:Text text="{i18n>lblStartFinishCrop}"/>
+											</ui:label>
+											<ui:template>
+												<m:DateRangeSelection dateValue="{MultiCommercializationModel>HCP_START_CROP}" secondDateValue="{MultiCommercializationModel>HCP_END_CROP}"
+													displayFormat="dd/MM/YYYY" editable="false"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false" width="230px">
+											<ui:label>
+												<m:Text text="{i18n>lblStartFinish}"/>
+											</ui:label>
+											<ui:template>
+												<m:DateRangeSelection dateValue="{MultiCommercializationModel>HCP_START_HRVST}"
+													secondDateValue="{MultiCommercializationModel>HCP_END_HRVST}" displayFormat="dd/MM/YYYY" editable="false"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblPlantingArea}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{ path: 'MultiCommercializationModel>HCP_PLANTING_AREA', formatter: '.formatter.formatterThousandHouse' }"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblProductivity}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{ path: 'MultiCommercializationModel>HCP_PRODUCTIVITY', formatter: '.formatter.formatterThousandHouse' }"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblCommercialization}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_COMMERCIALIZATION}%"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblProductionT}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{ path: 'MultiCommercializationModel>HCP_TOTAL_PRODUCTION', formatter: '.formatter.formatterThousandHouse' }"/>
+											</ui:template>
+										</ui:Column>
+									</ui:columns>
+								</ui:Table>
+								<m:Text text=""/>
+								<ui:Table rows="{MultiCommercializationModel>/oWindowTableData}" visibleRowCount="{MultiCommercializationModel>/oWindowTableDataLength}"
+									enableColumnReordering="false" selectionMode="None">
+									<ui:columns>
+										<ui:Column resizable="false" width="150px">
+											<ui:label>
+												<m:Text text="{i18n>lblRegion}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_BEZEI}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false" width="230px">
+											<ui:label>
+												<m:Text text="{i18n>lblStartFinishCrop}"/>
+											</ui:label>
+											<ui:template>
+												<m:DateRangeSelection dateValue="{MultiCommercializationModel>HCP_START_CROP}" secondDateValue="{MultiCommercializationModel>HCP_END_CROP}"
+													displayFormat="dd/MM/YYYY" placeholder="{i18n>phStartFinishCrop}" change="updateCenterRegion" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false" width="230px">
+											<ui:label>
+												<m:Text text="{i18n>lblStartFinish}"/>
+											</ui:label>
+											<ui:template>
+												<m:DateRangeSelection dateValue="{MultiCommercializationModel>HCP_START_HRVST}" 
+													secondDateValue="{MultiCommercializationModel>HCP_END_HRVST}" displayFormat="dd/MM/YYYY" placeholder="{i18n>phStartFinish} "
+													change="updateCenterRegion" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblPlantingArea}"/>
+											</ui:label>
+											<ui:template>
+												<!--<m:Input value="{MultiCommercializationModel>HCP_PLANTING_AREA}" liveChange="validateValueCamp($event,'calculateProdutivityTotal')"/>-->
+												<m:Input
+													  value="{ path: 'MultiCommercializationModel>HCP_PLANTING_AREA', 
+													           type: 'sap.ui.model.type.Float',
+													           formatOptions: { groupingEnabled: true, groupingSeparator: ' ', decimalSeparator: '.', maxFractionDigits: 2 }
+													         }"
+													  liveChange="validateValueCamp($event,'calculateProdutivityTotal')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													  
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblProductivity}"/>
+											</ui:label>
+											<ui:template>
+												<!--<m:Input value="{MultiCommercializationModel>HCP_PRODUCTIVITY}" liveChange="validateValueCamp($event,'calculateProdutivityTotal')"/>-->
+												<m:Input
+													  value="{ path: 'MultiCommercializationModel>HCP_PRODUCTIVITY', 
+													           type: 'sap.ui.model.type.Float',
+													           formatOptions: { groupingEnabled: true, groupingSeparator: ' ', decimalSeparator: '.', maxFractionDigits: 2 }
+													         }"
+													  liveChange="validateValueCamp($event,'calculateProdutivityTotal')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblCommercialization}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="commercialization" value="{MultiCommercializationModel>HCP_COMMERCIALIZATION}" editable="{= ${MultiCommercializationModel>HCP_TOTAL_PRODUCTION} > 0 ? true : false}"
+														liveChange="validateValueCamp($event,'verifyPercentage')"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblProductionT}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{ path: 'MultiCommercializationModel>HCP_TOTAL_PRODUCTION', formatter: '.formatter.formatterThousandHouse' }"/>
+											</ui:template>
+										</ui:Column>
+									</ui:columns>
+								</ui:Table>
+							</m:VBox>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection showTitle="true" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>titleCropCondition}" mode="Expanded">
+						<blocks>
+							<m:VBox>
+								<ui:Table rows="{MultiCommercializationModel>/oWindowDataRegion}" visibleRowCount="1" selectionMode="None" enableColumnReordering="false">
+									<ui:columns>
+										<ui:Column resizable="false" width="150px">
+											<ui:label>
+												<m:Text text="{i18n>lblRegion}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_BEZEI}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblRainfallVolume}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{ path: 'MultiCommercializationModel>HCP_RAINFALL_LEVEL', formatter: '.formatter.formatterThousandHouse' }"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblCropCondition}"/>
+											</ui:label>
+											<ui:template>
+												<m:Select
+													items="{ path: '/Crop_Conditions', length: 999999 ,filters: [{path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}] }"
+													placeholder="{i18n>phSelectCropCondition}" width="100%" selectedKey="{MultiCommercializationModel>HCP_CROP_CONDITION}" change="validateForm"
+													forceSelection="false" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}">
+													<m:items>
+														<core:Item text="{HCP_TEXT}" key="{HCP_COND_ID}"/>
+													</m:items>
+												</m:Select>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblTechnologyLevel}"/>
+											</ui:label>
+											<ui:template>
+												<m:Select
+													items="{ path: '/Crop_Tech_Level', length: 999999 ,filters: [{path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'},{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}] }"
+													placeholder="{i18n>phTechnologyLevel}" width="100%" selectedKey="{MultiCommercializationModel>HCP_TECH_LEVEL}" change="validateForm"
+													forceSelection="false" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}">
+													<m:items>
+														<core:Item text="{HCP_TEXT}" key="{HCP_TECH_ID}"/>
+													</m:items>
+												</m:Select>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblProductionCost}"/>
+											</ui:label>
+											<ui:template>
+												<m:FormattedText htmlText="{ path: 'MultiCommercializationModel>HCP_PROD_COST', formatter: '.formatter.formatterThousandHouse' }"/>
+											</ui:template>
+										</ui:Column>
+									</ui:columns>
+								</ui:Table>
+								<m:Text text=""/>
+								<ui:Table rows="{MultiCommercializationModel>/oWindowTableData}" visibleRowCount="{MultiCommercializationModel>/oWindowTableDataLength}"
+									enableColumnReordering="false" selectionMode="None">
+									<ui:columns>
+										<ui:Column resizable="false" width="150px">
+											<ui:label>
+												<m:Text text="{i18n>lblRegion}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_BEZEI}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblRainfallVolume}"/>
+											</ui:label>
+											<ui:template>
+												<!--<m:Input value="{MultiCommercializationModel>HCP_RAINFALL_LEVEL}" liveChange="validateValueCamp($event,'verifyValueCamp')"/>-->
+												<m:Input
+													  value="{ path: 'MultiCommercializationModel>HCP_RAINFALL_LEVEL', 
+													           type: 'sap.ui.model.type.Float',
+													           formatOptions: { groupingEnabled: true, groupingSeparator: ' ', decimalSeparator: '.', maxFractionDigits: 2 }
+													         }"
+													  liveChange="validateValueCamp($event,'verifyValueCamp')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblCropCondition}"/>
+											</ui:label>
+											<ui:template>
+												<m:Select
+													items="{ path: '/Crop_Conditions', length: 999999 ,filters: [{path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}] }"
+													placeholder="{i18n>phSelectCropCondition}" width="100%" selectedKey="{MultiCommercializationModel>HCP_CROP_CONDITION}" change="validateForm"
+													forceSelection="false" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}">
+													<m:items>
+														<core:Item text="{HCP_TEXT}" enabled="true" key="{HCP_COND_ID}"/>
+													</m:items>
+												</m:Select>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblTechnologyLevel}"/>
+											</ui:label>
+											<ui:template>
+												<m:Select
+													items="{ path: '/Crop_Tech_Level', length: 999999 ,filters: [{path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'},{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}] }"
+													placeholder="{i18n>phTechnologyLevel}" width="100%" selectedKey="{MultiCommercializationModel>HCP_TECH_LEVEL}" change="validateForm"
+													forceSelection="false" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}">
+													<m:items>
+														<core:Item text="{HCP_TEXT}" enabled="true" key="{HCP_TECH_ID}"/>
+													</m:items>
+												</m:Select>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblProductionCost}"/>
+											</ui:label>
+											<ui:template>
+												<!--<m:Input value="{MultiCommercializationModel>HCP_PROD_COST}" liveChange="validateValueCamp($event,'verifyValueCamp')"/>-->
+												<m:Input
+													  value="{ path: 'MultiCommercializationModel>HCP_PROD_COST', 
+													           type: 'sap.ui.model.type.Float',
+													           formatOptions: { groupingEnabled: true, groupingSeparator: ' ', decimalSeparator: '.', maxFractionDigits: 2 }
+													         }"
+													  liveChange="validateValueCamp($event,'verifyValueCamp')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+											</ui:template>
+										</ui:Column>
+									</ui:columns>
+								</ui:Table>
+							</m:VBox>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="{i18n>titlePhenologicalStages}" mode="Expanded">
+						<blocks>
+							<m:VBox>
+								<ui:Table rows="{MultiCommercializationModel>/oWindowDataRegion}" visibleRowCount="1" selectionMode="None" enableColumnReordering="false">
+									<ui:columns>
+										<ui:Column resizable="false" width="150px">
+											<ui:label>
+												<m:Text text="{i18n>lblRegion}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_BEZEI}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblPlantingT}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_PLANTING_STAGE}%"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblGermination}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_GERMINATION_STAGE}%"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblVegetative}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_VEG_DEV_STAGE}%"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblFlowering}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_FLOWERING_STAGE}%"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblGrainFormation}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_GRAIN_FORMATION_STAGE}%"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblfillGrains}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_GRAIN_FILLING_STAGE}%"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblMaturation}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_MATURATION_STAGE}%"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblTotal}"/>
+											</ui:label>
+											<ui:template>
+												<m:FormattedText
+													htmlText="{ parts: [ 'MultiCommercializationModel>HCP_TOTAL_PERCENTAGE', 'MultiCommercializationModel>HCP_HARVEST_STAGE', 'MultiCommercializationModel>HCP_MATURATION_STAGE' ], formatter: '.formatter.formatterExtraPercentage'}"
+													maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblHarvest}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_HARVEST_STAGE}%"/>
+											</ui:template>
+										</ui:Column>
+									</ui:columns>
+								</ui:Table>
+								<m:Text text=""/>
+								<ui:Table rows="{MultiCommercializationModel>/oWindowTableData}" visibleRowCount="{MultiCommercializationModel>/oWindowTableDataLength}"
+									enableColumnReordering="false" selectionMode="None">
+									<ui:columns>
+										<ui:Column resizable="false" width="150px">
+											<ui:label>
+												<m:Text text="{i18n>lblRegion}"/>
+											</ui:label>
+											<ui:template>
+												<m:Text text="{MultiCommercializationModel>HCP_BEZEI}"/>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblPlantingT}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="plantingStage" value="{MultiCommercializationModel>HCP_PLANTING_STAGE}"
+														liveChange="validateValueCamp($event,'verifyPercentage')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblGermination}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="germinationStage" value="{MultiCommercializationModel>HCP_GERMINATION_STAGE}"
+														liveChange="validateValueCamp($event,'verifyPercentage')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblVegetative}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="vegDevStage" value="{MultiCommercializationModel>HCP_VEG_DEV_STAGE}" liveChange="validateValueCamp($event,'verifyPercentage')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblFlowering}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="floweringStage" value="{MultiCommercializationModel>HCP_FLOWERING_STAGE}"
+														liveChange="validateValueCamp($event,'verifyPercentage')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblGrainFormation}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="grainFormationStage" value="{MultiCommercializationModel>HCP_GRAIN_FORMATION_STAGE}"
+														liveChange="validateValueCamp($event,'verifyPercentage')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblfillGrains}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="grainFillingStage" value="{MultiCommercializationModel>HCP_GRAIN_FILLING_STAGE}"
+														liveChange="validateValueCamp($event,'verifyPercentage')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblMaturation}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="maturationStage" value="{MultiCommercializationModel>HCP_MATURATION_STAGE}"
+														liveChange="validateValueCamp($event,'verifyPercentage')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblTotal}"/>
+											</ui:label>
+											<ui:template>
+												<m:FormattedText
+													htmlText="{ parts: [ 'MultiCommercializationModel>HCP_TOTAL_PERCENTAGE', 'MultiCommercializationModel>HCP_HARVEST_STAGE', 'MultiCommercializationModel>HCP_MATURATION_STAGE' ], formatter: '.formatter.formatterExtraPercentage'}"
+													maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" />
+											</ui:template>
+										</ui:Column>
+										<ui:Column resizable="false">
+											<ui:label>
+												<m:Text text="{i18n>lblHarvest}"/>
+											</ui:label>
+											<ui:template>
+												<m:HBox>
+													<m:Input id="harvestStage" value="{MultiCommercializationModel>HCP_HARVEST_STAGE}" liveChange="validateValueCamp($event,'verifyPercentage')" editable="{= ${MultiCommercializationModel>/oldCrop} ? false : true}"/>
+													<m:Text text="%"/>
+												</m:HBox>
+											</ui:template>
+										</ui:Column>
+									</ui:columns>
+								</ui:Table>
+							</m:VBox>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

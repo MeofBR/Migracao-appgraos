@@ -1,0 +1,448 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.commodities.EditFixedOrder"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<!--<OverflowToolbar class="sapUiResponsiveMargin">-->
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancelPress"/>
+					<!--<ToolbarSpacer/>-->
+					<!--<OverflowToolbarButton type="Transparent" icon="sap-icon://paging" tooltip="copy" press="onCancelPress"/>-->
+					<!--</OverflowToolbar>-->
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="{i18n>optionBuyFixedPrice}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onOrderStatusPress"
+						icon="sap-icon://order-status"/>
+					<Button text="" iconFirst="true" width="auto" enabled="{fixedOrderFormModel>/enabledMessage}" visible="true" iconDensityAware="false"
+						press="onMessagePress" icon="sap-icon://message-popup"/>
+					<Button text="{i18n>textCadence}" iconFirst="true" width="auto"
+						enabled="{= ${fixedOrderFormModel>/enabledCadence} &amp;&amp; ${fixedOrderFormModel>/enableEditWerksValid} &amp;&amp; ${profileModel>/edit} &amp;&amp; ${fixedOrderFormModel>/enabledOffer}}"
+						visible="true" iconDensityAware="false" press="onCadencePress"/>
+					<Button text="{i18n>buttonSave}" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${fixedOrderFormModel>/enabledConfirm} &amp;&amp; ${fixedOrderFormModel>/enableEditWerksValid} &amp;&amp; ${profileModel>/edit} &amp;&amp; ${fixedOrderFormModel>/enabled}}"
+						visible="true" iconDensityAware="false" press="onSavePress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="{i18n>textRegister}" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="{i18n>textRegister}" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${profileModel>/edit} === true ? false : true}"/>
+									<MessageStrip text="Você não tem permissão para editar Compra de Commodities" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${profileModel>/edit} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<!--Sequencial-->
+									<Label text="{i18n>textSequence}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{fixedOrderFormModel>/visibleSequence}"/>
+									<Input placeholder="" type="Text" value="{= parseFloat(${fixedOrderFormModel>/HCP_ZSEQUE}) }" showValueHelp="false" required="false"
+										enabled="false" visible="{fixedOrderFormModel>/visibleSequence}" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<!--Oferta-->
+									<Label text="{i18n>textOfferNumber}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{fixedOrderFormModel>/visibleOffer}"/>
+									<Input placeholder="" type="Text" value="{fixedOrderFormModel>/HCP_OFFER_NUMBER}" showValueHelp="false" required="false" enabled="false"
+										visible="{fixedOrderFormModel>/visibleOffer}" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<!--Fornecedor-->
+									<Label text="{i18n>textVendor}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPartner" visible="true" required="true" change="_validateForm" editable="true" enabled="{fixedOrderFormModel>/enabledOffer}"
+										placeholder="{i18n>placeSelectVendor}" showValueHelp="true" type="Text" value="{fixedOrderFormModel>/HCP_LIFNR}"
+										description="{fixedOrderFormModel>/PROVIDER_DESC}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress"/>
+									<!--Material-->
+									<Label text="{i18n>textMaterial}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeMaterial}" selectedKey="{fixedOrderFormModel>/HCP_MATNR}" editable="true"
+										enabled="{fixedOrderFormModel>/enabledOffer}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="onInputMaterialFormSelect" name="HCP_MATNR"
+										items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false}}">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/errorMaterial}"/>
+									<MessageStrip text="{fixedOrderFormModel>/messageMaterial}" type="Error" showIcon="true" showCloseButton="false"
+										visible="{fixedOrderFormModel>/errorMaterial}" class="sapUiMediumMarginBottom"/>
+									<!--Tipo de Cereal-->
+									<Label text="{i18n>textComCerealType}" design="Standard" width="100%" required="{fixedOrderFormModel>/matCereal}" textAlign="Begin"
+										textDirection="Inherit" visible="{fixedOrderFormModel>/matCereal}"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectCerealType}" selectedKey="{fixedOrderFormModel>/HCP_TPCEREAL}" editable="true"
+										enabled="{fixedOrderFormModel>/enabledOffer}" visible="{fixedOrderFormModel>/matCereal}" required="{fixedOrderFormModel>/matCereal}"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_checkPrice"
+										items="{ path: '/View_Material_Type_Price', length: 999999, sorter: { path: 'TPCEREAL',descending: false}}" name="HCP_TPCEREAL">
+										<custom:items>
+											<core:Item text="{TPCEREAL} - {DETPCEREAL}" enabled="true" key="{TPCEREAL}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Centro-->
+									<Label text="{i18n>textCenter}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectCenter}" selectedKey="{fixedOrderFormModel>/HCP_WERKS}" editable="true"
+										enabled="{fixedOrderFormModel>/enabledOffer}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="onInputWerksFormSelect" items="{ path: '/View_Center', length: 999999, sorter: { path: 'WERKS',descending: false}}"
+										name="HCP_WERKS">
+										<custom:items>
+											<core:Item text="{WERKS} - {NAME1}" enabled="true" key="{WERKS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${fixedOrderFormModel>/enableEditWerksValid} === true ? false : true}"/>
+									<MessageStrip text="Centro não permitido para o seu perfil" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${fixedOrderFormModel>/enableEditWerksValid} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<!--Depósito-->
+									<Label text="{i18n>textDeposit}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectDeposit}" selectedKey="{fixedOrderFormModel>/HCP_LGORT}"
+										editable="{fixedOrderFormModel>/enabledLgort}" enabled="{fixedOrderFormModel>/enabledLgort}" visible="true" required="true" width="auto"
+										items="{path:'fixedOrderFormModel>/tableDeposit'}" selectionChange="onInputLgortFormSelect"
+										valueState="{= ${fixedOrderFormModel>/errorDeposit} ? 'Error' : 'None' }">
+										<core:Item text="{path:'fixedOrderFormModel>LGORT'} - {path:'fixedOrderFormModel>LGOBE'}" enabled="true"
+											key="{path:'fixedOrderFormModel>LGORT'}"/>
+									</custom:CustomComboBox>
+									<!--Organização de Compras-->
+									<Label text="{i18n>textPurchOrg}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Purchasing_Org', length: 999999 , sorter: { path: 'EKOTX',descending: false}}"
+										placeholder="{i18n>placePurchOrg}" selectedKey="{fixedOrderFormModel>/HCP_EKORG}" editable="true"
+										enabled="{fixedOrderFormModel>/enabledOffer}" visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{EKORG} - {EKOTX}" enabled="true" key="{EKORG}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Comprador-->
+									<Label text="{i18n>textBuyer}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectBuyer}" selectedKey="{fixedOrderFormModel>/HCP_EKGRP}" editable="true"
+										enabled="{fixedOrderFormModel>/enabledOffer}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_checkPrice" items="{ path: '/View_Account_Groups', length: 999999, sorter: { path: 'EKGRP',descending: false}}">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Corretor-->
+									<Label text="{i18n>textBroker}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeBroker}" selectedKey="{fixedOrderFormModel>/HCP_LIFNRCR}" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" visible="true" required="false" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm"
+										items="{ path: '/View_Suppliers', filters: {path: 'FDGRV', operator: 'EQ', value1: '02.13.05'} , sorter: { path: 'NAME1' } }">
+										<custom:items>
+											<core:Item text="{= parseFloat(${LIFNR}) } - {NAME1}" enabled="true" key="{LIFNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Moeda-->
+									<Label text="{i18n>textCurrency}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectCurrency}" selectionChange="onInputWaersFormSelect"
+										selectedKey="{fixedOrderFormModel>/HCP_WAERS}" editable="true" enabled="{fixedOrderFormModel>/enabledOffer}" required="true" visible="true"
+										width="auto" valueState="None" maxWidth="100%">
+										<custom:items>
+											<core:Item text="{i18n>textArgentPeso}" enabled="true" key="ARS"/>
+											<core:Item text="{i18n>textBrasilReal}" enabled="true" key="BRL"/>
+											<core:Item text="{i18n>textAmericanDollar}" enabled="true" key="USD"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Quantidade-->
+									<Label text="{i18n>textComQuantity}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterQuantity}" liveChange="_validateForm" change="_calculateTotalValue" name="HCP_MENGE"
+										value="{ path: 'fixedOrderFormModel>/HCP_MENGE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="false" visible="true" width="100%" valueHelpOnly="false"
+										maxLength="0"/>
+									<Label text="" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/errorMenge}"/>
+									<MessageStrip text="{i18n>messageNotQuantityoffer}" type="Error" showIcon="true" showCloseButton="false"
+										visible="{fixedOrderFormModel>/errorMenge}" class="sapUiMediumMarginBottom"/>
+									<!--UM Medida Quantidade-->
+									<Label text="{i18n>textComUmQuantity}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectComUmQuantity}" selectedKey="{fixedOrderFormModel>/HCP_MEINS}" editable="true"
+										name="HCP_MEINS" enabled="{fixedOrderFormModel>/enabled}" visible="true" required="false" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_calculateTotalValue">
+										<custom:items>
+											<core:Item text="{i18n>textBag}" enabled="true" key="SC"/>
+											<core:Item text="{i18n>textKG}" enabled="true" key="KG"/>
+											<core:Item text="{i18n>textTonnes}" enabled="true" key="TO"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Preço-->
+									<Label text="{i18n>textComPrice}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterPrice}" liveChange="_validateForm" change="_calculateTotalValue" name="HCP_NETWR"
+										value="{ path: 'fixedOrderFormModel>/HCP_NETWR' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="false" visible="true" width="100%" valueHelpOnly="false"
+										maxLength="0"/>
+									<!--UM Medida Preço-->
+									<Label text="{i18n>textComUmPrice}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectComUmPrice}" selectedKey="{fixedOrderFormModel>/HCP_ZMEINS}" editable="true"
+										name="HCP_ZMEINS" enabled="{fixedOrderFormModel>/enabled}" visible="true" required="false" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_calculateTotalValue">
+										<custom:items>
+											<core:Item text="{i18n>textBag}" enabled="true" key="SC"/>
+											<core:Item text="{i18n>textKG}" enabled="true" key="KG"/>
+											<core:Item text="{i18n>textTonnes}" enabled="true" key="TO"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Valor Total-->
+									<Label text="{i18n>textComAmount}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="" name="HCP_VALOR_TOTAL"
+										value="{ path: 'fixedOrderFormModel>/HCP_VALOR_TOTAL' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="false" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_validateForm" change="_validateForm"/>
+									<!--Alíquota ICMS-->
+									<Label text="{i18n>textIcmsRate}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterIcmsRate}" name="HCP_ZICMS"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZICMS' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="true" visible="true" width="100%" valueHelpOnly="false"
+										maxLength="0" liveChange="_validateForm" change="_onInputCalcutatePriceMaterial"/>
+									<!--Frete-->
+									<Label text="{i18n>textComfFreight}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectFreight}" selectedKey="{fixedOrderFormModel>/HCP_ZFRETE}" editable="true"
+										enabled="{fixedOrderFormModel>/enabledOffer}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_onInputFreightFormSelect" name="HCP_ZFRETE"
+										items="{ path: '/Incoterms', filters: [ {path: 'MANDT', operator: 'EQ', value1: '110'}, {path: 'SPRAS', operator: 'EQ', value1: 'P'} ], sorter: { path: 'INCO1' } }">
+										<custom:items>
+											<core:Item text="{INCO1} - {BEZEI}" enabled="true" key="{INCO1}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Valor Frete Previsto-->
+									<Label text="{i18n>textCompPredictedValue}" design="Standard" width="100%" required="{fixedOrderFormModel>/yesFob}" textAlign="Begin"
+										textDirection="Inherit" visible="{fixedOrderFormModel>/yesFob}"/>
+									<Input placeholder="{i18n>placeEnterCompPredictedValue}" name="HCP_FRETE_PREV"
+										value="{ path: 'fixedOrderFormModel>/HCP_FRETE_PREV' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="{fixedOrderFormModel>/yesFob}"
+										visible="{fixedOrderFormModel>/yesFob}" width="100%" valueHelpOnly="false" maxLength="0" liveChange="_validateForm"
+										change="_onInputCalcutatePriceMaterial"/>
+									<!--UM Medida Frete-->
+									<Label text="{i18n>textComUmFreight}" design="Standard" width="100%" required="{fixedOrderFormModel>/yesFob}" textAlign="Begin"
+										textDirection="Inherit" visible="{fixedOrderFormModel>/yesFob}"/>
+									<custom:CustomComboBox placeholder="{i18n>textComUmFreight}" selectedKey="{fixedOrderFormModel>/HCP_UNID_FRETE}" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" visible="{fixedOrderFormModel>/yesFob}" required="{fixedOrderFormModel>/yesFob}" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{i18n>textBag}" enabled="true" key="SC"/>
+											<core:Item text="{i18n>textKG}" enabled="true" key="KG"/>
+											<core:Item text="{i18n>textTonnes}" enabled="true" key="TO"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Data Remessa-->
+									<Label text="{i18n>textDateShipment}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<DateRangeSelection placeholder="{i18n>placeSelectDateShipment}" visible="true" width="auto" change="_onDateCreateRangeSelectionChange"
+										enabled="{= ${fixedOrderFormModel>/enabledShipment} &amp;&amp; ${fixedOrderFormModel>/enabled}}"
+										dateValue="{fixedOrderFormModel>/HCP_ZDTREMDE}" secondDateValue="{fixedOrderFormModel>/HCP_ZDTREMATE}" displayFormat="dd/MM/YYYY"
+										name="DATE_SHIPMENT"/>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/visibleShipment}"/>
+									<MessageStrip text="{fixedOrderFormModel>/messageShipment}" type="Warning" showIcon="true" showCloseButton="false"
+										visible="{fixedOrderFormModel>/visibleShipment}" class="sapUiMediumMarginBottom"/>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/visibleCadence}"/>
+									<MessageStrip text="{fixedOrderFormModel>/messageCadence}" type="Error" showIcon="true" showCloseButton="false"
+										visible="{fixedOrderFormModel>/visibleCadence}" class="sapUiMediumMarginBottom"/>
+									<!--Justificativa-->
+									<Label text="{i18n>textJustification}" design="Standard" width="100%" required="{fixedOrderFormModel>/justPreco}" textAlign="Begin"
+										textDirection="Inherit" visible="{fixedOrderFormModel>/justPreco}"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectJustification}" selectedKey="{fixedOrderFormModel>/HCP_JUST_PRECO}" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" visible="{fixedOrderFormModel>/justPreco}" required="{fixedOrderFormModel>/justPreco}" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_onInputJustificationFormSelect"
+										items="{ path: '/View_Domain', filters: {path: 'DOMNAME', operator: 'EQ', value1: 'ZZJUST_PRECO'} , sorter: { path: 'VALPOS' } }">
+										<custom:items>
+											<core:Item text="{DDTEXT}" enabled="true" key="{DOMVALUE_L}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/errorPrice}"/>
+									<MessageStrip text="{i18n>messagePriceJustification}" type="Error" showIcon="true" showCloseButton="false"
+										visible="{fixedOrderFormModel>/errorPrice}" class="sapUiMediumMarginBottom"/>
+									<!--Tx._Justif. -->
+									<Label text="{i18n>textJustification}" design="Standard" width="100%" required="{fixedOrderFormModel>/justOtherPreco}" textAlign="Begin"
+										textDirection="Inherit" visible="{fixedOrderFormModel>/justOtherPreco}"/>
+									<TextArea placeholder="{i18n>textJustification}" rows="2" value="{fixedOrderFormModel>/HCP_TEXT_PRECO}" liveChange="_validateForm" cols="20"
+										maxLength="255" wrapping="None" visible="{fixedOrderFormModel>/justOtherPreco}" enabled="{fixedOrderFormModel>/enabled}"
+										required="{fixedOrderFormModel>/justOtherPreco}"/>
+									<!--Condição de Pagamento-->
+									<!-- //Pacote de melhorias 02/06/2022 adicionado filtro para condições de pagamento dinamico.
+									<Label text="{i18n>textPaymentTerms}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placePaymentTerms}" selectedKey="{fixedOrderFormModel>/HCP_ZTERM}" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm"
+										items="{ path: '/View_Payment_Conditions', length: 999999, filters: [ {path: 'MANDT', operator: 'EQ', value1: '110'} , {path: 'SPRAS', operator: 'EQ', value1: 'P'} ], sorter: { path: 'ZTERM',descending: false} }">
+										<custom:items>
+											<core:Item text="{ZTERM} - {TEXT1}" enabled="true" key="{ZTERM}"/>
+										</custom:items>
+									</custom:CustomComboBox> -->
+									<Label text="{i18n>paymentTerms}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPaymentTerm" visible="true" required="{fixedOrderFormModel>/yesPartner}" change="_validateForm" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" placeholder="{i18n>placeSelectPaymentTerms}" showValueHelp="true" type="Text" value="{fixedOrderFormModel>/HCP_ZTERM}"
+										description="{fixedOrderFormModel>/HCP_TEXT1}" valueHelpOnly="true" valueHelpRequest="_handlePaymentTermFilterPress"/>
+									<!--Retirada -->
+									<Label text="{i18n>textComWithdrawal}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<TextArea placeholder="{i18n>placeEnterWithdrawal}" rows="2" value="{fixedOrderFormModel>/HCP_ZLOCRET}" liveChange="_validateForm" cols="20"
+										maxLength="255" wrapping="None" visible="true" enabled="{fixedOrderFormModel>/enabled}" required="true"/>
+									<!--Data Fixa-->
+									<Label text="{i18n>textComFixedDate}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<CheckBox selected="{fixedOrderFormModel>/HCP_DTFIX}" visible="true" editable="true" width="auto" textDirection="Inherit" text=""
+										enabled="{fixedOrderFormModel>/enabled}" useEntireWidth="true" wrapping="false" select="_onInputFixedDate"/>
+									<!--Data Pagamento 1-->
+									<!--<Label text="{i18n>textPaymentDate} 1" design="Standard" required="{fixedOrderFormModel>/fixedDate}" textAlign="Begin"-->
+									<Label text="{i18n>textPaymentDate} 1" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="{fixedOrderFormModel>/visibleFixedDate}"/>
+									<DatePicker id="idDateInput1" placeholder="{i18n>placeSelectPaymentDate1}" displayFormat="short" name="HCP_ZDTPGTO1" enabled="{fixedOrderFormModel>/enabled}"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZDTPGTO1', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/yyyy' } }"
+										dateValue="" change="_onInputPaymentDate1FormSelect" visible="{fixedOrderFormModel>/visibleFixedDate}"/>
+									<!--Data Pagamento 2-->
+									<Label text="{i18n>textPaymentDate} 2" design="Standard" required="false" textAlign="Begin" textDirection="Inherit" visible="{fixedOrderFormModel>/visibleFixedDate}"/>
+									<DatePicker id="idDateInput2" placeholder="{i18n>placeSelectPaymentDate1}" displayFormat="short" name="HCP_ZDTPGTO2" enabled="{fixedOrderFormModel>/enabled}"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZDTPGTO2', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/yyyy' } }"
+										dateValue="" change="_onInputPaymentDateFormSelect" visible="{fixedOrderFormModel>/visibleFixedDate}"/>
+									<!--Data Pagamento 3-->
+									<Label text="{i18n>textPaymentDate} 3" design="Standard" required="false" textAlign="Begin" textDirection="Inherit" visible="{fixedOrderFormModel>/visibleFixedDate}"/>
+									<DatePicker id="idDateInput3" placeholder="{i18n>placeSelectPaymentDate1}" displayFormat="short" name="HCP_ZDTPGTO3" enabled="{fixedOrderFormModel>/enabled}"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZDTPGTO3', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/yyyy' } }"
+										dateValue="" change="_onInputPaymentDateFormSelect" visible="{fixedOrderFormModel>/visibleFixedDate}"/>
+									<!--Modalidade-->
+									<Label text="{i18n>textComModality}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>textComModality}" selectedKey="{fixedOrderFormModel>/HCP_ZMODAL}" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm"
+										items="{ path: '/View_Domain', filters: {path: 'DOMNAME', operator: 'EQ', value1: 'ZMODAL'} , sorter: { path: 'VALPOS' } }">
+										<custom:items>
+											<core:Item text="{DDTEXT}" enabled="true" key="{DOMVALUE_L}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Adiantamento-->
+									<Label text="{i18n>textAdvance}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true" visible="true"/>
+									<SegmentedButton selectedKey="{fixedOrderFormModel>/HCP_ZADIAMTO}" width="100%" selectionChange="_validateForm"
+										enabled="{fixedOrderFormModel>/enabled}">
+										<items>
+											<SegmentedButtonItem text="{i18n>textYes}" key="S"/>
+											<SegmentedButtonItem text="{i18n>textNo}" key="N"/>
+										</items>
+									</SegmentedButton>
+									<!--Pedido Substituição-->
+									<Label text="{i18n>textOrderReplacement}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true"
+										visible="true"/>
+									<SegmentedButton selectedKey="{fixedOrderFormModel>/HCP_SUBST}" width="100%" selectionChange="_onInputOrderReplacementFormSelect"
+										enabled="{fixedOrderFormModel>/enabled}">
+										<items>
+											<SegmentedButtonItem text="{i18n>textYes}" key="S"/>
+											<SegmentedButtonItem text="{i18n>textNo}" key="N"/>
+										</items>
+									</SegmentedButton>
+									<!--Pedido-->
+									<Label text="{i18n>textOriginalOrder}" design="Standard" width="100%" required="{fixedOrderFormModel>/yesOrdeRep}" textAlign="Begin"
+										textDirection="Inherit" visible="{fixedOrderFormModel>/yesOrdeRep}"/>
+									<Input placeholder="{i18n>placeEnterOriginalOrder}" name="HCP_EBELN_SUB" value="{fixedOrderFormModel>/HCP_EBELN_SUB}" type="Tel"
+										showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="{fixedOrderFormModel>/yesOrdeRep}"
+										visible="{fixedOrderFormModel>/yesOrdeRep}" width="100%" valueHelpOnly="false" maxLength="0" liveChange="_validateForm"
+										change="_validateForm"/>
+									<!--Motivo de Substituição-->
+									<Label text="{i18n>textReasonReplacement}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/yesOrdeRep}"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectReasonReplacement}" selectedKey="{fixedOrderFormModel>/HCP_JUST_SUB}" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" visible="{fixedOrderFormModel>/yesOrdeRep}" required="true" width="auto" valueState="None"
+										maxWidth="100%" selectionChange="_validateForm"
+										items="{ path: '/View_Domain', filters: {path: 'DOMNAME', operator: 'EQ', value1: 'ZZJUST_SUB'} , sorter: { path: 'VALPOS' } }">
+										<custom:items>
+											<core:Item text="{DDTEXT}" enabled="true" key="{DOMVALUE_L}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Umidade-->
+									<Label text="{i18n>textMoisture}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterMoisture}" liveChange="_validateForm" change="_validateForm" name="HCP_ZUMIDADE"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZUMIDADE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="false" visible="true" width="100%" valueHelpOnly="false"
+										maxLength="0"/>
+									<!--Impureza-->
+									<Label text="{i18n>textImpurity}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterImpurity}" liveChange="_validateForm" change="_validateForm" name="HCP_ZIMPUREZA"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZIMPUREZA' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="false" visible="true" width="100%" valueHelpOnly="false"
+										maxLength="0"/>
+									<!--Ardidos-->
+									<Label text="{i18n>textBurned}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterBurned}" liveChange="_validateForm" change="_validateForm" name="HCP_ZARDIDOS"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZARDIDOS' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="false" visible="true" width="100%" valueHelpOnly="false"
+										maxLength="0"/>
+									<!--Contrato-->
+									<Label text="{i18n>textContract}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeEnterContract}" name="HCP_ZCONTRATO" value="{fixedOrderFormModel>/HCP_ZCONTRATO}" type="Tel"
+										showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="false" visible="true" width="100%" valueHelpOnly="false"
+										maxLength="0" liveChange="_validateForm" change="_validateForm"/>
+									<!--Tipo de NF-->
+									<Label text="{i18n>textNfType}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectNfType}" selectedKey="{fixedOrderFormModel>/HCP_ZTPNF}" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm"
+										items="{ path: '/View_Domain', filters: {path: 'DOMNAME', operator: 'EQ', value1: 'ZTPNF'} , sorter: { path: 'VALPOS' } }">
+										<custom:items>
+											<core:Item text="{DDTEXT}" enabled="true" key="{DOMVALUE_L}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!--Observações-->
+									<Label text="{i18n>textComments}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<TextArea placeholder="{i18n>placeEnterComments}" rows="2" value="{fixedOrderFormModel>/HCP_ZOBS}" liveChange="_validateForm" cols="20"
+										maxLength="255" wrapping="None" visible="true" enabled="{fixedOrderFormModel>/enabled}" required="false"/>
+									<!--Aprovador-->
+									<Label text="{i18n>textApprover}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectApprover}" selectedKey="{fixedOrderFormModel>/HCP_BEDNR}" editable="true"
+										enabled="{fixedOrderFormModel>/enabled}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm" items="{ path: 'fixedOrderFormModel>/tableApprover', length: 999999, sorter: { path: 'BEDNR' }}">
+										<custom:items>
+											<core:Item text="{path:'fixedOrderFormModel>ID_USER'} - {path:'fixedOrderFormModel>NAME_TEXT'}" enabled="true"
+												key="{path:'fixedOrderFormModel>ID_USER'}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!-- Tipo de Compra -->
+									<Label text="Tipo de Compra" design="Standard" width="100%" required="{fixedOrderFormModel>/errorMaterialDisponible}" textAlign="Begin"
+										textDirection="Inherit" visible="{fixedOrderFormModel>/errorMaterialDisponible}"/>
+									<custom:CustomComboBox placeholder="{i18n>placeMaterial}" selectedKey="{fixedOrderFormModel>/HCP_ZZTPCOMPRA}"
+										enabled="{fixedOrderFormModel>/enabled}" editable="true" visible="{fixedOrderFormModel>/errorMaterialDisponible}" required="true"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_changePurchaseType">
+										<custom:items>
+											<core:Item text="1 - SPOT" enabled="true" key="1"/>
+											<core:Item text="2 - FRAME" enabled="true" key="2"/>
+											<core:Item text="3 - TRANSF.SALDO" enabled="true" key="3"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<!-- Valor liquido do pedido em moeda de pedido -->
+									<Label text="CBOT" design="Standard" width="100%" required="{fixedOrderFormModel>/isFrameType}" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/isFrameType}"/>
+									<Input placeholder="" liveChange="_validateForm" name="HCP_BWERT" change="_validateForm"
+										value="{ path: 'fixedOrderFormModel>/HCP_BWERT' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="true" visible="{fixedOrderFormModel>/isFrameType}"
+										width="100%" valueHelpOnly="false" maxLength="0"/>
+									<!-- Premio -->
+									<Label text="Premio" design="Standard" width="100%" required="{fixedOrderFormModel>/isFrameType}" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/isFrameType}"/>
+									<Input placeholder="" liveChange="_validateForm" name="HCP_ZZPREMIO_CEREAL" change="_validateForm"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZZPREMIO_CEREAL' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="true" visible="{fixedOrderFormModel>/isFrameType}"
+										width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/isFrameType}"/>
+									<!-- Valor liquido do pedido em moeda de pedido -->
+									<Label text="Câmbio" design="Standard" width="100%" required="{fixedOrderFormModel>/isFrameType}" textAlign="Begin" textDirection="Inherit"
+										visible="{fixedOrderFormModel>/isFrameType}"/>
+									<Input placeholder="" liveChange="_validateForm" name="HCP_ZZCAMBIO" change="_validateForm"
+										value="{ path: 'fixedOrderFormModel>/HCP_ZZCAMBIO' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{fixedOrderFormModel>/enabled}" required="true" visible="{fixedOrderFormModel>/isFrameType}"
+										width="100%" valueHelpOnly="false" maxLength="0"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

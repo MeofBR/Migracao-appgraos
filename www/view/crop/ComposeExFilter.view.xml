@@ -1,0 +1,227 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.crop.ComposeExFilter"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="false" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="backToIndex"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+					<Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto" enabled="{composeExFilterModel>/enableConfirm}" visible="true"
+						iconDensityAware="false" press="_onConfirm"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="false" title="" titleUppercase="false" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection>
+						<uxap:blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="locationform" labelSpanL="3"
+								labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+								<f:content>
+									<Label text="Estado" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true">
+										<!--<layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</layoutData>-->
+									</Label>
+									<custom:CustomComboBox
+										items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: false} }"
+										placeholder="Selecione o Estado" editable="true" id="stateCBId" name="state" enabled="true" visible="true" width="80%" valueState="None"
+										maxWidth="100%" selectedKey="{composeExFilterModel>/HCP_STATE}" selectionChange="onKeyInfoChange">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L7 M7 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+									<Label text="Região" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true">
+										<!--<layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</layoutData>-->
+									</Label>
+									<custom:CustomComboBox items="{ path: '/Regions', filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, length: 999999}" id="regionCBId" name="region" placeholder="Selecione a Região"
+										editable="true" enabled="{composeExFilterModel>regionEnabled}" visible="true" width="80%" valueState="None" maxWidth="100%"
+										selectedKey="{composeExFilterModel>/HCP_REGION}" selectionChange="onKeyInfoChange">
+										<custom:items>
+											<core:Item text="{HCP_BEZEI}" key="{HCP_ID}"/>
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L7 M7 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+									<Label text="Material" design="Standard" width="100%" required="{= ${BLAND} !== ' ' ? true : false }" textAlign="Begin"
+										textDirection="Inherit" visible="true">
+										<!--<layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</layoutData>-->
+									</Label>
+									<custom:CustomComboBox id="materialCbId" name="material"
+										items="{ path: '/View_Material', length: 999999, sorter: { path: 'MATNR',descending: false} }" placeholder="Selecione o Material"
+										editable="true" enabled="{filterPageModel>/regionEnabled}" visible="true" width="80%" valueState="None" maxWidth="100%"
+										selectedKey="{composeExFilterModel>/HCP_MATERIAL}" selectionChange="onKeyInfoChange">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" key="{MATNR}"/>
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L7 M7 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection showTitle="true" title="Safra 1" titleUppercase="false" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection>
+						<uxap:blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="cropkeysform1" labelSpanL="3"
+								labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+								<f:content>
+									<Label text="Safra" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true">
+										<layoutData>
+											<l:GridData span="L3 M2 S12"/>
+										</layoutData>
+									</Label>
+									<custom:CustomComboBox items="{ path: '/Crop_Group', length: 999999 , sorter: { path: 'HCP_CROP_DESC',descending: false}}"
+										placeholder="Selecione a Safra" editable="true"
+										enabled="{= ${composeExFilterModel>/HCP_STATE} !== '' &amp;&amp; ${composeExFilterModel>/HCP_MATERIAL} !== '' &amp;&amp; ${composeExFilterModel>/HCP_REGION} !== '' ? true : false}"
+										visible="true" width="80%" valueState="None" maxWidth="100%" name="crop1" id="cropYear1CBId"
+										selectedKey="{composeExFilterModel>/HCP_CROP_YEAR1}" selectionChange="onKeyInfoChange">
+										<custom:items>
+											<core:Item text="{HCP_CROP_DESC}" enabled="true" key="{HCP_CROP_ID}"/>
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+									<Label text="Semana" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true">
+										<!--<layoutData>-->
+										<!--	<l:GridData span="L1 M1 S12"/>-->
+										<!--</layoutData>-->
+									</Label>
+									<custom:CustomComboBox items="{ path: '/Crop_Period', length: 999999 , sorter: { path: 'HCP_CROP_DESC',descending: false}}"
+										placeholder="Selecione a Semana" id="cbPeriod1" name="period1" editable="true" visible="true" width="80%" valueState="None" maxWidth="100%"
+										selectedKey="{composeExFilterModel>/HCP_PERIOD1}" selectionChange="_validateForm"
+										enabled="{= ${composeExFilterModel>/HCP_CROP_YEAR1} !== '' ? true : false}" change="_validateForm">
+										<custom:items>
+											<core:Item text="Semana {HCP_PERIOD} - {HCP_YEAR}" enabled="true" key="{HCP_PERIOD}{HCP_YEAR}"/>
+											<!--<core:Item text="Semana 02" enabled="true" key="02"/>-->
+											<!--<core:Item text="Semana 03" enabled="true" key="03"/>-->
+											<!--<core:Item text="Semana 04" enabled="true" key="04"/>-->
+											<!--<core:Item text="Semana 17" enabled="true" key="172019"/>-->
+											<!--<core:Item text="Semana 22" enabled="true" key="222019"/>-->
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+									
+									<!--START - INSERÇÃO NOVO CAMPO COMERCIALIZACAO-->
+									<Label text="Comercialização" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true">
+									</Label>
+									<custom:CustomComboBox items="{ path: '/Commercialization', length: 999999 , sorter: { path: 'HCP_PERIOD',descending: false}}"
+										placeholder="Selecione a comercialização" id="CBCommercialization1" name="CBCommer1" editable="true" visible="true" width="80%" valueState="None" maxWidth="100%"
+										selectedKey="" selectionChange="onKeyInfoChange"
+										enabled="{= ${composeExFilterModel>/HCP_CROP_YEAR1} !== '' ? true : false}" change="onKeyInfoChange">
+										<custom:items>
+											<core:Item text="Semana {= ${HCP_PERIOD}.substring(0, 2)} - {= ${HCP_PERIOD}.substring(2, 6)} " enabled="true" key="{HCP_PERIOD}{HCP_YEAR}"/>
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+									<!-- END - INSERÇÃO NOVO CAMPO COMERCIALIZACAO-->
+									
+									<Label text="Filial" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true">
+										<!--<layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</layoutData>-->
+									</Label>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection showTitle="true" title="Safra 2" titleUppercase="false" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection>
+						<uxap:blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="cropkeysform2" labelSpanL="3"
+								labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+								<f:content>
+									<Label text="Safra" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true">
+										<!--<layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</layoutData>-->
+									</Label>
+									<custom:CustomComboBox items="{ path: '/Crop_Group', length: 999999 , sorter: { path: 'HCP_CROP_DESC',descending: false}}"
+										placeholder="Selecione a Safra" editable="true" visible="true" width="80%" valueState="None" maxWidth="100%"
+										selectedKey="{composeExFilterModel>/HCP_CROP_YEAR2}" selectionChange="onKeyInfoChange" name="crop2" id="cropYear2CBId"
+										enabled="{= ${composeExFilterModel>/HCP_STATE} !== '' &amp;&amp; ${composeExFilterModel>/HCP_MATERIAL} !== '' &amp;&amp; ${composeExFilterModel>/HCP_REGION} !== '' ? true : false}">
+										<custom:items>
+											<core:Item text="{HCP_CROP_DESC}" enabled="true" key="{HCP_CROP_ID}"/>
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+									<Label text="Semana" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true">
+										<!--<layoutData>-->
+										<!--	<l:GridData span="L1 M1 S12"/>-->
+										<!--</layoutData>-->
+									</Label>
+									<custom:CustomComboBox items="{ path: '/Crop_Period', length: 999999 , sorter: { path: 'HCP_CROP_DESC',descending: false}}"
+										placeholder="Selecione a Semana" editable="true" id="cbPeriod2" name="period2" visible="true" width="80%" valueState="None" maxWidth="100%"
+										selectedKey="{composeExFilterModel>/HCP_PERIOD2}" selectionChange="_validateForm"
+										enabled="{= ${composeExFilterModel>/HCP_CROP_YEAR2} !== '' ? true : false}" change="_validateForm">
+										<custom:items>
+											<core:Item text="Semana {HCP_PERIOD} - {HCP_YEAR}" enabled="true" key="{HCP_PERIOD}{HCP_YEAR}"/>
+											<!--<core:Item text="Semana 02" enabled="true" key="02"/>-->
+											<!--<core:Item text="Semana 03" enabled="true" key="03"/>-->
+											<!--<core:Item text="Semana 04" enabled="true" key="04"/>-->
+											<!--<core:Item text="Semana 17" enabled="true" key="172019"/>-->
+											<!--<core:Item text="Semana 22" enabled="true" key="222019"/>-->
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+									
+										<!--START - INSERÇÃO NOVO CAMPO COMERCIALIZACAO-->
+									<Label text="Comercialização" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true">
+									</Label>
+									<custom:CustomComboBox items="{ path: '/Commercialization', length: 999999 , sorter: { path: 'HCP_PERIOD',descending: false}}"
+										placeholder="Selecione a comercialização" id="CBCommercialization2" name="CBCommer2" editable="true" visible="true" width="80%" valueState="None" maxWidth="100%"
+										selectedKey="" selectionChange="onKeyInfoChange"
+										enabled="{= ${composeExFilterModel>/HCP_CROP_YEAR2} !== '' ? true : false}" change="onKeyInfoChange">
+										<custom:items>
+											<core:Item text="Semana {= ${HCP_PERIOD}.substring(0, 2)} - {= ${HCP_PERIOD}.substring(2, 6)} " enabled="true" key="{HCP_PERIOD}{HCP_YEAR}"/>
+										</custom:items>
+										<!--<custom:layoutData>-->
+										<!--	<l:GridData span="L3 M3 S12"/>-->
+										<!--</custom:layoutData>-->
+									</custom:CustomComboBox>
+									<!-- END - INSERÇÃO NOVO CAMPO COMERCIALIZACAO-->
+									
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,135 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ResponsivePopover title="Filtrar CropTour" placement="Bottom">
+		<content>
+			<form:Form width="100%" editable="true" visible="true">
+				<form:title/>
+				<form:formContainers>
+					<form:FormContainer visible="true">
+						<form:formElements>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Coleta" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<Input placeholder="Digite a Coleta" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="0" value="{filters>/HCP_COLLECT}"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Safra" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<custom:CustomComboBox items="{ path: '/Crop_Year_Croptour_Dist', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], length: 999999}"
+										placeholder="Selecione a Safra" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filters>/HCP_CROP_DESC}">
+										<custom:items>
+											<core:Item text="{HCP_CROP_DESC}" enabled="true" key="{HCP_CROP_DESC}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="País" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<custom:CustomComboBox items="{consultModel>/itemsCountry}"
+										placeholder="Selecione o País" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filters>/HCP_COUNTRY_NAME}" change="_filteredStates">
+										<custom:items>
+											<core:Item text="{consultModel>HCP_COUNTRY_NAME}" key="{consultModel>HCP_COUNTRY_NAME}" enabled="true" />
+										</custom:items>
+									</custom:CustomComboBox>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Estado" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<custom:CustomComboBox
+										id="idComboBoxEstado"
+										items="{ path: '/View_States' }"
+										placeholder="Selecione Estado" selectedKey="{filters>/BLAND}" editable="true" enabled="{consultModel>/isEnabledState}" visible="true" width="auto" valueState="None"
+										maxWidth="100%" selectionChange="_validateStates">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Região" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<custom:CustomComboBox id="regionCBFilterID" items="{ path: '/Regions_Croptour', filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, length: 999999}" placeholder="Selecione a Região" editable="true"
+										enabled="{= ${filters>/BLAND} === '' ? false : true}" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filters>/HCP_REGIO}">
+										<custom:items>
+											<core:Item text="{HCP_BEZEI}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Material" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<custom:CustomComboBox items="{ path: '/View_Material', length: 999999, sorter: { path: 'MATNR',descending: false} }"
+										placeholder="Selecione o Material" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filters>/HCP_MATERIAL}">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Data de" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<DatePicker placeholder="Dia / Mês / Ano" displayFormat="short"
+										value="{ path: 'filters>/HCP_START_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+										dateValue="" change="test"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Data Até" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<DatePicker placeholder="Dia / Mês / Ano" displayFormat="short"
+										value="{ path: 'filters>/HCP_END_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+										dateValue=""/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Criado por" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<Input placeholder="Digite o usuário" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="0" value="{filters>/HCP_CREATED_BY}"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:fields>
+									<Button text="Pesquisar" type="Emphasized" press="submitFilter"/>
+								</form:fields>
+							</form:FormElement>
+						</form:formElements>
+						<form:title/>
+					</form:FormContainer>
+				</form:formContainers>
+				<form:layout>
+					<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+				</form:layout>
+			</form:Form>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

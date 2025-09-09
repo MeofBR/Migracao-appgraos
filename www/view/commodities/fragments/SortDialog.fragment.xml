@@ -1,0 +1,54 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+	<ResponsivePopover title="{i18n>textSorting}" placement="Bottom">
+		<content>
+			<form:Form width="100%" editable="true" visible="true">
+				<form:title/>
+				<form:formContainers>
+					<form:FormContainer visible="true">
+						<form:formElements>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Coluna" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<RadioButtonGroup id="group_column">
+									<buttons>
+										<RadioButton id="HCP_ZSEQUE" text="{i18n>textSequence}"/>
+										<RadioButton id="HCP_LIFNR" text="{i18n>textVendor}"/>
+										<RadioButton id="HCP_MATNR" text="{i18n>textMaterial}"/>
+										<RadioButton id="HCP_EKGRP" text="{i18n>textBuyer}"/>
+										<RadioButton id="HCP_ZDTREMDE" text="{i18n>textShippingPeriod}"/>
+										<RadioButton id="HCP_STATUS" text="{i18n>textStatus}"/>
+										<RadioButton id="cndIsExceeded" text="{i18n>textCND}"/>
+										<RadioButton id="HCP_CREATED_AT" text="{i18n>textDateCreation}"/>
+										<RadioButton id="HCP_CREATED_BY" text="{i18n>Usuário}"/>
+									</buttons>
+								</RadioButtonGroup>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="{i18n>textTypeSorting}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+								</form:label>
+								<RadioButtonGroup id="group_sort">
+									<buttons>
+										<RadioButton id="ascending" text="{i18n>textAscending}" selected="true"/>
+										<RadioButton id="descending" text="{i18n>textDescending}"/>
+									</buttons>
+								</RadioButtonGroup>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:fields>
+									<Button text="{i18n>buttonOrder}" type="Emphasized" press="submitSortList"/>
+								</form:fields>
+							</form:FormElement>
+						</form:formElements>
+						<form:title/>
+					</form:FormContainer>
+				</form:formContainers>
+				<form:layout>
+					<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+				</form:layout>
+			</form:Form>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

@@ -1,0 +1,50 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.commodities.Index"
+	xmlns="sap.m">
+	<Page showHeader="true" title="{i18n>textCommodities}" showFooter="{indexModel>/isMobile}" showNavButton="true" navButtonPress="backToIndex">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<List mode="None" width="100%" headerText="Header" footerText="" backgroundDesign="Solid" showSeparators="All" growing="true"
+				growingThreshold="20" growingScrollToLoad="true" visible="true">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar> 
+					<Toolbar enabled="false" visible="false" width="" design="Solid">
+						<content>
+							<SearchField placeholder="Search" showSearchButton="true" visible="true" width="100%"/>
+						</content>
+					</Toolbar>
+				</headerToolbar>
+				<items>
+					<StandardListItem icon="sap-icon://commission-check" title="{i18n>optionBuyFixedPrice}" description="" info="" infoState="None" type="Navigation"
+						selected="false" visible="true" press="_onCreateFixedPriceFormPress"/>
+					<StandardListItem icon="sap-icon://my-sales-order" title="{i18n>optionBuyDepositi}" description="" info="" infoState="Success"
+						type="Navigation" selected="false" visible="true" press="_onCreateDepositFormPress"/>
+					<StandardListItem icon="sap-icon://duplicate" title="{i18n>optionTransfer}" description="" info="" infoState="Success"
+						type="Navigation" selected="false" visible="true" press="_onCreateTransferFormPress"/>
+					<StandardListItem icon="sap-icon://search" title="{i18n>optionConsult}" description="" info="" infoState="Success"
+						type="Navigation" selected="false" visible="true" press="_onConsultFormPress"/>
+				</items>
+			</List>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+					<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Ultima atualização {indexModel>/lastUpdate}"
+					showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

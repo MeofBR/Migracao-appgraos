@@ -1,0 +1,135 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.visitForm.New"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancelPress"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Ficha de Visitas" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+					<Button text="Cadastrar" type="Emphasized" iconFirst="true" width="auto" enabled="{= ${visitFormModel>/enableConfirm} &amp;&amp; ${profileModel>/create}}" visible="true"
+						iconDensityAware="false" press="onConfirmPress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Cadastro" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Cadastro" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${profileModel>/create} === true ? false : true}"/>
+									<MessageStrip text="Você não tem permissão para criar Fichas de Visitas" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${profileModel>/create} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<Label text="" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true" class="sapUiSmallMarginBegin"/>
+									<SegmentedButton selectedKey="{visitFormModel>/partnerProspect}" width="100%" class="sapUiSmallMarginBottom"
+										selectionChange="_onInputFormSelect">
+										<items>
+											<SegmentedButtonItem text="Fornecedor" key="Fornecedor"/>
+											<SegmentedButtonItem text="Prospect" key="Prospect"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Fornecedor" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPartner" visible="{visitFormModel>/yesPartner}" required="{visitFormModel>/yesPartner}" change="_validateForm" editable="true"
+										enabled="{true}" placeholder="Selecione o Fornecedor" showValueHelp="true" type="Text" value="{visitFormModel>/HCP_PROVIDER_ID}"
+										description="{visitFormModel>/PROVIDER_DESC}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress"/>
+									<Label text="Prospect" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="yesProspect" placeholder="Selecione o Prospect" selectedKey="{visitFormModel>/HCP_PROVIDER_ID}" editable="true"
+										enabled="true" visible="{visitFormModel>/yesProspect}" required="{visitFormModel>/yesProspect}" width="auto" valueState="None"
+										maxWidth="100%" selectionChange="_validateForm" items="{ path: '/Prospects', length: 999999}">
+										<custom:items>
+											<core:Item text="{NAME1} {NAME2}" enabled="true" key="{HCP_PROSP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Tipo de Contato" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="Selecione o Tipo de Contato" selectedKey="{visitFormModel>/HCP_CONTACT_TYPE}" editable="true"
+										enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="Presencial" enabled="true" key="presencial"/>
+											<core:Item text="Telefone" enabled="true" key="telefone"/>
+											<core:Item text="Mensagem via Telefone" enabled="true" key="mensagemtelefone"/>
+											<core:Item text="Skype" enabled="true" key="skype"/>
+											<core:Item text="E-mail" enabled="true" key="email"/>
+											<core:Item text="Outros" enabled="true" key="outros"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Objetivo da Interação" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox change="_validateForm" selectionChange="_validateForm" items="{ path: '/Interact_Objectives', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}]}" editable="true"
+										selectedKey="{visitFormModel>/HCP_INTERACTION_OBJECTIVE}"
+										enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" placeholder="Selecione Objetivo da Interação">
+										<custom:items>
+											<core:Item text="{HCP_INT_OBJ_DESC}" enabled="true" key="{HCP_INT_OBJ_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Iniciativa do Contato" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="Selecione a Iniciativa do Contato" selectedKey="{visitFormModel>/HCP_CONTACT_INICIATIVE}"
+										editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="BRF" enabled="true" key="BRF"/>
+											<core:Item text="Fornecedor" enabled="true" key="Fornecedor"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Ficha de visita" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="Selecione a Ficha de Visita" editable="true" enabled="true" visible="true"
+										selectedKey="{visitFormModel>/HCP_VISIT_FORM}" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateVisitForm">
+										<custom:items>
+											<core:Item text="Produtor" enabled="true" key="Produtor"/>
+											<core:Item text="Empresa" enabled="true" key="Empresa"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Tipo do Checklist" design="Standard" width="100%" required="{= ${visitFormModel>/companyComboBox} ? true : false}"
+										textAlign="Begin" textDirection="Inherit" visible="{= ${visitFormModel>/companyComboBox} ? true : false}"/>
+									<custom:CustomComboBox placeholder="Selecione o Tipo do Checklist" selectedKey="{visitFormModel>/checkListType}" editable="true"
+										enabled="true" visible="{= ${visitFormModel>/companyComboBox} ? true : false}" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="Grãos" enabled="true" key="Grains"/>
+											<core:Item text="Indústria" enabled="true" key="Industry"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Tipo do Checklist" design="Standard" width="100%" required="{= ${visitFormModel>/produtorComboBox} ? true : false}"
+										textAlign="Begin" textDirection="Inherit" visible="{= ${visitFormModel>/produtorComboBox} ? true : false}"/>
+									<custom:CustomComboBox placeholder="Selecione o Tipo do Checklist" selectedKey="{visitFormModel>/checkListType}" editable="true"
+										enabled="true" visible="{= ${visitFormModel>/produtorComboBox} ? true : false}" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="Anual" enabled="true" key="Yearly"/>
+											<core:Item text="Periódico" enabled="true" key="Periodic"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+		<!--<uxap:footer>-->
+		<!--	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">-->
+		<!--		<content>-->
+		<!--			<Button text="Voltar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"-->
+		<!--				press="onCancelPress"/>-->
+		<!--			<ToolbarSpacer width=""/>-->
+		<!--			<Button text="Cadastrar" type="Emphasized" iconFirst="true" width="auto" enabled="{visitFormModel>/enableConfirm}" visible="true"-->
+		<!--				iconDensityAware="false" press="onConfirmPress"/>-->
+		<!--		</content>-->
+		<!--	</OverflowToolbar>-->
+		<!--</uxap:footer>-->
+	</uxap:ObjectPageLayout>
+</mvc:View>

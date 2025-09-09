@@ -1,0 +1,299 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.offerMap.Edit"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancelPress"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="{i18n>textOfferMap}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button press="onPurchaseListPress" iconDensityAware="false" visible="false" enabled="true" width="100%" iconFirst="true"
+						icon="sap-icon://sales-order-item"/>
+					<Button class="button_red" press="_onCancelOfferButton" type="Reject" text="{editOfferMapFormModel>/buttonCancel}" iconDensityAware="false"
+						visible="{editOfferMapFormModel>/visibleCancel}" enabled="{= ${editOfferMapFormModel>/enableCancel} &amp;&amp; ${profileModel>/edit}}"
+						width="100%" iconFirst="true"/>
+					<Button press="onSavePress" type="Emphasized" text="{i18n>buttonSave}" iconDensityAware="false"
+						visible="{editOfferMapFormModel>/visibleConfirm}"
+						enabled="{= ${editOfferMapFormModel>/enableConfirm} &amp;&amp; ${editOfferMapFormModel>/enableEditPurchaseOrgValid} &amp;&amp; ${profileModel>/edit}}"
+						width="100%" iconFirst="true"/>
+					<Button press="onReactivatePress" type="Emphasized" text="{i18n>buttonReactivate}" iconDensityAware="false"
+						visible="{editOfferMapFormModel>/visibleReactivate}" enabled="true"
+						width="100%" iconFirst="true"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="{i18n>textRegister}" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="{i18n>textRegister}" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="simpleForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4"
+								id="newEntitySimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${profileModel>/edit} === true ? false : true}"/>
+									<MessageStrip text="Você não tem permissão para editar Mapas de Oferta" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${profileModel>/edit} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<Label text="{i18n>textOfferNumber}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="true"/>
+									<Input placeholder="" type="Text" value="{editOfferMapFormModel>/HCP_OFFER_NUMBER}" showValueHelp="false" required="false" enabled="false"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textCancelReasonDesc}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+									visible="{= ${editOfferMapFormModel>/HCP_CANCELLATION_REASON} ? true : false}"/>
+									<Input placeholder="" type="Text" value="{editOfferMapFormModel>/HCP_CANCELLATION_REASON}" showValueHelp="false" required="false" enabled="false"
+										visible="{= ${editOfferMapFormModel>/HCP_CANCELLATION_REASON} ? true : false}" width="100%" valueHelpOnly="false" maxLength="0"/>
+										
+									<Label text="{i18n>textCancelReasonDescription}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{= ${editOfferMapFormModel>/HCP_CANCEL_REASON_DESC} ? true : false}"/>
+									<Input placeholder="" type="Text" value="{editOfferMapFormModel>/HCP_CANCEL_REASON_DESC}" showValueHelp="false" required="false" enabled="false"
+										visible="{= ${editOfferMapFormModel>/HCP_CANCEL_REASON_DESC} ? true : false}" width="100%" valueHelpOnly="false" maxLength="0"/>
+									
+									<Label text="{i18n>textPurchGroup}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectPurchGroup}" selectedKey="{editOfferMapFormModel>/HCP_EKGRP}" editable="true"
+										enabled="{editOfferMapFormModel>/enabledEdit}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_onGetPriceBrf" items="{ path: '/View_Account_Groups', length: 999999, sorter: { path: 'EKGRP',descending: false}}">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textPurchOrg}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Purchasing_Org', length: 999999 , sorter: { path: 'EKOTX',descending: false}}"
+										placeholder="{i18n>placePurchOrg}" selectedKey="{editOfferMapFormModel>/HCP_EKORG}" editable="true"
+										enabled="{editOfferMapFormModel>/enabledEdit}" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_onPurchaseOrgChange">
+										<custom:items>
+											<core:Item text="{EKORG} - {EKOTX}" enabled="true" key="{EKORG}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${editOfferMapFormModel>/enableEditPurchaseOrgValid} === true ? false : true}"/>
+									<MessageStrip text="Organização de compras não permitida para o seu perfil" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${editOfferMapFormModel>/enableEditPurchaseOrgValid} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<Label text="{i18n>textBroker}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeBroker}" selectedKey="{editOfferMapFormModel>/HCP_LIFNR}" editable="true"
+										enabled="{editOfferMapFormModel>/enabledEdit}" visible="true" required="false" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm"
+										items="{ path: '/View_Suppliers', filters: {path: 'FDGRV', operator: 'EQ', value1: '02.13.05'} , sorter: { path: 'NAME1' } }">
+										<custom:items>
+											<core:Item text="{= parseFloat(${LIFNR}) } - {NAME1}" enabled="true" key="{LIFNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textVendorProspect}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true"
+										visible="true"/>
+									<SegmentedButton selectedKey="{editOfferMapFormModel>/HCP_PARTNER_TYPE}" width="100%" selectionChange="_onInputPartnerFormSelect"
+										enabled="{editOfferMapFormModel>/enabledEdit}">
+										<items>
+											<SegmentedButtonItem text="{i18n>textVendor}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textProspect}" key="2"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textVendor}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPartner" visible="{editOfferMapFormModel>/yesPartner}" required="{editOfferMapFormModel>/yesPartner}" change="_validateForm"
+										editable="true" enabled="{editOfferMapFormModel>/enabledEdit}" placeholder="{i18n>placeSelectVendor}" showValueHelp="true" type="Text"
+										value="{editOfferMapFormModel>/HCP_PARTNER}" description="{editOfferMapFormModel>/PROVIDER_DESC}" valueHelpOnly="true"
+										valueHelpRequest="_handlePartnerFilterPress"/>
+									<Label text="{i18n>textProspect}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="yesProspect" placeholder="{i18n>placeProspect}" selectedKey="{editOfferMapFormModel>/HCP_PARTNER}"
+										editable="true" enabled="{editOfferMapFormModel>/enabledEdit}" visible="{editOfferMapFormModel>/yesProspect}"
+										required="{editOfferMapFormModel>/yesProspect}" width="auto" valueState="None" maxWidth="100%"
+										items="{ path: 'editOfferMapFormModel>/tableProspect', length: 999999 , sorter : { path : 'editOfferMapFormModel>NAME1' }}"
+										selectionChange="_onInputProspect">
+										<custom:items>
+											<core:Item text="{path:'editOfferMapFormModel>HCP_PROSP_ID'} - {path:'editOfferMapFormModel>NAME1'} {path:'editOfferMapFormModel>NAME2'}"
+												enabled="true" key="{path:'editOfferMapFormModel>HCP_PROSP_ID'}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textMaterial}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeMaterial}" selectedKey="{editOfferMapFormModel>/HCP_MATNR}" editable="true"
+										enabled="{editOfferMapFormModel>/enabledEdit}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_onInputMaterialFormSelect" items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false}}">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textCerealType}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeCerealType}" selectedKey="{editOfferMapFormModel>/HCP_TPCEREAL}" editable="true"
+										enabled="{editOfferMapFormModel>/enabledEdit}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_onGetPriceBrf" items="{ path: '/View_Material_Type_Price', length: 999999, sorter: { path: 'TPCEREAL',descending: false}}">
+										<custom:items>
+											<core:Item text="{TPCEREAL} - {DETPCEREAL}" enabled="true" key="{TPCEREAL}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textQuantity}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeQuantity}" name="HCP_VOLUME"
+										value="{ path: 'editOfferMapFormModel>/HCP_VOLUME' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{= ${editOfferMapFormModel>/HCP_STATES_OFFER} === '2' ? true : ${editOfferMapFormModel>/enabledEdit}}" required="true" visible="true" width="100%"
+										valueHelpOnly="false" maxLength="0" liveChange="_valideInputNumber" change="_valideInputNumber"/>
+									<Label text="{i18n>textQuantityCommercialized}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="{= ${editOfferMapFormModel>/HCP_STATES_OFFER} === '2' ? true : false}"/>
+									<Input 
+										value="{ path: 'editOfferMapFormModel>/HCP_VOLUME_COMMERCIALIZED' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="false" visible="{= ${editOfferMapFormModel>/HCP_STATES_OFFER} === '2' ? true : false}" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textQuantityFinal}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="{= ${editOfferMapFormModel>/HCP_STATES_OFFER} === '2' ? true : false}"/>
+									<Input 
+										value="{ path: 'editOfferMapFormModel>/HCP_VOLUME_FINAL' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="false" visible="{= ${editOfferMapFormModel>/HCP_STATES_OFFER} === '2' ? true : false}" width="100%" valueHelpOnly="false" maxLength="0"/>
+									<Label text="{i18n>textModality}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true" visible="true"/>
+									<SegmentedButton selectedKey="{editOfferMapFormModel>/HCP_MODALITY}" width="100%" selectionChange="_onInputModalityFormSelect"
+										enabled="{editOfferMapFormModel>/enabledEdit}">
+										<items>
+											<SegmentedButtonItem text="{i18n>textFixed}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textDeposit}" key="2"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textDepositType}" design="Standard" width="100%" required="{editOfferMapFormModel>/yesDeposit}" textAlign="Begin"
+										textDirection="Inherit" visible="{editOfferMapFormModel>/yesDeposit}"/>
+									<custom:CustomComboBox placeholder="{i18n>placeDepositType}" selectedKey="{editOfferMapFormModel>/HCP_DEPOSIT_TYPE}" editable="true"
+										enabled="{editOfferMapFormModel>/enabledEdit}" visible="{editOfferMapFormModel>/yesDeposit}" required="{editOfferMapFormModel>/yesDeposit}"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_onInputDepositFormSelect"
+										items="{ path: '/Deposit_Condition', length: 999999 , sorter: { path: 'HCP_ID',descending: false}}">
+										<custom:items>
+											<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textOthers}" design="Standard" width="100%" required="{editOfferMapFormModel>/yesOthersDep}" textAlign="Begin"
+										textDirection="Inherit" visible="{editOfferMapFormModel>/yesOthersDep}"/>
+									<TextArea placeholder="{i18n>placeDescribeOthers}" rows="2" value="{editOfferMapFormModel>/HCP_OTHER_DEPOSIT}" liveChange="_validateForm"
+										cols="20" maxLength="255" wrapping="None" visible="{editOfferMapFormModel>/yesOthersDep}" enabled="{editOfferMapFormModel>/enabledEdit}"
+										required="{editOfferMapFormModel>/yesOthersDep}"/>
+									<Label text="{i18n>placeDescribeDepositType}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{editOfferMapFormModel>/yesDeposit}"/>
+									<TextArea placeholder="Ex: CBOT x 70 x BRL BMF - 5" rows="2" value="{editOfferMapFormModel>/HCP_DESC_DEPOSIT}" liveChange="_validateForm"
+										cols="20" maxLength="255" wrapping="None" visible="{editOfferMapFormModel>/yesDeposit}" enabled="{editOfferMapFormModel>/enabledEdit}"
+										required="false"/>
+									<Label text="{i18n>textDelivDate}" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<DatePicker placeholder="{i18n>placeDayMonth}" displayFormat="short" name="HCP_DATE_START"
+										value="{ path: 'editOfferMapFormModel>/HCP_DATE_START', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+										dateValue="" change="_onInputDeliveryDateFormSelect" enabled="{editOfferMapFormModel>/enabledEdit}"/>
+									<Label text="{i18n>textTo}" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<DatePicker placeholder="{i18n>placeDayMonth}" displayFormat="short" name="HCP_DATE_END"
+										value="{ path: 'editOfferMapFormModel>/HCP_DATE_END', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+										dateValue="" change="_onInputDeliveryDateFormSelect" enabled="{editOfferMapFormModel>/enabledEdit}"/>
+								</form:content>
+								<!--
+								<Label text="{i18n>textPaymentTerms}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+									visible="true"/>
+								<custom:CustomComboBox placeholder="{i18n>placePaymentTerms}" selectedKey="{editOfferMapFormModel>/HCP_ZTERM}" editable="true"
+									enabled="{editOfferMapFormModel>/enabledEdit}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+									selectionChange="_validateForm"
+									items="{ path: '/View_Payment_Conditions', length: 999999, filters: [ {path: 'MANDT', operator: 'EQ', value1: '110'} , {path: 'SPRAS', operator: 'EQ', value1: 'P'} ], sorter: { path: 'ZTERM',descending: false} }">
+									<custom:items>
+										<core:Item text="{ZTERM} - {TEXT1}" enabled="true" key="{ZTERM}"/>
+									</custom:items>
+								</custom:CustomComboBox>
+								-->
+								<Label text="{i18n>paymentTerms}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<Input id="yesPaymentTerm" visible="true" required="{editOfferMapFormModel>/yesPartner}" change="_validateForm" editable="{editOfferMapFormModel>/paymentEditable}"
+									enabled="{editOfferMapFormModel>/enabledEdit}" placeholder="{i18n>placeSelectPaymentTerms}" showValueHelp="true" type="Text" value="{editOfferMapFormModel>/HCP_ZTERM}"
+									description="{editOfferMapFormModel>/HCP_TEXT1}" valueHelpOnly="true" valueHelpRequest="_handlePaymentTermFilterPress"/>
+								<Label text="{i18n>textIncoterms}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true" visible="true"/>
+								<SegmentedButton selectedKey="{editOfferMapFormModel>/HCP_INCOTERM}" width="100%" selectionChange="_onInputIncotermFormSelect"
+									enabled="{editOfferMapFormModel>/enabledEdit}">
+									<items>
+										<SegmentedButtonItem text="{i18n>textCIF}" key="1"/>
+										<SegmentedButtonItem text="{i18n>textFOB}" key="2"/>
+										<SegmentedButtonItem text="{i18n>textCPT}" key="3"/>
+									</items>
+								</SegmentedButton>
+								<Label text="{i18n>textWarehouse}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit"
+									required="{editOfferMapFormModel>/yesFob}" visible="{editOfferMapFormModel>/yesFob}"/>
+								<SegmentedButton selectedKey="{editOfferMapFormModel>/HCP_WAREHOUSE}" selectionChange="_onInputArmazemFormSelect" width="100%"
+									visible="{editOfferMapFormModel>/yesFob}" enabled="{editOfferMapFormModel>/enabledEdit}">
+									<items>
+										<SegmentedButtonItem text="{i18n>textOwn}" key="1"/>
+										<SegmentedButtonItem text="{i18n>textThirdParty}" key="2"/>
+									</items>
+								</SegmentedButton>
+								<Label text="{i18n>textLocalOrigin}" design="Standard" width="100%" required="{editOfferMapFormModel>/yesRequiredLocal}" textAlign="Begin"
+									textDirection="Inherit" visible="true"/>
+								<custom:CustomComboBox id="localOrigin" placeholder="{i18n>placeLocalOrigin}" selectedKey="{editOfferMapFormModel>/HCP_LOCAL}"
+									editable="true" enabled="{editOfferMapFormModel>/enabledLocal}" visible="{editOfferMapFormModel>/yesLocalItem}"
+									required="{editOfferMapFormModel>/yesRequiredLocal}" width="auto" valueState="None" maxWidth="100%" selectionChange="_onInputLocal"
+									items="{ path: 'editOfferMapFormModel>/ItemLocal', length: 999999 , sorter : { path : 'editOfferMapFormModel>NAME1' }}">
+									<custom:items>
+										<core:Item
+											text="{= parseFloat(${path:'editOfferMapFormModel>LIFNR'}) } - {path:'editOfferMapFormModel>NAME1'} - {path:'editOfferMapFormModel>STCDX'} - {path:'editOfferMapFormModel>REGIO'} - {path:'editOfferMapFormModel>ORT01'}"
+											enabled="true" key="{path:'editOfferMapFormModel>LIFNR'}"/>
+									</custom:items>
+								</custom:CustomComboBox>
+								<Label text="{i18n>textLocalOrigin}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+									visible="true"/>
+								<Input placeholder="{i18n>placeEnterLocalOrigin}" type="Text" value="{editOfferMapFormModel>/HCP_LOCAL}" showValueHelp="false"
+									required="false" enabled="{editOfferMapFormModel>/enabledEdit}" liveChange="_validateForm" change="_validateForm"
+									visible="{editOfferMapFormModel>/yesTerceiro}" width="100%" valueHelpOnly="false" maxLength="0"/>
+								<Label text="{i18n>textNotes}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<TextArea placeholder="{i18n>placeEnterNote}" rows="2" value="{editOfferMapFormModel>/HCP_OTHER_LOCAL}" liveChange="_validateForm" cols="20"
+									maxLength="255" wrapping="None" visible="true" enabled="{editOfferMapFormModel>/enabledEdit}" required="true"/>
+								<Label text="{i18n>textUMPrice}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<custom:CustomComboBox placeholder="{i18n>placeSelectUMPrice}" selectedKey="{editOfferMapFormModel>/HCP_UM}" editable="true"
+									enabled="{editOfferMapFormModel>/enabledEdit}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+									selectionChange="onInputUmPrice">
+									<custom:items>
+										<core:Item text="{i18n>textTonnes}" enabled="true" key="TO"/>
+										<core:Item text="{i18n>textBag}" enabled="true" key="SC"/>
+									</custom:items>
+								</custom:CustomComboBox>
+								<Label text="{i18n>textCurrency}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<custom:CustomComboBox placeholder="{i18n>placeSelectCurrency}" selectionChange="_validateForm"
+									selectedKey="{editOfferMapFormModel>/HCP_MOEDA}" editable="true" enabled="{editOfferMapFormModel>/enabledEdit}" required="true"
+									visible="true" width="auto" valueState="None" maxWidth="100%">
+									<custom:items>
+										<core:Item text="{i18n>textArgentPeso}" enabled="true" key="ARS"/>
+										<core:Item text="{i18n>textBrasilReal}" enabled="true" key="BRL"/>
+										<core:Item text="{i18n>textAmericanDollar}" enabled="true" key="USD"/>
+									</custom:items>
+								</custom:CustomComboBox>
+								<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<form:SimpleForm class="simpleForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="0" emptySpanXL="0"
+									id="newCenterSimpleForm" labelSpanL="12" labelSpanM="12" labelSpanXL="12" layout="ResponsiveGridLayout" maxContainerCols="1" minWidth="2048">
+									<form:content></form:content>
+								</form:SimpleForm>
+								<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<Button text="{i18n>buttonAddPlant}" type="Emphasized" iconFirst="true" enabled="{editOfferMapFormModel>/enabledEdit}" visible="true"
+									iconDensityAware="false" press="_onAddNewCenterForm" width="100%">
+									<customData>
+										<core:CustomData key="id" value="newCenterSimpleForm"/>
+									</customData>
+									<layoutData>
+										<l:GridData span="L5 M5 S12"/>
+									</layoutData>
+								</Button>
+								<Label text="{i18n>textOfferDateTime}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+									visible="true"/>
+								<DatePicker placeholder="" displayFormat="medium" valueFormat="yyyyMMddHHmmss"
+									value="{ path: 'editOfferMapFormModel>/HCP_CREATED_AT_OFFER', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/yyyy - HH:mm:ss' } }"
+									enabled="false"/>
+								<Label text="{i18n>textPurchaser}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false" visible="true"/>
+								<Input placeholder="" type="Text" value="{editOfferMapFormModel>/HCP_CREATED_BY_OFFER}" showValueHelp="false" required="false"
+									enabled="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+								<Label text="{i18n>questionCreateOfferRequestPo}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true"
+									visible="true"/>
+								<SegmentedButton selectedKey="{editOfferMapFormModel>/HCP_CREATE_OFFER}" enabled="{editOfferMapFormModel>/yesCommodities}" width="100%"
+									visible="true" selectionChange="_validateForm">
+									<items>
+										<SegmentedButtonItem text="{i18n>textYes}" key="1"/>
+										<SegmentedButtonItem text="{i18n>textNo}" key="2"/>
+									</items>
+								</SegmentedButton>
+								<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+									visible="{editOfferMapFormModel>/errorFreight}"/>
+								<MessageStrip text="{editOfferMapFormModel>/messageFreight}" type="Information" showIcon="true" showCloseButton="false"
+									visible="{editOfferMapFormModel>/errorFreight}" class="sapUiMediumMarginBottom"/>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

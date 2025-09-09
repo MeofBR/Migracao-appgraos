@@ -1,0 +1,24 @@
+/* Message asking permission to access the camera. */
+"NSCameraUsageDescription" = "Ezzel engedélyezi a fotózást vagy a QR-kódok beolvasását.";
+
+/* Message asking permission to access the microphone */
+"NSMicrophoneUsageDescription" = "Ezzel engedélyezi a mikrofonjához való hozzáférést.";
+
+/* Message asking permission to access the calendar */
+"NSCalendarsUsageDescription" = "Ezzel engedélyezi a naptárjához való hozzáférést.";
+
+/* Message asking permission to access photo library */
+"NSPhotoLibraryUsageDescription" = "Ezzel engedélyezi a fotótárához való hozzáférést.";
+
+/* Message asking permission to access contacts */
+"NSContactsUsageDescription" = "Ezzel engedélyezi a kontaktjaihoz való hozzáférést.";
+
+/* Message asking permission to access location */
+"NSLocationWhenInUseUsageDescription" = "Ezzel engedélyezi a tartózkodási helyéhez való hozzáférést az alkalmazás használata közben.";
+
+/* Message asking permission to access location at any time */
+"NSLocationAlwaysUsageDescription" = "Ezzel engedélyezi a tartózkodási helyéhez való hozzáférést mindenkor.";
+
+/* Message asking permission to access Face ID */
+"NSFaceIDUsageDescription" = "Ezzel engedélyezi a Face ID használatával történő hitelesítést.";
+

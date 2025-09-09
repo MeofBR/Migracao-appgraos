@@ -1,0 +1,84 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.negotiationReport.ReportIndex" xmlns="sap.m">
+	<Page title="Consulta Relato de Negócio" showNavButton="true" navButtonPress="navBack" showFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<Table width="auto" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				id="table"
+				items="{ path: '/Negotiation_Report', sorter : { path : 'HCP_NEGO_REPORT_ID' , descending:true }, parameters: { expand: 'Nego_Crop,Nego_Region,Nego_Material,Nego_Center' }}">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar>
+					<OverflowToolbar width="auto" height="60px" design="Transparent" visible="true" enabled="true">
+						<content>
+							<Title text="Relato de Negócio ({reportIndexModel>/count})" titleStyle="Auto" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+							<Text text="Origem ({reportIndexModel>/state})"/>
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Código do Relato" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Destino do Negócio" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Preço do relato" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Preço BRF" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Data Criação" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Criado por" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active" press="_onRowPress">
+						<cells>
+							<ObjectStatus icon="sap-icon://monitor-payments" text="{HCP_NEGO_REPORT_ID}"/>
+							<Text text="{= ${Nego_Center/EKNAM} ?  ${HCP_BRANCH} +' - '+ ${Nego_Center/EKNAM}  : ${HCP_BRANCH}}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<ObjectNumber 
+								number="{ parts:[{path:'HCP_PRICE_CALCULATED'}, 'BRL'], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+								unit="BRL" state="None"/>
+							<ObjectNumber number="{ parts:[{path:'HCP_PRICE_LIST'}, 'BRL'], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+								unit="BRL" state="None"/>
+							<Text text="{ path: 'HCP_CREATED_AT', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+								width="103px" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+							<Text text="{HCP_CREATED_BY}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</Page>
+</mvc:View>

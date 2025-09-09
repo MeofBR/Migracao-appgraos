@@ -1,0 +1,288 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.uxap" xmlns:m="sap.m" xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.prospects.Edit"
+	xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ObjectPageLayout id="ObjectPageLayout"  showTitleInHeaderContent="true" alwaysShowContentHeader="true" preserveHeaderStateOnScroll="true"
+		headerContentPinnable="true" isChildPage="true" enableLazyLoading="false">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle class="displayArrow">
+				<breadcrumbs>
+					<m:OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancel"/>
+				</breadcrumbs>
+				<expandedHeading>
+					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<m:Title text="{NAME1}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</m:FlexBox>
+				</expandedHeading>
+				<snappedHeading>
+					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<m:FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
+							<m:Title text="{NAME1}" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+						</m:FlexBox>
+					</m:FlexBox>
+				</snappedHeading>
+				<expandedContent>
+					<m:ObjectStatus class="sapUiSmallMarginBottom" text="{ path: 'HCP_STATUS', formatter: '.formatter.textStatusProspect' }"
+						state="{ path: 'HCP_STATUS', formatter: '.formatter.stateStatusProspect' }"
+						icon="{ path: 'HCP_STATUS', formatter: '.formatter.iconStatusProspect' }"/>
+				</expandedContent>
+				<snappedContent>
+					<m:ObjectStatus class="sapUiSmallMarginBottom" text="{ path: 'HCP_STATUS', formatter: '.formatter.textStatusProspect' }"
+						state="{ path: 'HCP_STATUS', formatter: '.formatter.stateStatusProspect' }"
+						icon="{ path: 'HCP_STATUS', formatter: '.formatter.iconStatusProspect' }"/>
+				</snappedContent>
+				<navigationActions>
+					<m:Button icon="sap-icon://employee-approvals" type="Accept" tooltip="Retomar Prospect"
+						visible="{= ${prospectModel>/rotateButton} ? true : false}" press="rotateProspect"/>
+					<m:Button class="button_red" icon="sap-icon://employee-rejections" type="Emphasized"  tooltip="Cancelar Prospect"
+						visible="{= ${prospectModel>/cancelProspect} ? true : false}" press="cancelProspect"
+						enabled="{= ${prospectModel>/rotateProspect} ? false : true}"/>
+					<m:Button class="button_green" text="Liberar" type="Emphasized" iconFirst="true" width="auto" enabled="{= ${prospectModel>/approvedProspect} ? false : true}"
+						visible="true" iconDensityAware="false" press="onApprove"/>
+					<m:Button text="Salvar" type="Emphasized" iconFirst="true" width="auto" enabled="{= ${prospectModel>/rotateProspect} ? false : true}"
+						visible="true" iconDensityAware="false" press="onEdit"/>
+				</navigationActions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<sections>
+			<ObjectPageSection showTitle="true" title="Dados Principais" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="Dados Principais" mode="Expanded">
+						<blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<m:Label text="Org. Compras" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Purchasing_Org', length: 999999 , sorter: { path: 'EKOTX',descending: false}}"
+										placeholder="Selecione Org. Compras" selectedKey="{EKORG}" editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{EKORG} - {EKOTX}" enabled="true" key="{EKORG}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+										<m:Label text="Pessoa" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:SegmentedButton width="100%" id="segmentedPersonID" selectedKey="{KTOKK}" class="sapUiSmallMarginBottom" enabled="false">
+										<m:items>
+											<m:SegmentedButtonItem text="Física" key="F2"/>
+											<m:SegmentedButtonItem text="Jurídica" key="F1"/>
+											<m:SegmentedButtonItem text="Estrangeiro" key="F3"/>
+										</m:items>
+									</m:SegmentedButton>
+									<m:Label text="Nome" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite o Nome" type="Text" value="{NAME1}" showValueHelp="false" enabled="{= ${prospectModel>/rotateProspect} ? false : true}"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false" maxLength="40"
+										change="_validateForm"/>
+									<m:Label text="Nome 2" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input id="nome2" placeholder="Digite o Nome 2" type="Text" value="{NAME2}" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="40" change="_validateForm"/>
+									<m:Label text="Data de nascimento" required="false}"/>
+									<m:DatePicker placeholder="Dia / Mês / Ano" displayFormat="short" editable="{= ${prospectModel>/rotateProspect} ? false : true}"  enabled="{= ${prospectModel>/rotateProspect} ? false : true}"
+										value="{ path: 'ZDTNASC', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+										dateValue=""/>
+									<m:Label text="CPF" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<m:MaskInput id="CPFInputID" mask="000.000.000-00" value="{STCD2}" editable="{= ${HCP_STATUS} !== '1' || ${STCD1} !== '' ? false : true}" 
+										enabled="{= ${HCP_STATUS} !== '1' || ${STCD1} !== '' ? false : true}" visible="{= ${KTOKK} === 'F2' ? true : false}" placeholder="000.000.000-00" width="auto"
+										change="_onCPFChange">
+										<m:rules>
+											<m:MaskInputRule maskFormatSymbol="0" regex="[0-9]"/>
+										</m:rules>
+									</m:MaskInput>
+									<m:Label text="CNPJ" design="Standard" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<m:MaskInput id="CNPJInputID" mask="00.000.000/0000-00" value="{STCD1}" editable="{= ${HCP_STATUS} !== '1' || ${STCD2} !== '' ? false : true}"
+										enabled="{= ${HCP_STATUS} !== '1' || ${STCD2} !== '' ? false : true}" visible="{= ${KTOKK} === 'F1'? true : false}" placeholder="00.000.000/0000-00" width="auto"
+										change="_onCNPJChange">
+										<m:rules>
+											<m:MaskInputRule maskFormatSymbol="0" regex="[0-9]"/>
+										</m:rules>
+									</m:MaskInput>
+									<m:Label text="CPF" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input id="CPFInputIDF3" placeholder="Digite o CPF" editable="{= ${HCP_STATUS} !== '1' || ${STCD1} !== '' ? false : true}" type="Text" value="{STCD2}"
+										showValueHelp="false" enabled="{= ${HCP_STATUS} !== '1' || ${STCD1} !== '' ? false : true}" visible="{= ${KTOKK} === 'F3' ? true : false}" width="auto"
+										valueHelpOnly="false" maxLength="0" change="_validateForm"/>
+									<m:Label text="CNPJ" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input id="CNPJInputIDF3" value="{STCD1}" editable="{= ${HCP_STATUS} !== '1' || ${STCD2} !== '' ? false : true}" enabled="{= ${HCP_STATUS} !== '1' || ${STCD2} !== '' ? false : true}"
+										visible="{= ${KTOKK} === 'F3' ? true : false}" placeholder="Digite aqui o CNPJ" width="auto" change="_validateForm"/>
+									<m:Label text="Inscrição Estadual" design="Standard" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite a I.E ou Isento" type="Email" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" value="{STCD3}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto"
+										valueHelpOnly="false" maxLength="20" change="_validateForm"/>
+									<m:Label text="Email" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite o E-mail" type="Email" showValueHelp="false" editable="{= ${prospectModel>/rotateProspect} ? false : true}"
+										value="{EMAIL}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false" maxLength="241" change="_validateEmail"/>
+									<m:Label text="Endereço Internet resp" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite o E-mail do responsável no parceiro" editable="{= ${prospectModel>/rotateProspect} ? false : true}"
+										value="{INTAD}" type="Text" showValueHelp="false" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false" maxLength="130"
+										change="_validateEmail"/>
+									<m:Label text="Telefone" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite o telefone" value="{TELF1}" type="Tel" showValueHelp="false" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto"
+										valueHelpOnly="false" maxLength="130" change="_validatePhone" editable="{= ${prospectModel>/rotateProspect} ? false : true}"/>
+									<m:Label text="Telefone 2" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite o telefone 2" value="{TELFX}" type="Tel" editable="{= ${prospectModel>/rotateProspect} ? false : true}"
+										showValueHelp="false" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false" maxLength="130" change="_validatePhone"/>
+								</f:content>
+							</f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+				<customAnchorBarButton/>
+			</ObjectPageSection>
+			<ObjectPageSection showTitle="true" title="Dados Principais" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="Endereço" mode="Expanded">
+						<blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4" id="adressSimpleForm"
+								labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<m:Label text="País" design="Standard" width="100%" textAlign="Begin" required="true" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="countries" items="{ path: '/View_Countries', length: 999999 , sorter: { path: 'LANDX',descending: false}}"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" placeholder="Selecione País" selectedKey="{LAND1}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_validateCountries">
+										<custom:items>
+											<core:Item text="{LAND1} - {LANDX}" enabled="true" key="{LAND1}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<m:Label text="Estado" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="states" items="{ path: '/View_States', length: 999999 , sorter : { path : 'BLAND' }}" placeholder="Selecione Estado"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" selectedKey="{BLAND}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<m:Label text="Zona" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite a Zona" value="{ORT02}" type="Text" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="35" change="_validateForm"/>
+									<m:Label text="Município" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input id="municipio" placeholder="Digite o Município" value="{ORT01}" type="Text" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="35" change="_validateFormTeste"/>
+									<m:Label text="Endereço" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite o Endereço" value="{STRAS}" type="Text" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="35" change="_validateForm"/>
+									<m:Label text="Número" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Input placeholder="Digite o Número" value="{HOUSE_NUM1}" type="Text" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="10" change="_validateForm"/>
+									<m:Label text="Rua Complementar" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Switch state="{prospectModel>/AdditionalAdressPress}" customTextOff="Não" enabled="{= ${prospectModel>/rotateProspect} ? false : true}"
+										customTextOn="Sim" change="onAdditionalAdressPress"/>
+									<m:Label text="Rua Complementar" design="Standard" width="100%" required="{= ${prospectModel>/AdditionalAdressPress} ? true : false}"
+										textAlign="Begin" textDirection="Inherit"/>
+									<m:Input placeholder="Digite o Endereço" id="additionalAdressID" type="Text" editable="{= ${prospectModel>/rotateProspect} ? false : true}"
+										value="{STRAS2}" showValueHelp="false" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" width="auto" valueHelpOnly="false" change="_validateForm" maxLength="60"
+										visible="{= ${prospectModel>/AdditionalAdressPress} ? true : false}"/>
+									<m:Label text="CEP" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${KTOKK} !== 'F3' ? true : false}"/>
+									<m:MaskInput mask="00000-000" value="{PSTLZ}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="{= ${KTOKK} !== 'F3' ? true : false}"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" placeholder="00000-000" width="auto" change="_onCepChange">
+										<m:rules>
+											<m:MaskInputRule maskFormatSymbol="0" regex="[0-9]"/>
+										</m:rules>
+									</m:MaskInput>
+									<m:Label text="CEP" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${KTOKK} === 'F3' ? true : false}"/>
+									<m:Input placeholder="Digite o CEP" value="{PSTLZ}" type="Text" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="{= ${KTOKK} === 'F3' ? true : false}" width="auto"
+										valueHelpOnly="false" maxLength="60" change="_validateForm"/>
+								</f:content>
+							</f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="Administração de conta" mode="Expanded">
+						<blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4" id="accountSimpleForm"
+								labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<m:Label text="Setor Industrial" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Industrial_Sector', length: 999999 , sorter : { path : 'BRSCH' }}" placeholder="Selecione Setor Industrial"
+										selectedKey="{BRSCH}" editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{BRSCH} - {BRTXT}" enabled="true" key="{BRSCH}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<m:Label text="Grp. De Adm. Tesouraria" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Treasury_Group', length: 999999 , sorter : { path : 'GRUPP' }}" placeholder="Selecione Grp. Tesouraria"
+										selectedKey="{FDGRV}" editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{GRUPP} - {TEXTK}" enabled="true" key="{GRUPP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</f:content>
+							</f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="Dados Bancários" mode="Expanded">
+						<blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4" id="bankDataSimpleForm"
+								labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<m:Label text="Banco" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Button text="Adicionar Banco" type="Emphasized" iconFirst="true" enabled="{= ${prospectModel>/rotateProspect} ? false : true}"
+										visible="true" iconDensityAware="false" press="_onAddBanks"/>
+								</f:content>
+							</f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="IRF" mode="Expanded">
+						<blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4" id="irfSimpleForm" labelSpanL="3"
+								labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<m:Label text="IRF" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Button text="Adicionar IRF" type="Emphasized" iconFirst="true"
+										enabled="{= ${prospectModel>/isPY} || ${prospectModel>/rotateProspect} ? false : true}" visible="true" iconDensityAware="false"
+										press="_onAddIrf"/>
+								</f:content>
+							</f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<subSections>
+					<ObjectPageSubSection title="Complementos" mode="Expanded">
+						<blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1"  editable="true" emptySpanL="4" emptySpanM="4" id="CharacteristicsSimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<m:Label text="Observações" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:TextArea rows="2" value="{OBSER}" change="_validateForm" editable="{= ${prospectModel>/rotateProspect} ? false : true}"
+										placeholder="Adicione Informações Adicionais" cols="20" maxLength="255" wrapping="None" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true"/>
+									<m:Label text="Centro/KM" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<m:Button text="Adicionar Centro/KM" type="Emphasized" iconFirst="true" enabled="{= ${prospectModel>/rotateProspect} ? false : true}"
+										visible="true" iconDensityAware="false" press="_onAddCharacteristics"/>
+								</f:content>
+							</f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>

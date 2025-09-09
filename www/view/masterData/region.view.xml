@@ -1,0 +1,146 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.masterData.region"
+	xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Page showHeader="true" title="Regiões" showFooter="{indexModel>/isMobile}" showNavButton="true" navButtonPress="backToIndex">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<IconTabBar id="idIconTabBarMulti" expanded="true" class="sapUiResponsiveContentPadding gridIntencao" select="handleIconTabBarSelect"
+				expandable="false">
+				<items>
+					<IconTabFilter icon="sap-icon://complete" key="Ativo" text="Ativo" iconColor="Positive">
+						<VBox class="sapUiResponsiveMargin">
+						<Label text="Estado" class="marginTop" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox id="Estado" name="STATE" class="sapUiTinyMarginTop" width="100%"
+							items="{ path: '/View_States', length: 999999 , filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'}, sorter: { path: 'BEZEI',descending: false}}" placeholder="Selecione o Estado"
+							selectedKey="{regionFormModel>/HCP_BLAND}" editable="true" enabled="true" visible="true" valueState="None" liveChange="_validateForm" change="_validateForm">
+							<custom:items>
+								<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						</VBox>
+						<Table id="table" width="auto"
+							items="{path:'filterRegion>/itemRegion', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], sorter: { path: 'HCP_ID',descending: false}}"
+							noDataText="Sem dados" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+							class="sapUiResponsiveMargin">
+							<infoToolbar>
+								<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+									<content>
+									<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</content>
+								</Toolbar>
+							</infoToolbar>
+							<headerToolbar>
+								<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+									<content>
+										<ToolbarSpacer width=""/>
+										<OverflowToolbarButton text="Sort" type="Emphasized" icon="sap-icon://add" iconFirst="true" width="auto" enabled="true" visible="true"
+											iconDensityAware="false" press="_openDialogRegion"/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column width="90%" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Região" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Ações" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem type="Active">
+									<cells>
+										<Label text="{filterRegion>HCP_BEZEI}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<VBox class="teste">
+											<Button text="Inativar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+												press="_onDeleteButton"/>
+										</VBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://collapse" text="Inativo" key="Inativo" iconColor="Negative">
+						
+						<VBox class="sapUiResponsiveMargin">
+						<Label text="Estado" class="marginTop" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox id="EstadoIn" name="STATE" class="sapUiTinyMarginTop" width="100%"
+							items="{ path: '/View_States', length: 999999 , filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'}, sorter: { path: 'BEZEI',descending: false}}" placeholder="Selecione o Estado"
+							selectedKey="{regionFormModel>/HCP_BLAND}" editable="true" enabled="true" visible="true" valueState="None" liveChange="_validateForm" change="_validateForm">
+							<custom:items>
+								<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						</VBox>
+						<Table id="tableInative" width="auto"
+							items="{path:'filterRegion>/itemRegion', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '0'}], sorter: { path: 'HCP_ID',descending: false}}"
+							noDataText="Sem dados" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+							class="sapUiResponsiveMargin">
+							<infoToolbar>
+								<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+									<content>
+										<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</content>
+								</Toolbar>
+							</infoToolbar>
+							<headerToolbar>
+								<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+									<content>
+										<ToolbarSpacer width=""/>
+										<OverflowToolbarButton text="Sort" type="Emphasized" icon="sap-icon://add" iconFirst="true" width="auto" enabled="true" visible="true"
+											iconDensityAware="false" press="_openDialogRegion"/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column width="90%" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Região" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Ações" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem type="Active">
+									<cells>
+										<Label text="{filterRegion>HCP_BEZEI}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<VBox class="teste">
+											<Button text="Ativar" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+												press="_onActiveButton"/>
+										</VBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+				<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Ultima atualização {indexModel>/lastUpdate}" showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

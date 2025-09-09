@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar">
+	<Dialog afterClose="onPartnerDialogClose" contentWidth="100%" title="{i18n>placeSelectPaymentTerms}">
+		<fb:FilterBar reset="_onPaymentTermReset" search="_onPaymentTermApplySearch" showClearButton="false" showRestoreButton="true" id="fbPaymentTerm">
+			<fb:filterItems>
+				<fb:FilterItem label="{i18n>paymentTerms}" name="ZTERM">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem label="{i18n>textDescription}" name="TEXT1">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>
+				</fb:FilterItem>
+			</fb:filterItems>
+		</fb:FilterBar>
+		<List growing="true" id="paymentTermListID" items="{ path: '/View_Payment_Conditions', sorter: { path: 'ZTERM' } }" mode="SingleSelectMaster"
+			includeItemInSelection="true" selectionChange="onPaymentTermSelected">
+			<StandardListItem title="{ZTERM}" description="{TEXT1}"/>
+		</List>
+		<buttons>
+			<Button text="{i18n&gt;Cancelar}" width="auto" press="onPaymentTermDialogClose" type="Transparent"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

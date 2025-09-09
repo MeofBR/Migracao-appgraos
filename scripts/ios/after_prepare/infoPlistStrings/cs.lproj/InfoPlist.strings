@@ -1,0 +1,24 @@
+/* Message asking permission to access the camera. */
+"NSCameraUsageDescription" = "Umožňuje vám fotografovat a skenovat kódy QR.";
+
+/* Message asking permission to access the microphone */
+"NSMicrophoneUsageDescription" = "To nám umožní přístup k mikrofonu.";
+
+/* Message asking permission to access the calendar */
+"NSCalendarsUsageDescription" = "To nám umožní přístup k vašemu kalendáři.";
+
+/* Message asking permission to access photo library */
+"NSPhotoLibraryUsageDescription" = "To nám umožní přístup k vaší knihovně.";
+
+/* Message asking permission to access contacts */
+"NSContactsUsageDescription" = "To nám umožní přístup k vašim kontaktům.";
+
+/* Message asking permission to access location */
+"NSLocationWhenInUseUsageDescription" = "To nám umožní přístup k vaší poloze při používání aplikace.";
+
+/* Message asking permission to access location at any time */
+"NSLocationAlwaysUsageDescription" = "To nám umožní nepřetržitý přístup k vaší poloze.";
+
+/* Message asking permission to access Face ID */
+"NSFaceIDUsageDescription" = "To nám umožní přístup k funkci Face ID pro přihlášení.";
+

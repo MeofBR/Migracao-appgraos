@@ -1,0 +1,83 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"  xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+    <Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="{= ${cropFormModel>/HCP_CROP_DESC} === '' ? 'Adicionar Safra' : 'Editar Safra'}" type="Standard" verticalScrolling="true">
+        <content>
+            <form:Form width="100%" editable="true" visible="true">
+                <form:title/>
+                <form:formContainers>
+                    <form:FormContainer visible="true">
+                        <form:formElements>
+                            <form:FormElement visible="true">
+                                <Text text="Safra informada já está cadastrada!" class="textColorRed" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="{cropFormModel>/cropAlreadyExist}"/>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                <Text text="Data da Safra informada já está cadastrada!" class="textColorRed" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="{cropFormModel>/rangeCropAlreadyExist}"/>
+                            </form:FormElement>
+                            <form:FormElement visible="true">
+                                <Label text="Pais" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                <custom:CustomComboBox
+									items="{filterPageModel>/itemsCountry}"
+									placeholder="Selecione o tipo de país" name="CountryType" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+									selectedKey="{cropFormModel>/HCP_COUNTRY_ID}" liveChange="_validateForm" change="_validateForm">
+									<custom:items>
+										<core:Item text="{filterPageModel>HCP_ID} - {filterPageModel>HCP_COUNTRY_NAME}" enabled="true" key="{filterPageModel>HCP_ID}"/>
+									</custom:items>
+								</custom:CustomComboBox>
+							</form:FormElement>
+							
+                            <form:FormElement visible="true">
+                                <form:label>
+                                    <Label text="Safra" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                </form:label>
+                                <form:fields>
+	                        		<MaskInput id="CPFInputID" mask="00/00" value="{cropFormModel>/HCP_CROP_DESC}" enabled="{= ${filterPageModel>/disableInputCrop} ? false : true}"
+										visible="true" placeholder="Digite a Safra" width="auto" change="validateCropAlredyExist">
+										<rules>
+											<MaskInputRule maskFormatSymbol="0" regex="[0-9]"/>
+										</rules>
+									</MaskInput>
+                               </form:fields>
+    							<Label text="Data da Safra" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+									visible="true"/>
+								<DateRangeSelection placeholder="Selecione a data da safra" visible="true" width="auto" required="true" change="_onDateCreateRangeSelectionChange"
+									enabled="true" displayFormat="medium" name="DATE_SHIPMENT"
+									value= "{
+										'type': 'sap.ui.model.type.DateInterval',
+										formatOptions: { pattern: 'MM/yyyy' },
+										'parts': [
+											{
+												'type': 'sap.ui.model.type.Date',
+												'path': 'cropFormModel>/HCP_RANGE_START'
+											},
+											{
+												'type': 'sap.ui.model.type.Date',
+												'path':'cropFormModel>/HCP_RANGE_END'
+											}
+										]
+									}"/>
+                            </form:FormElement>
+                        </form:formElements>
+                        <form:title/>
+                    </form:FormContainer>
+                </form:formContainers>
+               <form:layout>
+    <form:ResponsiveGridLayout
+        adjustLabelSpan="true"
+        columnsL="1"
+        columnsM="1"
+        columnsS="1"
+        labelSpanL="12"
+        labelSpanM="12"
+        labelSpanS="12"/>
+</form:layout>
+            </form:Form>
+        </content>
+        <beginButton/>
+        <buttons>
+            <Button text="Cancelar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onDialogTablePricCancelPress"/>
+            <Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="{= ${cropFormModel>/cropAlreadyExist} || ${cropFormModel>/rangeCropAlreadyExist} ? false : true}" iconDensityAware="false" press="_onConfirmDialog"/>
+        </buttons>
+        <customHeader/>
+        <endButton/>
+        <subHeader/>
+    </Dialog>
+</core:FragmentDefinition>

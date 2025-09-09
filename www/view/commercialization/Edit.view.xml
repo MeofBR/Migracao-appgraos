@@ -1,0 +1,181 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.commercialization.Edit"
+	xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:uxap="sap.uxap">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="_onCancel"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Comercialização" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:navigationActions>
+					<Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${editCommercializationModel>/enableCreate} &amp;&amp; ${profileModel>/edit}}" visible="true" iconDensityAware="false"
+						press="_onSave"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="false" title="" titleUppercase="false" visible="true" class="gridCommercialization">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="">
+						<uxap:blocks>
+							<VBox>
+								<Panel class="panel-expansive-default" width="auto" expandable="true" expanded="true" headerText="Filtros Selecionados">
+									<l:VerticalLayout width="100%" class="gridWrapper">
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="{= ${profileModel>/edit} === true ? false : true}"/>
+										<MessageStrip text="Você não tem permissão para editar Comercialização" type="Error" showIcon="true" showCloseButton="false"
+											visible="{= ${profileModel>/edit} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+										<l:Grid containerQuery="true" defaultSpan="XL3 L4 M12 S12">
+											<VBox class="demoBox sapUiSmallMarginTop">
+												<Label text="{i18n>labelState}" design="Standard" width="100%" visible="true" class="labelBold"/>
+												<ObjectStatus icon="sap-icon://map" text="{modelFilter>/estado}"/>
+											</VBox>
+											<VBox class="demoBox sapUiSmallMarginTop">
+												<Label text="{i18n>labelCenter}" design="Standard" width="100%" visible="true" class="labelBold"/>
+												<ObjectStatus icon="sap-icon://factory" text="{modelFilter>/regiao}"/>
+											</VBox>
+											<VBox class="demoBox sapUiSmallMarginTop">
+												<Label text="{i18n>labelMaterial}" design="Standard" width="100%" visible="true" class="labelBold"/>
+												<ObjectStatus icon="sap-icon://e-care" text="{modelFilter>/material}" visible="true"/>
+											</VBox>
+										</l:Grid>
+									</l:VerticalLayout>
+								</Panel>
+								<List mode="None" width="100%" class="headerWeek" headerText="Semana Atual {editCommercializationModel>/dataWeek}" footerText=""
+									backgroundDesign="Solid" showSeparators="All" visible="true">
+									<infoToolbar>
+										<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+											<content>
+												<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</content>
+										</Toolbar>
+									</infoToolbar>
+									<headerToolbar/>
+									<items>
+										<ObjectListItem intro="" title="Prod. Total" icon="sap-icon://tools-opportunity"
+											number="{ path: 'editCommercializationModel>/HCP_TOTAL_CROP_TRACK' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"
+											numberUnit="TON" numberState="None" type="Inactive" selected="false">
+											<attributes>
+												<ObjectAttribute text="Valor em Porcentagem" active="false" visible="true"/>
+												<ObjectAttribute id="idPercent" title="" text="{i18n>editItem}" active="true" visible="{= ${editCommercializationModel>/noExistsCropTrack} &amp;&amp; ${editCommercializationModel>/visibleCentralRegion}}"
+													press="_commercializationButtonPressed"/>
+											</attributes>
+											<firstStatus>
+												<ObjectStatus text="100%" state="Success" visible="true"/>
+											</firstStatus>
+											<secondStatus/>
+										</ObjectListItem>
+									</items>
+								</List>
+								<List mode="None" width="100%" backgroundDesign="Solid" showSeparators="All" visible="true">
+									<infoToolbar>
+										<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="false">
+											<content>
+												<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="false"/>
+											</content>
+										</Toolbar>
+									</infoToolbar>
+									<headerToolbar/>
+									<items>
+										<ObjectListItem intro="" title="Comercializado" icon="sap-icon://group"
+											number="{ path: 'editCommercializationModel>/HCP_CAPACITY_TONNE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"
+											numberUnit="TON" numberState="None" type="{= ${editCommercializationModel>/visibleCentralRegion} === true ? 'Navigation' : 'Inactive'}" selected="false" press="_commercializationButtonPressed">
+											<attributes>
+												<ObjectAttribute text="Valor em Porcentagem" active="false" visible="true"/>
+												<ObjectAttribute title="" text="Editar Item" active="true" visible="{editCommercializationModel>/visibleCentralRegion}" press="_commercializationButtonPressed"/>
+											</attributes>
+											<firstStatus>
+												<ObjectStatus text="{= parseFloat(${editCommercializationModel>/HCP_CAPACITY_PERCENT}).toFixed(2)} %" state="Success" visible="true"/>
+											</firstStatus>
+											<secondStatus/>
+										</ObjectListItem>
+									</items>
+								</List>
+								<List mode="None" width="100%" footerText="" backgroundDesign="Solid" showSeparators="All" visible="true">
+									<infoToolbar visible="false">
+										<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+											<content>
+												<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="false"/>
+											</content>
+										</Toolbar>
+									</infoToolbar>
+									<headerToolbar/>
+									<items>
+										<ObjectListItem intro="" title="Total Disponível" icon="sap-icon://capital-projects"
+											number="{ path: 'editCommercializationModel>/HCP_TOTAL' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"
+											numberUnit="TON" numberState="Success" type="Inactive" selected="false">
+											<attributes>
+												<ObjectAttribute text="Semana Atual {editCommercializationModel>/dataWeek}" active="false" visible="true"/>
+											</attributes>
+											<secondStatus/>
+										</ObjectListItem>
+									</items>
+								</List>
+								<List mode="None" width="100%" footerText="" backgroundDesign="Solid" showSeparators="All" visible="true">
+									<infoToolbar visible="false">
+										<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+											<content>
+												<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="false"/>
+											</content>
+										</Toolbar>
+									</infoToolbar>
+									<headerToolbar/>
+									<items>
+										<ObjectListItem intro="" title="Relato do Negócio" icon="sap-icon://monitor-payments"
+											number=" { path: 'editCommercializationModel>/HCP_TOTAL_NEGOTIATION' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"
+											numberUnit="TON" numberState="None" type="Inactive" selected="false">
+											<attributes>
+												<ObjectAttribute text="Valor em Porcentagem" active="false" visible="true"/>
+											</attributes>
+											<secondStatus/>
+											<firstStatus>
+												<ObjectStatus
+													text="{= ${editCommercializationModel>/HCP_TOTAL_NEGOTIATION_PERCENT} > 0 ? parseFloat(${editCommercializationModel>/HCP_TOTAL_NEGOTIATION_PERCENT}).toFixed(2) : 0}%"
+													state="{editCommercializationModel>/dataValueState}" visible="true"/>
+											</firstStatus>
+										</ObjectListItem>
+									</items>
+								</List>
+								<List mode="None" width="100%" class="headerWeek" headerText="Resumo Semana Anterior {editCommercializationModel>/dataLastWeek}"
+									footerText="" backgroundDesign="Solid" showSeparators="All" visible="true">
+									<infoToolbar>
+										<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+											<content>
+												<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</content>
+										</Toolbar>
+									</infoToolbar>
+									<headerToolbar/>
+									<items>
+										<ObjectListItem intro="" title="Comercializado" icon="sap-icon://group"
+											number="{ path: 'editCommercializationModel>/HCP_TOTAL_PRODUCTION_LAST_WEEK' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"
+											visible="{editCommercializationModel>/hasDataLastWeek}" numberUnit="TON" numberState="None" type="Inactive" selected="true">
+											<attributes>
+												<ObjectAttribute text="Valor em Porcentagem" active="false" visible="{editCommercializationModel>/hasDataLastWeek}"/>
+											</attributes>
+											<firstStatus>
+												<ObjectStatus
+													text="{= ${editCommercializationModel>/HCP_CAPACITY_PERCENT_LW} > 0 ? parseFloat(${editCommercializationModel>/HCP_CAPACITY_PERCENT_LW}).toFixed(2) : ''}%"
+													state="Success" visible="{editCommercializationModel>/hasDataLastWeek}"/>
+											</firstStatus>
+											<secondStatus/>
+										</ObjectListItem>
+									</items>
+								</List>
+							</VBox>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

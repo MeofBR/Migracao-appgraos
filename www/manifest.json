@@ -1,0 +1,1824 @@
+{
+	"_version": "1.8.0",
+	"sap.app": {
+		"_version": "1.3.0",
+		"id": "com.sap.build.standard.brfAppDeGraosModoEditar",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"offline": true,
+		"applicationVersion": {
+			"version": "1.2.2"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/app-graos-qas/crud.xsodata/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"ZGWAPPGRAOS_SRV": {
+				"uri": "/APP-GRAOS-PORTAL/odata/SAP/ZGWAPPGRAOS_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZGWAPPGRAOS_SRV/metadata.xml"
+				}
+			}
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"ach": "ach",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.32.0"
+		}
+	},
+	"sap.ui": {
+		"_version": "1.3.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"fullWidth": true
+	},
+	"sap.ui5": {
+		"_version": "1.3.0",
+		"rootView": {
+			"viewName": "com.sap.build.standard.brfAppDeGraosModoEditar.view.Index",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.71.64",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"useBatch": false,
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay"
+				}
+			},
+			"eccModel": {
+				"dataSource": "ZGWAPPGRAOS_SRV",
+				"settings": {
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					},
+					"defaultBindingMode": "TwoWay"
+				}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/styles.css"
+				}
+			],
+			"font": [
+				{
+					"uri": "font/FSTruman.otf"
+				}
+			],
+			"js": [
+				{
+					"uri": "libs/graph-js-sdk-web.js"
+				},
+				{
+					"uri": "libs/amcharts4/core.js"
+				},
+				{
+					"uri": "libs/amcharts4/charts.js"
+				},
+				{
+					"uri": "libs/amcharts4/animated.js"
+				},
+				{
+					"uri": "libs/amcharts4/dataviz.js"
+				},
+				{
+					"uri": "libs/xlsx/xlsx.core.min.js"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.sap.build.standard.brfAppDeGraosModoEditar.view",
+				"controlId": "App",
+				"clearTarget": false,
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"Index"
+					]
+				}
+			},
+			"targets": {
+				"Index": {
+					"controlAggregation": "pages",
+					"viewName": "Index",
+					"viewId": "Index",
+					"viewLevel": 1,
+					"transition": "slide"
+				},
+				"prospects.Index": {
+					"controlAggregation": "pages",
+					"viewName": "prospects.Index",
+					"viewId": "prospects.Index",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"prospects.New": {
+					"controlAggregation": "pages",
+					"viewName": "prospects.New",
+					"viewId": "prospects.New",
+					"viewLevel": 3,
+					"transition": "slide"
+				},
+				"prospects.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "prospects.Edit",
+					"viewId": "Edit",
+					"viewLevel": 4,
+					"transition": "slide"
+				},
+				"schedule.Index": {
+					"controlAggregation": "pages",
+					"viewName": "schedule.Index",
+					"viewId": "schedule.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"visitForm.Index": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.Index",
+					"viewId": "visitForm.Index",
+					"viewLevel": 6,
+					"transition": "slide"
+				},
+				"visitForm.New": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.New",
+					"viewId": "visitForm.New",
+					"viewLevel": 7,
+					"transition": "slide"
+				},
+				"visitForm.NewPeriodicVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.NewPeriodicVisitForm",
+					"viewId": "visitForm.NewPeriodicVisitForm",
+					"viewLevel": 8,
+					"transition": "slide"
+				},
+				"visitForm.NewYearlyVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.NewYearlyVisitForm",
+					"viewId": "visitForm.NewYearlyVisitForm",
+					"viewLevel": 9,
+					"transition": "slide"
+				},
+				"visitForm.EditYearlyVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.EditYearlyVisitForm",
+					"viewId": "visitForm.EditYearlyVisitForm",
+					"viewLevel": 10,
+					"transition": "slide"
+				},
+				"visitForm.NewGrainsVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.NewGrainsVisitForm",
+					"viewId": "visitForm.NewGrainsVisitForm",
+					"viewLevel": 11,
+					"transition": "slide"
+				},
+				"visitForm.EditGrainsVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.EditGrainsVisitForm",
+					"viewId": "visitForm.EditGrainsVisitForm",
+					"viewLevel": 12,
+					"transition": "slide"
+				},
+				"visitForm.NewIndustryVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.NewIndustryVisitForm",
+					"viewId": "visitForm.NewIndustryVisitForm",
+					"viewLevel": 13,
+					"transition": "slide"
+				},
+				"visitForm.EditIndustryVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.EditIndustryVisitForm",
+					"viewId": "visitForm.EditIndustryVisitForm",
+					"viewLevel": 14,
+					"transition": "slide"
+				},
+				"visitForm.EditPeriodicVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.EditPeriodicVisitForm",
+					"viewId": "visitForm.EditPeriodicVisitForm",
+					"viewLevel": 15,
+					"transition": "slide"
+				},
+				"visitForm.EditCommercializationVisitForm": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.EditCommercializationVisitForm",
+					"viewId": "visitForm.EditCommercializationVisitForm",
+					"viewLevel": 15,
+					"transition": "slide"
+				},
+				"visitForm.SimplifiedContact": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.SimplifiedContact",
+					"viewId": "visitForm.SimplifiedContact",
+					"viewLevel": 16,
+					"transition": "slide"
+				},
+				"visitForm.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "visitForm.Edit",
+					"viewId": "visitForm.Edit",
+					"viewLevel": 16,
+					"transition": "slide"
+				},
+				"offerMap.Index": {
+					"controlAggregation": "pages",
+					"viewName": "offerMap.Index",
+					"viewId": "offerMap.Index",
+					"viewLevel": 17,
+					"transition": "slide"
+				},
+				"offerMap.New": {
+					"controlAggregation": "pages",
+					"viewName": "offerMap.New",
+					"viewId": "offerMap.New",
+					"viewLevel": 18,
+					"transition": "slide"
+				},
+				"offerMap.ConsultOfferMap": {
+					"controlAggregation": "pages",
+					"viewName": "offerMap.ConsultOfferMap",
+					"viewId": "offerMap.ConsultOfferMap",
+					"viewLevel": 19,
+					"transition": "slide"
+				},
+				"offerMap.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "offerMap.Edit",
+					"viewId": "offerMap.Edit",
+					"viewLevel": 20,
+					"transition": "slide"
+				},
+				"offerMap.FilterOfferMap": {
+					"controlAggregation": "pages",
+					"viewName": "offerMap.FilterOfferMap",
+					"viewId": "offerMap.FilterOfferMap",
+					"viewLevel": 21,
+					"transition": "slide"
+				},
+				"offerMap.FilterLogisticsFreight": {
+					"controlAggregation": "pages",
+					"viewName": "offerMap.FilterLogisticsFreight",
+					"viewId": "offerMap.FilterLogisticsFreight",
+					"viewLevel": 22,
+					"transition": "slide"
+				},
+				"offerMap.ConsultLogisticsFreight": {
+					"controlAggregation": "pages",
+					"viewName": "offerMap.ConsultLogisticsFreight",
+					"viewId": "offerMap.ConsultLogisticsFreight",
+					"viewLevel": 23,
+					"transition": "slide"
+				},
+				"warehouseMap.Index": {
+					"controlAggregation": "pages",
+					"viewName": "warehouseMap.Index",
+					"viewId": "warehouseMap.Index",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"warehouseMap.New": {
+					"controlAggregation": "pages",
+					"viewName": "warehouseMap.New",
+					"viewId": "warehouseMap.New",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"warehouseMap.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "warehouseMap.Edit",
+					"viewId": "warehouseMap.Edit",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"warehouseMap.List": {
+					"controlAggregation": "pages",
+					"viewName": "warehouseMap.List",
+					"viewId": "warehouseMap.List",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"warehouseMap.Images": {
+					"controlAggregation": "pages",
+					"viewName": "warehouseMap.Images",
+					"viewId": "warehouseMap.Images",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"warehouseMap.Map": {
+					"controlAggregation": "pages",
+					"viewName": "warehouseMap.Map",
+					"viewId": "warehouseMap.Map",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"cropTur.Map": {
+					"controlAggregation": "pages",
+					"viewName": "cropTur.Map",
+					"viewId": "cropTur.Map",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"commodities.Index": {
+					"controlAggregation": "pages",
+					"viewName": "commodities.Index",
+					"viewId": "commodities.Index",
+					"viewLevel": 27,
+					"transition": "slide"
+				},
+				"commodities.NewFixedOrder": {
+					"controlAggregation": "pages",
+					"viewName": "commodities.NewFixedOrder",
+					"viewId": "commodities.NewFixedOrder",
+					"viewLevel": 28,
+					"transition": "slide"
+				},
+				"commodities.Filter": {
+					"controlAggregation": "pages",
+					"viewName": "commodities.Filter",
+					"viewId": "commodities.Filter",
+					"viewLevel": 29,
+					"transition": "slide"
+				},
+				"commodities.Consult": {
+					"controlAggregation": "pages",
+					"viewName": "commodities.Consult",
+					"viewId": "commodities.Consult",
+					"viewLevel": 30,
+					"transition": "slide"
+				},
+				"commodities.EditFixedOrder": {
+					"controlAggregation": "pages",
+					"viewName": "commodities.EditFixedOrder",
+					"viewId": "commodities.EditFixedOrder",
+					"viewLevel": 31,
+					"transition": "slide"
+				},
+				"commodities.NewDepositTransf": {
+					"controlAggregation": "pages",
+					"viewName": "commodities.NewDepositTransf",
+					"viewId": "commodities.NewDepositTransf",
+					"viewLevel": 32,
+					"transition": "slide"
+				},
+				"commodities.EditDepositTransf": {
+					"controlAggregation": "pages",
+					"viewName": "commodities.EditDepositTransf",
+					"viewId": "commodities.EditDepositTransf",
+					"viewLevel": 33,
+					"transition": "slide"
+				},
+				"crop.Index": {
+					"controlAggregation": "pages",
+					"viewName": "crop.Index",
+					"viewId": "crop.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"crop.Filter": {
+					"controlAggregation": "pages",
+					"viewName": "crop.Filter",
+					"viewId": "crop.Filter",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"crop.MultiCommercialization": {
+					"controlAggregation": "pages",
+					"viewName": "crop.MultiCommercialization",
+					"viewId": "crop.MultiCommercialization",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"crop.Create": {
+					"controlAggregation": "pages",
+					"viewName": "crop.Create",
+					"viewId": "crop.Create",
+					"viewLevel": 6,
+					"transition": "slide"
+				},
+				"crop.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "crop.Edit",
+					"viewId": "crop.Edit",
+					"viewLevel": 7
+				},
+				"crop.Images": {
+					"controlAggregation": "pages",
+					"viewName": "crop.Images",
+					"viewId": "crop.Images",
+					"viewLevel": 8
+				},
+				"crop.Consult": {
+					"controlAggregation": "pages",
+					"viewName": "crop.Consult",
+					"viewId": "crop.Consult",
+					"viewLevel": 8
+				},
+				"crop.ComposeExFilter": {
+					"controlAggregation": "pages",
+					"viewName": "crop.ComposeExFilter",
+					"viewId": "crop.ComposeExFilter",
+					"viewLevel": 8
+				},
+				"crop.ComposeEx": {
+					"controlAggregation": "pages",
+					"viewName": "crop.ComposeEx",
+					"viewId": "crop.ComposeEx",
+					"viewLevel": 8
+				},
+				"crop.ComposeExImages": {
+					"controlAggregation": "pages",
+					"viewName": "crop.ComposeExImages",
+					"viewId": "crop.ComposeExImages",
+					"viewLevel": 8
+				},
+				"cropTur.Index": {
+					"controlAggregation": "pages",
+					"viewName": "cropTur.Index",
+					"viewId": "cropTur.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cropTur.Filter": {
+					"controlAggregation": "pages",
+					"viewName": "cropTur.Filter",
+					"viewId": "cropTur.Filter",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cropTur.Create": {
+					"controlAggregation": "pages",
+					"viewName": "cropTur.Create",
+					"viewId": "cropTur.Create",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cropTur.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "cropTur.Edit",
+					"viewId": "cropTur.Edit",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cropTur.Consult": {
+					"controlAggregation": "pages",
+					"viewName": "cropTur.Consult",
+					"viewId": "cropTur.Consult",
+					"viewLevel": 8
+				},
+				"cropTur.FilterConsult": {
+					"controlAggregation": "pages",
+					"viewName": "cropTur.FilterConsult",
+					"viewId": "cropTur.FilterConsult",
+					"viewLevel": 8
+				},
+				"negotiationReport.Index": {
+					"controlAggregation": "pages",
+					"viewName": "negotiationReport.Index",
+					"viewId": "negotiationReport.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"negotiationReport.Filter": {
+					"controlAggregation": "pages",
+					"viewName": "negotiationReport.Filter",
+					"viewId": "negotiationReport.Filter",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"negotiationReport.New": {
+					"controlAggregation": "pages",
+					"viewName": "negotiationReport.New",
+					"viewId": "negotiationReport.New",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"negotiationReport.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "negotiationReport.Edit",
+					"viewId": "negotiationReport.Edit",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"negotiationReport.ReportFilter": {
+					"controlAggregation": "pages",
+					"viewName": "negotiationReport.ReportFilter",
+					"viewId": "negotiationReport.ReportFilter",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"negotiationReport.ReportIndex": {
+					"controlAggregation": "pages",
+					"viewName": "negotiationReport.ReportIndex",
+					"viewId": "negotiationReport.ReportIndex",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"negotiationReport.ReportList": {
+					"controlAggregation": "pages",
+					"viewName": "negotiationReport.ReportList",
+					"viewId": "negotiationReport.ReportList",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"price.tablePrice.Index": {
+					"controlAggregation": "pages",
+					"viewName": "price.tablePrice.Index",
+					"viewId": "price.tablePrice.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"price.tablePrice.Filter": {
+					"controlAggregation": "pages",
+					"viewName": "price.tablePrice.Filter",
+					"viewId": "price.tablePrice.Filter",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"price.tablePrice.Table": {
+					"controlAggregation": "pages",
+					"viewName": "price.tablePrice.Table",
+					"viewId": "price.tablePrice.Table",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"price.priceIntention.MainIndex": {
+					"controlAggregation": "pages",
+					"viewName": "price.priceIntention.MainIndex",
+					"viewId": "price.priceIntention.MainIndex",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"price.priceIntention.Index": {
+					"controlAggregation": "pages",
+					"viewName": "price.priceIntention.Index",
+					"viewId": "price.priceIntention.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"price.priceIntention.New": {
+					"controlAggregation": "pages",
+					"viewName": "price.priceIntention.New",
+					"viewId": "price.priceIntention.New",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"price.priceIntention.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "price.priceIntention.Edit",
+					"viewId": "price.priceIntention.Edit",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"commercialization.Index": {
+					"controlAggregation": "pages",
+					"viewName": "commercialization.Index",
+					"viewId": "commercialization.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"commercialization.Filter": {
+					"controlAggregation": "pages",
+					"viewName": "commercialization.Filter",
+					"viewId": "commercialization.Filter",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"commercialization.Create": {
+					"controlAggregation": "pages",
+					"viewName": "commercialization.Create",
+					"viewId": "commercialization.Create",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"commercialization.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "commercialization.Edit",
+					"viewId": "commercialization.Edit",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"errorPages.noUserFound": {
+					"controlAggregation": "pages",
+					"viewName": "errorPages.noUserFound",
+					"viewId": "errorPages.noUserFound",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"errorPages.timeOutConnection": {
+					"controlAggregation": "pages",
+					"viewName": "errorPages.timeOutConnection",
+					"viewId": "errorPages.timeOutConnection",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cadence.Index": {
+					"controlAggregation": "pages",
+					"viewName": "cadence.Index",
+					"viewId": "cadence.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cadence.FilterFixed": {
+					"controlAggregation": "pages",
+					"viewName": "cadence.FilterFixed",
+					"viewId": "cadence.FilterFixed",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cadence.FilterDeposit": {
+					"controlAggregation": "pages",
+					"viewName": "cadence.FilterDeposit",
+					"viewId": "cadence.FilterDeposit",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cadence.Search": {
+					"controlAggregation": "pages",
+					"viewName": "cadence.Search",
+					"viewId": "cadence.Search",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cadence.List": {
+					"controlAggregation": "pages",
+					"viewName": "cadence.List",
+					"viewId": "cadence.List",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"cadence.New": {
+					"controlAggregation": "pages",
+					"viewName": "cadence.New",
+					"viewId": "cadence.New",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"freightCalculator.New": {
+					"controlAggregation": "pages",
+					"viewName": "freightCalculator.New",
+					"viewId": "freightCalculator.New",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.Index": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.Index",
+					"viewId": "supplierExtract.Index",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.Filter": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.Filter",
+					"viewId": "supplierExtract.Filter",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.ExtractView": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.ExtractView",
+					"viewId": "supplierExtract.ExtractView",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.visitForm.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.visitForm.Edit",
+					"viewId": "supplierExtract.visitForm.Edit",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.priceIntention.Index": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.priceIntention.Index",
+					"viewId": "supplierExtract.priceIntention.Index",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.offerMap.OfferMapChart": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.offerMap.OfferMapChart",
+					"viewId": "supplierExtract.offerMap.OfferMapChart",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.offerMap.Index": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.offerMap.Index",
+					"viewId": "supplierExtract.offerMap.Index",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.commodities.Index": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.commodities.Index",
+					"viewId": "supplierExtract.commodities.Index",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.offerMap.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.offerMap.Edit",
+					"viewId": "supplierExtract.offerMap.Edit",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"supplierExtract.priceIntention.Edit": {
+					"controlAggregation": "pages",
+					"viewName": "supplierExtract.priceIntention.Edit",
+					"viewId": "supplierExtract.priceIntention.Edit",
+					"viewLevel": 2,
+					"transition": "slide"
+				},
+				"masterData.Index": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.Index",
+					"viewId": "masterData.Index",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.tablePrice": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.tablePrice",
+					"viewId": "masterData.tablePrice",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.cropForm": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.cropForm",
+					"viewId": "masterData.cropForm",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.certification": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.certification",
+					"viewId": "masterData.certification",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.region": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.region",
+					"viewId": "masterData.region",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.freight": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.freight",
+					"viewId": "masterData.freight",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.commit": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.commit",
+					"viewId": "masterData.commit",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.objective": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.objective",
+					"viewId": "masterData.objective",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.typeInteract": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.typeInteract",
+					"viewId": "masterData.typeInteract",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.storageType": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.storageType",
+					"viewId": "masterData.storageType",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.conditions": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.conditions",
+					"viewId": "masterData.conditions",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.tech": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.tech",
+					"viewId": "masterData.tech",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.sourceInformation": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.sourceInformation",
+					"viewId": "masterData.sourceInformation",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.visualCondition": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.visualCondition",
+					"viewId": "masterData.visualCondition",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.depositCondition": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.depositCondition",
+					"viewId": "masterData.depositCondition",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.userLogistics": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.userLogistics",
+					"viewId": "masterData.userLogistics",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.players": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.players",
+					"viewId": "masterData.players",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.suppliersContact": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.suppliersContact",
+					"viewId": "masterData.suppliersContact",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.cancellationReason": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.cancellationReason",
+					"viewId": "masterData.cancellationReason",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.cancelAppointment": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.cancelAppointment",
+					"viewId": "masterData.cancelAppointment",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.masterDataPermission": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.masterDataPermission",
+					"viewId": "masterData.masterDataPermission",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.cropFormCropTour": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.cropFormCropTour",
+					"viewId": "masterData.cropFormCropTour",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.admsCropTour": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.admsCropTour",
+					"viewId": "masterData.admsCropTour",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.countryCropTour": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.countryCropTour",
+					"viewId": "masterData.countryCropTour",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.businessVisit": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.businessVisit",
+					"viewId": "masterData.businessVisit",
+					"viewLevel": 5,
+					"transition": "slide"
+				},
+				"masterData.disableCommercialization": {
+					"controlAggregation": "pages",
+					"viewName": "masterData.disableCommercialization",
+					"viewId": "masterData.disableCommercialization",
+					"viewLevel": 5,
+					"transition": "slide"
+				}
+			},
+			"routes": [
+				{
+					"pattern": "Index/:context:",
+					"name": "Index",
+					"target": [
+						"Index"
+					]
+				},
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"Index"
+					]
+				},
+				{
+					"pattern": "prospects.Index/:context:",
+					"name": "prospects.Index",
+					"target": [
+						"prospects.Index"
+					]
+				},
+				{
+					"pattern": "prospects.New/:context:",
+					"name": "prospects.New",
+					"target": [
+						"prospects.New"
+					]
+				},
+				{
+					"pattern": "prospects.Edit/{PROSP_ID}",
+					"name": "prospects.Edit",
+					"target": [
+						"prospects.Edit"
+					]
+				},
+				{
+					"pattern": "schedule.Index/:partner:,:partnerName:,:keyData:",
+					"name": "schedule.Index",
+					"target": [
+						"schedule.Index"
+					]
+				},
+				{
+					"pattern": "visitForm.Index/:context:",
+					"name": "visitForm.Index",
+					"target": [
+						"visitForm.Index"
+					]
+				},
+				{
+					"pattern": "visitForm.New/:partner:,:partnerName:",
+					"name": "visitForm.New",
+					"target": [
+						"visitForm.New"
+					]
+				},
+				{
+					"pattern": "visitForm.Edit/:context:",
+					"name": "visitForm.Edit",
+					"target": [
+						"visitForm.Edit"
+					]
+				},
+				{
+					"pattern": "visitForm.SimplifiedContact/:context:",
+					"name": "visitForm.SimplifiedContact",
+					"target": [
+						"visitForm.SimplifiedContact"
+					]
+				},
+				{
+					"pattern": "visitForm.NewPeriodicVisitForm/{keyData}",
+					"name": "visitForm.NewPeriodicVisitForm",
+					"target": [
+						"visitForm.NewPeriodicVisitForm"
+					]
+				},
+				{
+					"pattern": "visitForm.NewYearlyVisitForm/{keyData}",
+					"name": "visitForm.NewYearlyVisitForm",
+					"target": [
+						"visitForm.NewYearlyVisitForm"
+					]
+				},
+				{
+					"pattern": "visitForm.NewGrainsVisitForm/{keyData}",
+					"name": "visitForm.NewGrainsVisitForm",
+					"target": [
+						"visitForm.NewGrainsVisitForm"
+					]
+				},
+				{
+					"pattern": "visitForm.NewIndustryVisitForm/{keyData}",
+					"name": "visitForm.NewIndustryVisitForm",
+					"target": [
+						"visitForm.NewIndustryVisitForm"
+					]
+				},
+				{
+					"pattern": "visitForm.EditCommercializationVisitForm/{keyData},:operation:",
+					"name": "visitForm.EditCommercializationVisitForm",
+					"target": [
+						"visitForm.EditCommercializationVisitForm"
+					]
+				},
+				{
+					"pattern": "visitForm.EditYearlyVisitForm/{keyData},:operation:",
+					"name": "visitForm.EditYearlyVisitForm",
+					"target": [
+						"visitForm.EditYearlyVisitForm"
+					]
+				},
+				{
+					"pattern": "visitForm.EditGrainsVisitForm/{keyData},:operation:",
+					"name": "visitForm.EditGrainsVisitForm",
+					"target": [
+						"visitForm.EditGrainsVisitForm"
+					]
+				},
+				{
+					"pattern": "visitForm.EditIndustryVisitForm/{keyData},:operation:",
+					"name": "visitForm.EditIndustryVisitForm",
+					"target": [
+						"visitForm.EditIndustryVisitForm"
+					]
+				},
+				{
+					"pattern": "visitForm.EditPeriodicVisitForm/{keyData},:operation:",
+					"name": "visitForm.EditPeriodicVisitForm",
+					"target": [
+						"visitForm.EditPeriodicVisitForm"
+					]
+				},
+				{
+					"pattern": "commodities.Index/:context:",
+					"name": "commodities.Index",
+					"target": [
+						"commodities.Index"
+					]
+				},
+				{
+					"pattern": "commodities.NewFixedOrder/:keyData:,:context:",
+					"name": "commodities.NewFixedOrder",
+					"target": [
+						"commodities.NewFixedOrder"
+					]
+				},
+				{
+					"pattern": "commodities.EditFixedOrder/{keyData}",
+					"name": "commodities.EditFixedOrder",
+					"target": [
+						"commodities.EditFixedOrder"
+					]
+				},
+				{
+					"pattern": "commodities.NewDepositTransf/:keyData:,:type:",
+					"name": "commodities.NewDepositTransf",
+					"target": [
+						"commodities.NewDepositTransf"
+					]
+				},
+				{
+					"pattern": "commodities.EditDepositTransf/{keyData},:tableCadence:",
+					"name": "commodities.EditDepositTransf",
+					"target": [
+						"commodities.EditDepositTransf"
+					]
+				},
+				{
+					"pattern": "commodities.Filter/:context:",
+					"name": "commodities.Filter",
+					"target": [
+						"commodities.Filter"
+					]
+				},
+				{
+					"pattern": "commodities.Consult/{keyData}",
+					"name": "commodities.Consult",
+					"target": [
+						"commodities.Consult"
+					]
+				},
+				{
+					"pattern": "offerMap.Index/:context:",
+					"name": "offerMap.Index",
+					"target": [
+						"offerMap.Index"
+					]
+				},
+				{
+					"pattern": "offerMap.New/:partner:,:partnerName:,:ekgrp:",
+					"name": "offerMap.New",
+					"target": [
+						"offerMap.New"
+					]
+				},
+				{
+					"pattern": "offerMap.ConsultOfferMap/{keyData}",
+					"name": "offerMap.ConsultOfferMap",
+					"target": [
+						"offerMap.ConsultOfferMap"
+					]
+				},
+				{
+					"pattern": "offerMap.ConsultLogisticsFreight/{keyData}",
+					"name": "offerMap.ConsultLogisticsFreight",
+					"target": [
+						"offerMap.ConsultLogisticsFreight"
+					]
+				},
+				{
+					"pattern": "offerMap.Edit/{keyData}/:option:,:operation:",
+					"name": "offerMap.Edit",
+					"target": [
+						"offerMap.Edit"
+					]
+				},
+				{
+					"pattern": "offerMap.FilterOfferMap/:context",
+					"name": "offerMap.FilterOfferMap",
+					"target": [
+						"offerMap.FilterOfferMap"
+					]
+				},
+				{
+					"pattern": "offerMap.FilterLogisticsFreight/:context",
+					"name": "offerMap.FilterLogisticsFreight",
+					"target": [
+						"offerMap.FilterLogisticsFreight"
+					]
+				},
+				{
+					"pattern": "warehouseMap.Index/:context:",
+					"name": "warehouseMap.Index",
+					"target": [
+						"warehouseMap.Index"
+					]
+				},
+				{
+					"pattern": "warehouseMap.New/{keyData}",
+					"name": "warehouseMap.New",
+					"target": [
+						"warehouseMap.New"
+					]
+				},
+				{
+					"pattern": "warehouseMap.Edit/{keyData}",
+					"name": "warehouseMap.Edit",
+					"target": [
+						"warehouseMap.Edit"
+					]
+				},
+				{
+					"pattern": "warehouseMap.List/:context:",
+					"name": "warehouseMap.List",
+					"target": [
+						"warehouseMap.List"
+					]
+				},
+				{
+					"pattern": "warehouseMap.Images/{keyData}",
+					"name": "warehouseMap.Images",
+					"target": [
+						"warehouseMap.Images"
+					]
+				},
+				{
+					"pattern": "warehouseMap.Map/{keyData}",
+					"name": "warehouseMap.Map",
+					"target": [
+						"warehouseMap.Map"
+					]
+				},
+				{
+					"pattern": "cropTur.Map/{keyData}",
+					"name": "cropTur.Map",
+					"target": [
+						"cropTur.Map"
+					]
+				},
+				{
+					"pattern": "crop.Index/:context:",
+					"name": "crop.Index",
+					"target": [
+						"crop.Index"
+					]
+				},
+				{
+					"pattern": "crop.Filter/:context:",
+					"name": "crop.Filter",
+					"target": [
+						"crop.Filter"
+					]
+				},
+				{
+					"pattern": "crop.MultiCommercialization/{keyData}",
+					"name": "crop.MultiCommercialization",
+					"target": [
+						"crop.MultiCommercialization"
+					]
+				},
+				{
+					"pattern": "crop.Create/{keyData},{filterData},{operation}",
+					"name": "crop.Create",
+					"target": [
+						"crop.Create"
+					]
+				},
+				{
+					"pattern": "crop.Edit/:keyData:,:filterData:,:notCrop:,:operation:",
+					"name": "crop.Edit",
+					"target": [
+						"crop.Edit"
+					]
+				},
+				{
+					"pattern": "crop.Images/{stageName},{keyData},:operation:",
+					"name": "crop.Images",
+					"target": [
+						"crop.Images"
+					]
+				},
+				{
+					"pattern": "crop.Consult/:context:,:filters:",
+					"name": "crop.Consult",
+					"target": [
+						"crop.Consult"
+					]
+				},
+				{
+					"pattern": "crop.ComposeExFilter/:context:",
+					"name": "crop.ComposeExFilter",
+					"target": [
+						"crop.ComposeExFilter"
+					]
+				},
+				{
+					"pattern": "crop.ComposeEx/{keyData}",
+					"name": "crop.ComposeEx",
+					"target": [
+						"crop.ComposeEx"
+					]
+				},
+				{
+					"pattern": "crop.ComposeExImages/{keyData}",
+					"name": "crop.ComposeExImages",
+					"target": [
+						"crop.ComposeExImages"
+					]
+				},
+				{
+					"pattern": "cropTur.Index/:context:",
+					"name": "cropTur.Index",
+					"target": [
+						"cropTur.Index"
+					]
+				},
+				{
+					"pattern": "cropTur.Filter/:context:",
+					"name": "cropTur.Filter",
+					"target": [
+						"cropTur.Filter"
+					]
+				},
+				{
+					"pattern": "cropTur.Create/{keyData}",
+					"name": "cropTur.Create",
+					"target": [
+						"cropTur.Create"
+					]
+				},
+				{
+					"pattern": "cropTur.Edit/:contextData:",
+					"name": "cropTur.Edit",
+					"target": [
+						"cropTur.Edit"
+					]
+				},
+				{
+					"pattern": "cropTur.Consult/:context:,:filters:",
+					"name": "cropTur.Consult",
+					"target": [
+						"cropTur.Consult"
+					]
+				},
+				{
+					"pattern": "cropTur.FilterConsult/",
+					"name": "cropTur.FilterConsult",
+					"target": [
+						"cropTur.FilterConsult"
+					]
+				},
+				{
+					"pattern": "negotiationReport.Index/:context:",
+					"name": "negotiationReport.Index",
+					"target": [
+						"negotiationReport.Index"
+					]
+				},
+				{
+					"pattern": "negotiationReport.Filter/:context:",
+					"name": "negotiationReport.Filter",
+					"target": [
+						"negotiationReport.Filter"
+					]
+				},
+				{
+					"pattern": "negotiationReport.New/{branch},{cropYear},{matnr},{regio},{state},{material_type},:cancel_offer_map_id:",
+					"name": "negotiationReport.New",
+					"target": [
+						"negotiationReport.New"
+					]
+				},
+				{
+					"pattern": "negotiationReport.Edit/{isEdit},{HCP_NEGO_REPORT_ID}",
+					"name": "negotiationReport.Edit",
+					"target": [
+						"negotiationReport.Edit"
+					]
+				},
+				{
+					"pattern": "negotiationReport.ReportFilter/:context:",
+					"name": "negotiationReport.ReportFilter",
+					"target": [
+						"negotiationReport.ReportFilter"
+					]
+				},
+				{
+					"pattern": "negotiationReport.ReportIndex/{start_date},{end_date},{state}",
+					"name": "negotiationReport.ReportIndex",
+					"target": [
+						"negotiationReport.ReportIndex"
+					]
+				},
+				{
+					"pattern": "negotiationReport.ReportList/:context:",
+					"name": "negotiationReport.ReportList",
+					"target": [
+						"negotiationReport.ReportList"
+					]
+				},
+				{
+					"pattern": "price.tablePrice.Index/:context:",
+					"name": "price.tablePrice.Index",
+					"target": [
+						"price.tablePrice.Index"
+					]
+				},
+				{
+					"pattern": "price.tablePrice.Filter/:context:",
+					"name": "price.tablePrice.Filter",
+					"target": [
+						"price.tablePrice.Filter"
+					]
+				},
+				{
+					"pattern": "price.tablePrice.Table/{ekgrp}, {werks}, {matnr}, {matnr}, {tpcereal}, {mes}, {ano}",
+					"name": "price.tablePrice.Table",
+					"target": [
+						"price.tablePrice.Table"
+					]
+				},
+				{
+					"pattern": "price.priceIntention.Index/:context:",
+					"name": "price.priceIntention.Index",
+					"target": [
+						"price.priceIntention.Index"
+					]
+				},
+				{
+					"pattern": "price.priceIntention.MainIndex/:context:",
+					"name": "price.priceIntention.MainIndex",
+					"target": [
+						"price.priceIntention.MainIndex"
+					]
+				},
+				{
+					"pattern": "price.priceIntention.New/:partner:,:ekgrp:",
+					"name": "price.priceIntention.New",
+					"target": [
+						"price.priceIntention.New"
+					]
+				},
+				{
+					"pattern": "price.priceIntention.Edit/{keyData},:operation:",
+					"name": "price.priceIntention.Edit",
+					"target": [
+						"price.priceIntention.Edit"
+					]
+				},
+				{
+					"pattern": "commercialization.Index/:context:",
+					"name": "commercialization.Index",
+					"target": [
+						"commercialization.Index"
+					]
+				},
+				{
+					"pattern": "commercialization.Filter/:context:",
+					"name": "commercialization.Filter",
+					"target": [
+						"commercialization.Filter"
+					]
+				},
+				{
+					"pattern": "commercialization.Create/{keyData},{operation}",
+					"name": "commercialization.Create",
+					"target": [
+						"commercialization.Create"
+					]
+				},
+				{
+					"pattern": "commercialization.Edit/{keyData},{HCP_COMMERC_ID}",
+					"name": "commercialization.Edit",
+					"target": [
+						"commercialization.Edit"
+					]
+				},
+				{
+					"pattern": "errorPages.noUserFound/:context:",
+					"name": "errorPages.noUserFound",
+					"target": [
+						"errorPages.noUserFound"
+					]
+				},
+				{
+					"pattern": "errorPages.timeOutConnection/:context:",
+					"name": "errorPages.timeOutConnection",
+					"target": [
+						"errorPages.timeOutConnection"
+					]
+				},
+				{
+					"pattern": "cadence.Index/:context:",
+					"name": "cadence.Index",
+					"target": [
+						"cadence.Index"
+					]
+				},
+				{
+					"pattern": "cadence.FilterFixed/:context:",
+					"name": "cadence.FilterFixed",
+					"target": [
+						"cadence.FilterFixed"
+					]
+				},
+				{
+					"pattern": "cadence.FilterDeposit/:context:",
+					"name": "cadence.FilterDeposit",
+					"target": [
+						"cadence.FilterDeposit"
+					]
+				},
+				{
+					"pattern": "cadence.Search/:context:",
+					"name": "cadence.Search",
+					"target": [
+						"cadence.Search"
+					]
+				},
+				{
+					"pattern": "cadence.List/{type},{lifnr},{matnr},{werks},{ekgrp},{ekorg}",
+					"name": "cadence.List",
+					"target": [
+						"cadence.List"
+					]
+				},
+				{
+					"pattern": "cadence.New/{unique},{offerNumer},{sequence},{supplier},{totalCadence},{lifnr},{matnr}",
+					"name": "cadence.New",
+					"target": [
+						"cadence.New"
+					]
+				},
+				{
+					"pattern": "freightCalculator.New/:context:",
+					"name": "freightCalculator.New",
+					"target": [
+						"freightCalculator.New"
+					]
+				},
+				{
+					"pattern": "supplierExtract.Index/{start_date},{end_date},{supplier},{supplierName}",
+					"name": "supplierExtract.Index",
+					"target": [
+						"supplierExtract.Index"
+					]
+				},
+				{
+					"pattern": "supplierExtract.Filter/:context:",
+					"name": "supplierExtract.Filter",
+					"target": [
+						"supplierExtract.Filter"
+					]
+				},
+				{
+					"pattern": "supplierExtract.ExtractView/:context:,:filters:",
+					"name": "supplierExtract.ExtractView",
+					"target": [
+						"supplierExtract.ExtractView"
+					]
+				},
+				{
+					"pattern": "supplierExtract.visitForm.Edit/:context:,:filters:",
+					"name": "supplierExtract.visitForm.Edit",
+					"target": [
+						"supplierExtract.visitForm.Edit"
+					]
+				},
+				{
+					"pattern": "supplierExtract.priceIntention.Index/:context:,:filters:",
+					"name": "supplierExtract.priceIntention.Index",
+					"target": [
+						"supplierExtract.priceIntention.Index"
+					]
+				},
+				{
+					"pattern": "supplierExtract.offerMap.OfferMapChart/:context:,:filters:",
+					"name": "supplierExtract.offerMap.OfferMapChart",
+					"target": [
+						"supplierExtract.offerMap.OfferMapChart"
+					]
+				},
+				{
+					"pattern": "supplierExtract.offerMap.Index/:context:,:filters:",
+					"name": "supplierExtract.offerMap.Index",
+					"target": [
+						"supplierExtract.offerMap.Index"
+					]
+				},
+				{
+					"pattern": "supplierExtract.commodities.Index/:context:,:filters:",
+					"name": "supplierExtract.commodities.Index",
+					"target": [
+						"supplierExtract.commodities.Index"
+					]
+				},
+				{
+					"pattern": "supplierExtract.offerMap.Edit/{keyData}/:option:,:operation:",
+					"name": "supplierExtract.offerMap.Edit",
+					"target": [
+						"supplierExtract.offerMap.Edit"
+					]
+				},
+				{
+					"pattern": "supplierExtract.priceIntention.Edit/{keyData},:operation:",
+					"name": "supplierExtract.priceIntention.Edit",
+					"target": [
+						"supplierExtract.priceIntention.Edit"
+					]
+				},
+				{
+					"pattern": "masterData.Index/:context:",
+					"name": "masterData.Index",
+					"target": [
+						"masterData.Index"
+					]
+				},
+				{
+					"pattern": "masterData.tablePrice/:context:",
+					"name": "masterData.tablePrice",
+					"target": [
+						"masterData.tablePrice"
+					]
+				},
+				{
+					"pattern": "masterData.cropForm/:context:",
+					"name": "masterData.cropForm",
+					"target": [
+						"masterData.cropForm"
+					]
+				},
+				{
+					"pattern": "masterData.certification/:context:",
+					"name": "masterData.certification",
+					"target": [
+						"masterData.certification"
+					]
+				},
+				{
+					"pattern": "masterData.region/:context:",
+					"name": "masterData.region",
+					"target": [
+						"masterData.region"
+					]
+				},
+				{
+					"pattern": "masterData.freight/:context:",
+					"name": "masterData.freight",
+					"target": [
+						"masterData.freight"
+					]
+				},
+				{
+					"pattern": "masterData.commit/:context:",
+					"name": "masterData.commit",
+					"target": [
+						"masterData.commit"
+					]
+				},
+				{
+					"pattern": "masterData.objective/:context:",
+					"name": "masterData.objective",
+					"target": [
+						"masterData.objective"
+					]
+				},
+				{
+					"pattern": "masterData.typeInteract/:context:",
+					"name": "masterData.typeInteract",
+					"target": [
+						"masterData.typeInteract"
+					]
+				},
+				{
+					"pattern": "masterData.storageType/:context:",
+					"name": "masterData.storageType",
+					"target": [
+						"masterData.storageType"
+					]
+				},
+				{
+					"pattern": "masterData.conditions/:context:",
+					"name": "masterData.conditions",
+					"target": [
+						"masterData.conditions"
+					]
+				},
+				{
+					"pattern": "masterData.tech/:context:",
+					"name": "masterData.tech",
+					"target": [
+						"masterData.tech"
+					]
+				},
+				{
+					"pattern": "masterData.sourceInformation/:context:",
+					"name": "masterData.sourceInformation",
+					"target": [
+						"masterData.sourceInformation"
+					]
+				},
+				{
+					"pattern": "masterData.visualCondition/:context:",
+					"name": "masterData.visualCondition",
+					"target": [
+						"masterData.visualCondition"
+					]
+				},
+				{
+					"pattern": "masterData.depositCondition/:context:",
+					"name": "masterData.depositCondition",
+					"target": [
+						"masterData.depositCondition"
+					]
+				},
+				{
+					"pattern": "masterData.userLogistics/:context:",
+					"name": "masterData.userLogistics",
+					"target": [
+						"masterData.userLogistics"
+					]
+				},
+				{
+					"pattern": "masterData.players/:context:",
+					"name": "masterData.players",
+					"target": [
+						"masterData.players"
+					]
+				},
+				{
+					"pattern": "masterData.suppliersContact/:context:",
+					"name": "masterData.suppliersContact",
+					"target": [
+						"masterData.suppliersContact"
+					]
+				},
+				{
+					"pattern": "masterData.cancellationReason/:context:",
+					"name": "masterData.cancellationReason",
+					"target": [
+						"masterData.cancellationReason"
+					]
+				},
+				{
+					"pattern": "masterData.cancelAppointment/:context:",
+					"name": "masterData.cancelAppointment",
+					"target": [
+						"masterData.cancelAppointment"
+					]
+				},
+				{
+					"pattern": "masterData.masterDataPermission/:context:",
+					"name": "masterData.masterDataPermission",
+					"target": [
+						"masterData.masterDataPermission"
+					]
+				},
+				{
+					"pattern": "masterData.cropFormCropTour/:context:",
+					"name": "masterData.cropFormCropTour",
+					"target": [
+						"masterData.cropFormCropTour"
+					]
+				},
+				{
+					"pattern": "masterData.admsCropTour/:context:",
+					"name": "masterData.admsCropTour",
+					"target": [
+						"masterData.admsCropTour"
+					]
+				},
+				{
+					"pattern": "masterData.countryCropTour/:context:",
+					"name": "masterData.countryCropTour",
+					"target": [
+						"masterData.countryCropTour"
+					]
+				},
+				{
+					"pattern": "masterData.businessVisit/:context:",
+					"name": "masterData.businessVisit",
+					"target": [
+						"masterData.businessVisit"
+					]
+				},
+				{
+					"pattern": "masterData.disableCommercialization/:context:",
+					"name": "masterData.disableCommercialization",
+					"target": [
+						"masterData.disableCommercialization"
+					]
+				}
+			]
+		}
+	},
+	"sap.platform.hcp": {
+		"uri": "webapp",
+		"_version": "1.1.0"
+	},
+	"sap.mobile": {
+		"definingRequests": {
+			"Prospects": "/Prospects?$expand=Prosp_Code,Prosp_Characteristics,Prosp_Banks,Prosp_Irf",
+			"Appointments": "/Appointments?$expand=Appoint_Check,Appoint_Commit,Appoint_Prospect,Appoint_Partner,Appoint_IntObj,Appoint_IntTyp",
+			"Token_Outlook": "/Token_Outlook",
+			"Crop_Tracking": "/Crop_Tracking?$expand=Crop_Track_Partner,Crop_Track_Material,Crop_Track_Region,Crop_Track_Crop_Year,Crop_Track_Commercialization&$orderby=HCP_CROP_TRACK_ID desc&$top=2000",
+			"CropTur_Collection": "/CropTur_Collection?$expand=Crop_Tur_Material,Crop_Tur_Region,Crop_Tur_Year,Crop_Tur_Country"
+		},
+		"stores": [
+			{
+				"name": "store_mainService",
+				"serviceRoot": "/app-graos-qas/crud.xsodata/",
+				"definingRequests": "mainService"
+			}
+		]
+	}
+}

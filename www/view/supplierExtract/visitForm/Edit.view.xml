@@ -1,0 +1,26 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.visitForm.Edit" xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Page title="Consulta Lista de Visitas" showNavButton="true" navButtonPress="onCancelPress" showFooter="true">
+		<headerContent>
+			<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<IconTabBar id="idIconTabBar" select="handleIconTabBarSelect" expanded="true" expandable="false" class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter icon="sap-icon://appointment-2" iconColor="Default" text="Anual" key="Yearly">
+						<core:Fragment fragmentName="com.sap.build.standard.brfAppDeGraosModoEditar.view.supplierExtract.visitForm.TableView" type="XML"/>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://appointment" iconColor="Critical" text="Periódico" key="Periodic">
+						<core:Fragment fragmentName="com.sap.build.standard.brfAppDeGraosModoEditar.view.supplierExtract.visitForm.TableView" type="XML"/>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://e-care" iconColor="Positive" text="Grãos" key="Grains">
+						<core:Fragment fragmentName="com.sap.build.standard.brfAppDeGraosModoEditar.view.supplierExtract.visitForm.TableView" type="XML"/>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://factory" iconColor="Neutral" text="Indústria" key="Industry">
+						<core:Fragment fragmentName="com.sap.build.standard.brfAppDeGraosModoEditar.view.supplierExtract.visitForm.TableView" type="XML"/>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+	</Page>
+</mvc:View>

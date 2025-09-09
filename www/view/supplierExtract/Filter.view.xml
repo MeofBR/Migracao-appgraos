@@ -1,0 +1,31 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.Filter"
+	xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Page title="Selecione" showNavButton="true" navButtonPress="navBack" showFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="supplierExtractKeysForm"
+				labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+				<f:content>
+					<Label text="Fornecedor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Input id="yesPartner" visible="true" required="true" change="_validateForm" editable="true" enabled="true"
+						placeholder="Selecione o Fornecedor" showValueHelp="true" type="Text" value="{reportFilterModel>/HCP_PARTNER}"
+						description="{reportFilterModel>/PROVIDER_DESC}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress"/>
+					<Label text="Período" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<DateRangeSelection id="dataRangeSelect" valueStateText="Selecione o Período" placeholder="Data Início/Data Fim" dateValue="{reportFilterModel>/start_date}"
+						secondDateValue="{reportFilterModel>/end_date}" width="auto" displayFormat="dd/MM/YYYY" enabled="true" visible="true" change="_validateForm"/>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<footer>
+			<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+				<content>
+					<ToolbarSpacer/>
+					<Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto" enabled="{reportFilterModel>/enableCreate}" visible="true"
+						iconDensityAware="false" press="_onConfirm"/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -1,0 +1,856 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.crop.ComposeExImages"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ScrollContainer height="100%" width="100%" horizontal="true" vertical="true" focusable="true" id="scrollContainerID">
+		<Panel expandable="true" expanded="true" headerText="Plantio" id="PLANTING_STAGE">
+			<l:VerticalLayout width="100%">
+				<l:BlockLayout background="Default" keepFontSize="true">
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop1PlantingStageBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop1} - {ComposeExImages>/period1}">
+							<Image width="290px" src="">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop2PlantingStageBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop2} - {ComposeExImages>/period2}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+				</l:BlockLayout>
+			</l:VerticalLayout>
+		</Panel>
+		<Panel expandable="true" expanded="true" headerText="Germinação" id="GERMINATION_STAGE">
+			<l:VerticalLayout width="100%">
+				<l:BlockLayout background="Default" keepFontSize="true">
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop1GerminationStageBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop1} - {ComposeExImages>/period1}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop2GerminationStageBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop2} - {ComposeExImages>/period2}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+				</l:BlockLayout>
+			</l:VerticalLayout>
+		</Panel>
+		<Panel expandable="true" expanded="true" headerText="Desenvolvimento Vegetativo" id="VEG_DEV_STAGE">
+			<l:VerticalLayout width="100%">
+				<l:BlockLayout background="Default" keepFontSize="true">
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop1VegDevBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop1} - {ComposeExImages>/period1}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop2VegDevBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop2} - {ComposeExImages>/period2}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+				</l:BlockLayout>
+			</l:VerticalLayout>
+		</Panel>
+		<Panel expandable="true" expanded="true" headerText="Floração" id="FLOWERING_STAGE">
+			<l:VerticalLayout width="100%">
+				<l:BlockLayout background="Default" keepFontSize="true">
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop1FloweringBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop1} - {ComposeExImages>/period1}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop2FloweringBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop2} - {ComposeExImages>/period2}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+				</l:BlockLayout>
+			</l:VerticalLayout>
+		</Panel>
+		<Panel expandable="true" expanded="true" headerText="Formação de Grãos" id="GRAIN_FORMATION_STAGE">
+			<l:VerticalLayout width="100%">
+				<l:BlockLayout background="Default" keepFontSize="true" busy="{ComposeExImages>/crop1GrainFormationBusy}">
+					<l:BlockLayoutRow accentCells="Accent1">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop1} - {ComposeExImages>/period1}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop2GrainFormationBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop2} - {ComposeExImages>/period2}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+				</l:BlockLayout>
+			</l:VerticalLayout>
+		</Panel>
+		<Panel expandable="true" expanded="true" headerText="Enchimento de Grãos" id="GRAIN_FILLING_STAGE">
+			<l:VerticalLayout width="100%">
+				<l:BlockLayout background="Default" keepFontSize="true">
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop1GrainFillingBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop1} - {ComposeExImages>/period1}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop2GrainFillingBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop2} - {ComposeExImages>/period2}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+				</l:BlockLayout>
+			</l:VerticalLayout>
+		</Panel>
+		<Panel expandable="true" expanded="true" headerText="Maturação" id="MATURATION_STAGE">
+			<l:VerticalLayout width="100%">
+				<l:BlockLayout background="Default" keepFontSize="true">
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop1MaturationBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop1} - {ComposeExImages>/period1}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop2MaturationBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop2} - {ComposeExImages>/period2}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+				</l:BlockLayout>
+			</l:VerticalLayout>
+		</Panel>
+		<Panel expandable="true" expanded="true" headerText="Colheita" id="HARVEST_STAGE">
+			<l:VerticalLayout width="100%">
+				<l:BlockLayout background="Default" keepFontSize="true">
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop1HarvestBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop1} - {ComposeExImages>/period1}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+					<l:BlockLayoutRow accentCells="Accent1" busy="{ComposeExImages>/crop2HarvestBusy}">
+						<l:BlockLayoutCell titleLevel="H3" title="Safra {ComposeExImages>/crop2} - {ComposeExImages>/period2}">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+						<l:BlockLayoutCell titleLevel="H3" class="ComposeExImageMargin">
+							<Image width="290px" src="" mode="Image">
+								<layoutData>
+									<FlexItemData growFactor="1" shrinkFactor="0"/>
+								</layoutData>
+								<detailBox>
+									<LightBox>
+										<LightBoxItem imageSrc=""></LightBoxItem>
+									</LightBox>
+								</detailBox>
+							</Image>
+						</l:BlockLayoutCell>
+					</l:BlockLayoutRow>
+				</l:BlockLayout>
+			</l:VerticalLayout>
+		</Panel>
+	</ScrollContainer>
+</mvc:View>

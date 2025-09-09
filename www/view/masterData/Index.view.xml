@@ -1,0 +1,310 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.masterData.Index"
+	xmlns="sap.m">
+	<Page showHeader="true" title="{i18n>textMasterData}" showFooter="{indexModel>/isMobile}" showNavButton="true" navButtonPress="backToIndex">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<Panel width="auto" class="sapUiResponsiveMargin linhaDadosMestre">
+				<headerToolbar>
+					<OverflowToolbar height="3rem">
+						<Title text="Geral"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<content>
+					<GenericTile header="SAFRA" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCropFormPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countSafra}" valueColor="Neutral" indicator="None" icon="sap-icon://e-care"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="CERTIFICADOS" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCertificationPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countCertificate}" valueColor="Neutral" indicator="None" icon="sap-icon://study-leave"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="MESOREGIÕES" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onRegionPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countRegion}" valueColor="Neutral" indicator="None" icon="sap-icon://map-2"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="CÁLCULO DE FRETE" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onFreightPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="1" valueColor="Neutral" indicator="None" icon="sap-icon://simulate"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="PARÂMETROS TABELA DE PREÇO" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onTablePricePress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countTablePrice}" valueColor="Neutral" indicator="None" icon="sap-icon://blank-tag"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="CONDIÇÃO DE DEPÓSITO" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onDepositConditionPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countDepositCondition}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="USUÁRIOS LOGÍSTICA"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onUserLogisticsPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countUserLogistics}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>textPlayerTitle}"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onPlayersPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countPlayers}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>textCancellationReason}"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCancellationReasonPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countCancellationReason}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>textCancelAppointment}"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCancelAppointmentPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countCancelAppointment}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+						<GenericTile header="{i18n>textCancelAppointment}"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCancelAppointmentPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countCancelAppointment}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>textMasterDataPermission}"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onBlockMasterDataPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countMasterDataPermission}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+				</content>
+			</Panel>
+			<Panel width="auto" class="sapUiResponsiveMargin linhaDadosMestre">
+				<headerToolbar>
+					<OverflowToolbar height="3rem">
+						<Title text="Ficha de Visitas"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<content>
+					<GenericTile header="{i18n>lblSimplifiedContact}"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onSuppliersContactPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countSuppliersContact}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>titleBusinessVisit}"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onBusinessVisitPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countBusinessVisit}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>disableCommercialization}"  subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onDisableCommercializationPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="1" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+				</content>
+			</Panel>
+			<Panel width="auto" class="sapUiResponsiveMargin linhaDadosMestre">
+				<headerToolbar>
+					<OverflowToolbar height="3rem">
+						<Title text="CropTour"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<content>
+					<GenericTile header="Acesso Administrador CropTour" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onUserAdmCroptour">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countAdmCropTour}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="Cadastrar Países CropTour" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCountryCroptour">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countContryCropTour}" valueColor="Neutral" indicator="None" icon="sap-icon://map-2"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="Gerenciar Safra CropTour" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCropFormCropTourPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countSafraCropTour}" valueColor="Neutral" indicator="None" icon="sap-icon://e-care"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+				</content>
+			</Panel>
+			<Panel width="auto" class="sapUiResponsiveMargin linhaDadosMestre">
+				<headerToolbar>
+					<OverflowToolbar height="3rem">
+						<Title text="Checkin"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<content>
+					<GenericTile header="COMPROMISSOS" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCommitPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countCommit}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="OBJETIVOS DE INTERAÇÃO" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onObjectivePress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countObjective}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="TIPOS DE INTERAÇÃO" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onTypePress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countTypeInteract}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="FONTE DE INFORMAÇÃO" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onSourceInformationPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countSourceInformation}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+				</content>
+			</Panel>
+			<Panel width="auto" class="sapUiResponsiveMargin linhaDadosMestre">
+				<headerToolbar>
+					<OverflowToolbar height="3rem">
+						<Title text="Acompanhamento de Lavoura"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<content>
+					<GenericTile header="CONDIÇÕES DE LAVOURA" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onConditionsPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countConditions}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="NÍVEL DE TECNOLOGIA" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onTechPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countTech}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+				</content>
+			</Panel>
+			<Panel width="auto" class="sapUiResponsiveMargin linhaDadosMestre">
+				<headerToolbar>
+					<OverflowToolbar height="3rem">
+						<Title text="Armazém"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<content>
+					<GenericTile header="TIPOS DE ARMAZENAGEM" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onStorageTypePress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countTypeStorage}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="CONDIÇÃO VISUAL ARMAZÉM" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onVisualConditionPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+								<content>
+									<NumericContent value="{indexModel>/countVisualCondition}" valueColor="Neutral" indicator="None" icon="sap-icon://checklist"/>
+								</content>
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+				</content>
+			</Panel>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+				<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Ultima atualização {indexModel>/lastUpdate}" showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

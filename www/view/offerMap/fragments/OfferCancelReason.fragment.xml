@@ -1,0 +1,80 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Dialog  showHeader="true" title="{offerMapCancelFormModel>/textHeader}" type="Standard">
+		<content>
+			<Panel width="auto">
+				<form:SimpleForm class="simpleFormCommerc" id="cancelReasonKeysForm" editable="true" maxContainerCols="1">
+					<form:content>
+						<Label text="{offerMapCancelFormModel>/textCancelReason}" design="Standard" width="100%" required="true" textAlign="Begin"
+							textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox placeholder="{i18n>placeSelectReason}" selectedKey="{offerMapCancelFormModel>/HCP_CANCEL_REASON}" editable="true"
+							selectionChange="selectedCombobox"
+							items="{ path: '/Cancellation_Reason', length: 999999, filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, sorter: { path: 'HCP_DESC',descending: false} }"
+							enabled="true" visible="true" required="true" width="auto" valueState="None" maxWidth="100%">
+							<custom:items>
+								<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						
+						<Label text="Motivo" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="{appModelVisible>/isVisibleOthers}"/>
+						<Input placeholder="Descreva o Motivo" type="Text" value="{offerMapCancelFormModel>/HCP_CANCEL_REASON_DESC}" showValueHelp="false" enabled="true"
+									editable="true" visible="{appModelVisible>/isVisibleOthers}" width="auto" valueHelpOnly="false" maxLength="40" 
+									liveChange="validateComboboxPlayerOtherFields"
+									change="validateComboboxPlayerOtherFields"/>
+						
+						<Label text="{i18n>textOtherPlayers}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="{appModelVisible>/isVisiblePlayers}"/>
+						<custom:CustomComboBox placeholder="{i18n>textOtherPlayers}" selectedKey="{offerMapCancelFormModel>/HCP_PLAYERS}" editable="true"
+							selectionChange="validateComboboxPlayer"
+							items="{ path: '/Players', length: 999999, filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, sorter: { path: 'HCP_NAME',descending: false}}"
+							enabled="true" visible="{appModelVisible>/isVisiblePlayers}" required="true" width="auto" valueState="None" maxWidth="100%">
+							<custom:items>
+								<core:Item text="{HCP_NAME} / {HCP_STATE}" enabled="true" key="{HCP_ID}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						
+						<Label text="" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="{offerMapCancelFormModel>/isVisible}"/>
+						<Text text="Relato de Negócios" textAlign="Center" textDirection="Inherit" visible="{appModelVisible>/isVisible}" width="auto"/>
+						<Label text="{i18n>textHarvest}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="{offerMapCancelFormModel>/isVisible}"/>
+						<custom:CustomComboBox
+							items="{ path: '/Crop_Year', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], length: 999999 , sorter: { path: 'HCP_CROP_ID',descending: false}}"
+							editable="true" enabled="true" visible="{appModelVisible>/isVisible}" width="auto" valueState="None" maxWidth="100%"
+							placeholder="{i18n>selectRegion}" selectedKey="{offerMapCancelFormModel>/HCP_CROP}" selectionChange="validateComboboxPlayerOtherFields">
+							<custom:items>
+								<core:Item text="{HCP_CROP_DESC}" enabled="true" key="{HCP_CROP_ID}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						<Label text="{i18n>textHomeState}" id="state" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="{appModelVisible>/isVisible}"/>
+						<custom:CustomComboBox
+							items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: true} }"
+							placeholder="Selecione Estado" editable="true" enabled="true" visible="{appModelVisible>/isVisible}" width="auto" valueState="None"
+							maxWidth="100%" selectedKey="{offerMapCancelFormModel>/HCP_STATE}" selectionChange="validateComboboxPlayerOtherFields" change="validateComboboxPlayerOtherFields">
+							<custom:items>
+								<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						<Label text="{i18n>labelCenter}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+							visible="{appModelVisible>/isVisible}"/>
+							<custom:CustomComboBox id="region"
+									items="{ path: '/Regions', length: 999999 , filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, sorter: { path: 'HCP_BEZEI',descending: true} }"
+							        editable="true" enabled="{filterPageModel>/enableRegion}" width="auto" valueState="None" maxWidth="100%" selectedKey="{offerMapCancelFormModel>/HCP_REGIO}"
+							        placeholder="{i18n>selectRegion}" visible="{appModelVisible>/isVisible}" selectionChange="validateComboboxPlayerOtherFields">
+										<custom:items>
+											<core:Item text="{HCP_BEZEI}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+						
+					</form:content>
+				</form:SimpleForm>
+			</Panel>
+		</content>
+		<buttons>
+			<Button text="{i18n>buttonCancel}" press="_onCancelPress" type="Transparent"/>
+			<Button text="{i18n>buttonConfirm}" press="_onConfirPress" type="Emphasized" iconFirst="true" width="auto"
+				enabled="{offerMapCancelFormModel>/enabledConfir}" visible="true" iconDensityAware="false"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

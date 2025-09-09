@@ -1,0 +1,446 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.Index" xmlns:microchart="sap.suite.ui.microchart" xmlns="sap.m"
+	xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+	<App id="myApp">
+		<pages>
+			<Page showHeader="false" title="BRF App Grãos" showFooter="false" showNavButton="false" busy="{indexModel>/keepBusy}"
+				visible="{indexModel>/pageLoad}">
+				<subHeader>
+					<Toolbar class="headerIndex">
+						<ToolbarSpacer/>
+						<Title text="AMB.TESTE {indexModel>/appVersion}" level="H3" class="titleIndexMargin"/>
+						<ToolbarSpacer/>
+						<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData" visible="{indexModel>/isMobile}"/>
+						<Button icon="sap-icon://message-popup" text="{indexModel>/messageCounter}" type="Emphasized" press="showMessageDialog"
+							busy="{indexModel>/messageBusyIndicator}"/>
+						<!--<Button type="Emphasized" text="Logout" press="logoff" visible="false"/>-->
+						<!--<Switch state="{indexModel>/switch}" change="enablePhoto" customTextOn="On" customTextOff="Off">-->
+						<!--	<layoutData>-->
+						<!--		<FlexItemData growFactor="1" />-->
+						<!--	</layoutData>-->
+						<!--</Switch>-->
+					</Toolbar>
+				</subHeader>
+				<content>
+					<VBox visible="{photoModel>/hasOfflinePhotos}">
+						<MessageStrip class="sapUiTinyMargin"
+							text="Você tem {= ${photoModel>/ItemPhoto}.length} {= ${photoModel>/ItemPhoto}.length > 1 ? 'Fotos' : 'Foto'} Offline. Deseja realizar o upload?"
+							type="Success" showIcon="true"></MessageStrip>
+						<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button text="Upload" type="Emphasized" press="_base64ToImage"/>
+						</OverflowToolbar>
+					</VBox>
+					<VBox class="background-index">
+						<MessageStrip text="Ultima atualização base ECC {indexModel>/lastUpdate}, clique para atualizar." showIcon="true" showCloseButton="false"
+							visible="{indexModel>/isMobile}" class="sapUiSmallMargin"></MessageStrip>
+						<MessageStrip visible="{indexModel>/hasCountOfferMap}" class="sapUiTinyMargin" text="{indexModel>/countStorageOfferMap}" type="Warning"
+							showCloseButton="true">
+							<link>
+								<Link text="Atualizar Ofertas." press="refreshOfferMapData"/>
+							</link>
+						</MessageStrip>
+						<MessageStrip visible="{indexModel>/hasCountCommodities}" class="sapUiTinyMargin" text="{indexModel>/countStorageCommodities}"
+							type="Warning" showCloseButton="true">
+							<link>
+								<Link text="Atualizar Compras." press="refreshCommoditiesData"/>
+							</link>
+						</MessageStrip>
+							<MessageStrip type="Error" visible="{indexModel>/hasPendingCommodities}" class="sapUiTinyMargin" text="Você possui {indexModel>/countPendingCommodities} compras fixas pendentes de envio ao SAP."
+							showCloseButton="true">
+							<link>
+								<Link text="Verificar." press="goToPendingCommodities"/>
+							</link>
+						</MessageStrip>
+							<MessageStrip type="Error" visible="{indexModel>/hasPendingDepositCommodities}" class="sapUiTinyMargin" text="Você possui {indexModel>/countPendingDepositCommodities} compras depósito pendentes de envio ao SAP."
+							showCloseButton="true">
+							<link>
+								<Link text="Verificar." press="goToPendingDepositCommodities"/>
+							</link>
+						</MessageStrip>
+						<VBox id="headerID">
+							<Panel id="panelID" width="auto" expandable="true" expanded="{indexModel>/expandIndex}" visible="true" headerText="Seu Extrato"
+								class="extractPainel extrato-compras sapUiTinyMarginTopBottom ">
+								<GenericTile header="Volume de compras" press="_onPriceIntentionTile" subheader="" frameType="OneByOne"
+									class="sapUiSmallMarginBottom sapUiTinyMarginBegin tileStyle2">
+									<tileContent>
+										<TileContent footer="Toneladas" unit="">
+											<content>
+												<microchart:ComparisonMicroChart size="S" scale="" view="" shrinkable="false" width="auto">
+													<microchart:data>
+														<microchart:ComparisonMicroChartData value="100" color="Good" title="MÊS VIGENTE"
+															displayValue="{ path: 'indexModel>/totalCurrentPurchaseVolume' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"/>
+														<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Mês Anterior"
+															displayValue="{ path: 'indexModel>/totalLastMonthPurchaseVolume' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"/>
+													</microchart:data>
+												</microchart:ComparisonMicroChart>
+											</content>
+										</TileContent>
+									</tileContent>
+								</GenericTile>
+								<GenericTile header="Nº de Compromissos Realizados" press="_onPriceIntentionTile" subheader="" frameType="OneByOne"
+									class="sapUiSmallMarginBottom sapUiTinyMarginBegin tileStyle2">
+									<tileContent>
+										<TileContent footer="Visitas" unit="">
+											<content>
+												<microchart:ComparisonMicroChart size="S" scale="" view="" shrinkable="false" width="auto">
+													<microchart:data>
+														<microchart:ComparisonMicroChartData value="100" color="Critical" title="MÊS VIGENTE" displayValue="{indexModel>/totalAppointment}"/>
+														<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Mês Anterior" displayValue="{indexModel>/totalAppointmentLM}"/>
+													</microchart:data>
+												</microchart:ComparisonMicroChart>
+											</content>
+										</TileContent>
+									</tileContent>
+								</GenericTile>
+								<GenericTile header="Nº de Ofertas em Aberto" press="_onPriceIntentionTile" subheader="" frameType="OneByOne"
+									class="sapUiSmallMarginBottom sapUiTinyMarginBegin tileStyle2">
+									<tileContent>
+										<TileContent footer="Ofertas" unit="">
+											<content>
+												<microchart:ComparisonMicroChart size="S" scale="" view="" shrinkable="false" width="auto">
+													<microchart:data>
+														<microchart:ComparisonMicroChartData value="0" color="Neutral" title="MÊS VIGENTE" displayValue="{indexModel>/totalOffers}"/>
+														<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Mês Anterior" displayValue="{indexModel>/totalOffersLM}"/>
+													</microchart:data>
+												</microchart:ComparisonMicroChart>
+											</content>
+										</TileContent>
+									</tileContent>
+								</GenericTile>
+								<GenericTile header="Vol. de Ofertas em Aberto" press="_onPriceIntentionTile" subheader="" frameType="OneByOne"
+									class="sapUiSmallMarginBottom sapUiTinyMarginBegin tileStyle2">
+									<tileContent>
+										<TileContent footer="Toneladas" unit="">
+											<content>
+												<microchart:ComparisonMicroChart size="S" scale="" view="" shrinkable="false" width="auto">
+													<microchart:data>
+														<microchart:ComparisonMicroChartData value="0" color="Neutral" title="MÊS VIGENTE"
+															displayValue="{ path: 'indexModel>/totalVolume' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"/>
+														<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Mês Anterior"
+															displayValue="{ path: 'indexModel>/totalVolumeLM' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"/>
+													</microchart:data>
+												</microchart:ComparisonMicroChart>
+											</content>
+										</TileContent>
+									</tileContent>
+								</GenericTile>
+							</Panel>
+						</VBox>
+						<Title class="titulo-grupo" visible="true" text="Menu" level="H2"/>
+						<VBox visible="{= ${indexModel>/isIE} ? false : true}" class="boxTema">
+							<!--<Panel width="auto" expandable="true" expanded="false" visible="true" headerText="Indicadores Gestão Comercial">-->
+							<!--<l:VerticalLayout width="100%">-->
+							<!--	<l:BlockLayout id="BlockLayout" background="Dashboard">-->
+							<!--		<l:BlockLayoutRow accentCells="Accent1">-->
+							<!--			<l:BlockLayoutCell id="Accent1" width="4" title="Volume de Compras">-->
+							<!--<l:BlockLayoutCell id="Accent1" width="2">-->
+							<!--				<List items="">-->
+							<!--					<items>-->
+							<!--<ObjectListItem title="Volume de Compras">-->
+							<!--						<ObjectListItem>-->
+							<!--							<firstStatus>-->
+							<!--								<ObjectStatus text="{indexModel>/totalCurrentPurchaseVolume} (T)" state="Warning"/>-->
+							<!--							</firstStatus>-->
+							<!--							<secondStatus>-->
+							<!--								<ObjectStatus text="{indexModel>/totalLastMonthPurchaseVolume} (T)"/>-->
+							<!--							</secondStatus>-->
+							<!--							<attributes>-->
+							<!--								<ObjectAttribute text=" Mês Vigente"/>-->
+							<!--								<ObjectAttribute text="Mês Anterior"/>-->
+							<!--							</attributes>-->
+							<!--						</ObjectListItem>-->
+							<!--					</items>-->
+							<!--				</List>-->
+							<!--			</l:BlockLayoutCell>-->
+							<!--			<l:BlockLayoutCell width="4" title="Número de Visitas Realizadas">-->
+							<!--				<List items="">-->
+							<!--					<items>-->
+							<!--<ObjectListItem title="Volume de Compras">-->
+							<!--					<ObjectListItem title="Número de Visitas Realizadas">-->
+							<!--					<firstStatus>-->
+							<!--						<ObjectStatus text="{indexModel>/totalAppointment}" state="Success"/>-->
+							<!--					</firstStatus>-->
+							<!--					<secondStatus>-->
+							<!--						<ObjectStatus text="{indexModel>/totalAppointmentLM}"/>-->
+							<!--					</secondStatus>-->
+							<!--					<attributes>-->
+							<!--						<ObjectAttribute text=" Mês Vigente"/>-->
+							<!--						<ObjectAttribute text="Mês Anterior"/>-->
+							<!--					</attributes>-->
+							<!--				</ObjectListItem>-->
+							<!--					</items>-->
+							<!--				</List>-->
+							<!--			</l:BlockLayoutCell>-->
+							<!--			<l:BlockLayoutCell width="4" title="Número de Ofertas em Andamento">-->
+							<!--				<List items="">-->
+							<!--					<items>-->
+							<!--<ObjectListItem title="Volume de Compras">-->
+							<!--						<ObjectListItem>-->
+							<!--							<firstStatus>-->
+							<!--								<ObjectStatus text="{indexModel>/totalCurrentPurchaseVolume} (T)" state="Warning"/>-->
+							<!--							</firstStatus>-->
+							<!--							<secondStatus>-->
+							<!--								<ObjectStatus text="{indexModel>/totalLastMonthPurchaseVolume} (T)"/>-->
+							<!--							</secondStatus>-->
+							<!--							<attributes>-->
+							<!--								<ObjectAttribute text=" Mês Vigente"/>-->
+							<!--								<ObjectAttribute text="Mês Anterior"/>-->
+							<!--							</attributes>-->
+							<!--						</ObjectListItem>-->
+							<!--					</items>-->
+							<!--				</List>-->
+							<!--			</l:BlockLayoutCell>-->
+							<!--			<l:BlockLayoutCell width="4" title="Volume de Ofertas em Andamento">-->
+							<!--				<List items="">-->
+							<!--					<items>-->
+							<!--<ObjectListItem title="Volume de Compras">-->
+							<!--						<ObjectListItem>-->
+							<!--							<firstStatus>-->
+							<!--								<ObjectStatus text="{indexModel>/totalCurrentPurchaseVolume} (T)" state="Warning"/>-->
+							<!--							</firstStatus>-->
+							<!--							<secondStatus>-->
+							<!--								<ObjectStatus text="{indexModel>/totalLastMonthPurchaseVolume} (T)"/>-->
+							<!--							</secondStatus>-->
+							<!--							<attributes>-->
+							<!--								<ObjectAttribute text=" Mês Vigente"/>-->
+							<!--								<ObjectAttribute text="Mês Anterior"/>-->
+							<!--							</attributes>-->
+							<!--						</ObjectListItem>-->
+							<!--					</items>-->
+							<!--				</List>-->
+							<!--			</l:BlockLayoutCell>-->
+							<!--		</l:BlockLayoutRow>-->
+							<!--<l:BlockLayoutRow>-->
+							<!--	<l:BlockLayoutCell width="4" title="Número de Ofertas em Andamento">-->
+							<!--		<List items="">-->
+							<!--			<items>-->
+							<!--<ObjectListItem title="Volume de Compras">-->
+							<!--				<ObjectListItem>-->
+							<!--					<firstStatus>-->
+							<!--						<ObjectStatus text="{indexModel>/totalCurrentPurchaseVolume} (T)" state="Warning"/>-->
+							<!--					</firstStatus>-->
+							<!--					<secondStatus>-->
+							<!--						<ObjectStatus text="{indexModel>/totalLastMonthPurchaseVolume} (T)"/>-->
+							<!--					</secondStatus>-->
+							<!--					<attributes>-->
+							<!--						<ObjectAttribute text=" Mês Vigente"/>-->
+							<!--						<ObjectAttribute text="Mês Anterior"/>-->
+							<!--					</attributes>-->
+							<!--				</ObjectListItem>-->
+							<!--			</items>-->
+							<!--		</List>-->
+							<!--	</l:BlockLayoutCell>-->
+							<!--	<l:BlockLayoutCell width="4" title="Volume de Ofertas em Andamento">-->
+							<!--		<List items="">-->
+							<!--			<items>-->
+							<!--<ObjectListItem title="Volume de Compras">-->
+							<!--				<ObjectListItem>-->
+							<!--					<firstStatus>-->
+							<!--						<ObjectStatus text="{indexModel>/totalCurrentPurchaseVolume} (T)" state="Warning"/>-->
+							<!--					</firstStatus>-->
+							<!--					<secondStatus>-->
+							<!--						<ObjectStatus text="{indexModel>/totalLastMonthPurchaseVolume} (T)"/>-->
+							<!--					</secondStatus>-->
+							<!--					<attributes>-->
+							<!--						<ObjectAttribute text=" Mês Vigente"/>-->
+							<!--						<ObjectAttribute text="Mês Anterior"/>-->
+							<!--					</attributes>-->
+							<!--				</ObjectListItem>-->
+							<!--			</items>-->
+							<!--		</List>-->
+							<!--	</l:BlockLayoutCell>-->
+							<!--</l:BlockLayoutRow>-->
+							<!--	</l:BlockLayout>-->
+							<!--</l:VerticalLayout>-->
+							<!--</Panel>-->
+						
+						<!--<Button type="Accept" icon="sap-icon://synchronize" press="sendMail" visible="true"/>-->
+						
+						
+							<GenericTile id="agendaHiddenID" header="Gestão de Agenda" subheader="Comercial" visible="true" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onAppointmentsTilePress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Agendamentos" unit="">
+										<content>
+											<!--<NumericContent value="10" valueColor="Good" indicator="None" icon="sap-icon://workflow-tasks"/>-->
+											<ImageContent src="" class="gestao"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+								<GenericTile header="Tabela de Preços" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onTablePricePress">
+								<tileContent>
+									<TileContent footer="Agendamentos" unit="">
+										<content>
+											<ImageContent src="" class="tabelaDePrecos"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="{i18n>textOfferMap}" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onOfferMapPress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Mapeamento" unit="">
+										<content>
+											<!--<NumericContent value="10" valueColor="Good" indicator="None" icon="sap-icon://workflow-tasks"/>-->
+											<ImageContent src="" class="mapeamento-oferta"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="Ficha de visitas" visible="true" subheader="Consultoria" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onSelectVisitForm">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Agendamentos" unit="">
+										<content>
+											<!--<NumericContent value="10" valueColor="Good" indicator="None" icon="sap-icon://workflow-tasks"/>-->
+											<ImageContent src="" class="ficha"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="Acompanhamento de Lavoura" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onCropTrackingPress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Agendamentos" unit="">
+										<content>
+											<!--<NumericContent value="10" valueColor="Good" indicator="None" icon="sap-icon://workflow-tasks"/>-->
+											<ImageContent src="" class="lavoura"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="CropTour" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onCropTurPress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" unit="">
+										<content>
+											<ImageContent src="" class="mapeamento-oferta"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="Extrato Fornecedor" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onSupplierExtractPress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Extrato" unit="">
+										<content>
+											<ImageContent src="" class="extrato"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="Compra de Commodities" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onCommoditiesPress">
+								<tileContent>
+									<TileContent footer="Agendamentos" unit="">
+										<content>
+											<ImageContent src="" class="compra"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="{i18n>textFreightCalculator}" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onFreightCalculatorPress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Cadência" unit="">
+										<content>
+											<ImageContent src="" class="calculadora"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<!--<Title class="titulo-grupo" text="Comércio" level="H2"/>-->
+							<!--<Title class="titulo-grupo" visible="true" text="Consultoria" level="H2"/>-->
+							<GenericTile header="Relato de Negociação da Região" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onNegotiationReportPress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Agendamentos" unit="">
+										<content>
+											<!--<NumericContent value="10" valueColor="Good" indicator="None" icon="sap-icon://workflow-tasks"/>-->
+											<ImageContent src="" class="relato"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="Intenção de Preços" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onPriceIntentionPress">
+								<tileContent>
+									<TileContent footer="Agendamentos" unit="">
+										<content>
+											<ImageContent src="" class="intencao"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="Prospects" visible="true" subheader="Visualizar" frameType="TwoByOne"
+								class="sapUiMediumMarginTopTop sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onProspectTilePress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Prospects">
+										<content>
+											<!--<NumericContent value="0" icon="sap-icon://customer"/>-->
+											<ImageContent src="" class="novopros"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="Cadência Recebimento" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onCadencePress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Cadência" unit="">
+										<content>
+											<ImageContent src="" class="cadencia"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<GenericTile header="Mapa de Armazém" visible="true" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onWarehouseMapPress">
+								<tileContent>
+									<TileContent class="sapMTitleContentIndex" footer="Mapeamento" unit="">
+										<content>
+											<ImageContent src="" class="mapeamento"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<!--<GenericTile header="Comercialização" visible="false" subheader="Comercial" frameType="TwoByOne"-->
+							<!--	class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onComercializacaoPress">-->
+							<!--	<tileContent>-->
+							<!--		<TileContent footer="Agendamentos" unit="">-->
+							<!--			<content>-->
+							<!--				<ImageContent src="" class="comercializacao"/>-->
+							<!--			</content>-->
+							<!--		</TileContent>-->
+							<!--	</tileContent>-->
+							<!--</GenericTile>-->
+							<GenericTile header="Dados Mestre" visible="{indexModel>/showConfig}" subheader="Comercial" frameType="TwoByOne"
+								class="sapUiMediumMarginTopBottom sapUiMediumMarginBeginEnd azul" press="_onMasterDataPress">
+								<tileContent>
+									<TileContent footer="Dados Mestre" unit="">
+										<content>
+											<ImageContent src="" class="dadosMestre"/>
+										</content>
+									</TileContent>
+								</tileContent>
+							</GenericTile>
+							<form:SimpleForm class="simpleForm testeCss" width="100%" columnsL="1" columnsM="1" columnsXL="1" visible="true" editable="true"
+								emptySpanL="4" emptySpanM="0" emptySpanXL="0" id="newSimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout"
+								maxContainerCols="2" minWidth="2048">
+								<form:content></form:content>
+							</form:SimpleForm>
+						</VBox>
+						<VBox visible="{= ${indexModel>/isIE} ? true : false}">
+							<MessageStrip text="Navegador não suportado, recomendamos o uso do navegador 'Google Chrome'." type="Error" showIcon="true"
+								showCloseButton="false" visible="true" class="sapUiMediumMarginTop"></MessageStrip>
+						</VBox>
+					</VBox>
+					
+					
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

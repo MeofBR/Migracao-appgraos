@@ -1,0 +1,83 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.schedule.Map"
+	xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:f="sap.f" xmlns:vbm="sap.ui.vbm" xmlns:core="sap.ui.core">
+	<Page showHeader="true" title="Gestão Agenda Comercial" showFooter="false" showNavButton="true" navButtonPress="_onPageNavButtonPress">
+		<content>
+			<layout:BlockLayout background="Default" visible="true">
+				<layout:content>
+					
+					<layout:BlockLayoutRow scrollable="false">
+						<layout:content>
+							<layout:BlockLayoutCell width="2" title="" titleAlignment="Begin" titleLevel="Auto">
+								<layout:content>
+									<layout:BlockLayoutCell width="1" title="" titleAlignment="Begin" titleLevel="Auto">
+										<layout:content>
+											<HBox alignItems="Stretch" direction="Row" fitContainer="false" width="258px" height="83px" justifyContent="Start" renderType="Div"
+												visible="true" displayInline="false">
+												<items>
+													<f:Avatar src="/webapp/resources/avatar_02.jpg" initials="" displayShape="Circle" displaySize="M" imageFitType="Cover"
+														class="sapUiTinyMargin"/>
+													<VBox alignItems="Stretch" direction="Column" fitContainer="false" width="351px" height="66px" justifyContent="Start" renderType="Div"
+														visible="true" displayInline="false" class="sapUiTinyMargin">
+														<items>
+															<Title text="Adelino Pereira" titleStyle="H4" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+															<Text text="Visita Téc - Toledo/PR" width="162px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+															<Label text="Planejado - 01/10/2018" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+																visible="true"/>
+														</items>
+														<layoutData/>
+													</VBox>
+												</items>
+												<layoutData/>
+											</HBox>
+											<Button text="Iniciar Visita" type="Accept" iconFirst="true" width="228px" enabled="true" visible="true" iconDensityAware="false"
+												press="_onButtonPress"/>
+										</layout:content>
+									</layout:BlockLayoutCell>
+									<vbm:GeoMap legendVisible="true" scaleVisible="true" width="288px" height="322px" initialPosition="-24;-40;49"
+										centerPosition="-53.73;-24.73" initialZoom="13" zoomlevel="13" enableAnimation="false" refMapLayerStack="Default" disableZoom="false"
+										disablePan="false">
+										<vbm:resources>
+											<vbm:Resource name="ref1" src="/webapp/resources/pin.png"/>
+										</vbm:resources>
+										<vbm:legend/>
+										<vbm:vos>
+											<vbm:Spots>
+												<vbm:items>
+													<vbm:Spot position="-53.72;-24.734;49" text="" image="ref1" alignment="5"/>
+												</vbm:items>
+											</vbm:Spots>
+											<vbm:Circles>
+												<vbm:items/>
+											</vbm:Circles>
+											<vbm:Routes>
+												<vbm:items/>
+											</vbm:Routes>
+										</vbm:vos>
+									</vbm:GeoMap>
+								</layout:content>
+							</layout:BlockLayoutCell>
+						</layout:content>
+					</layout:BlockLayoutRow>
+				</layout:content>
+			</layout:BlockLayout>
+		</content>
+		<footer>
+			<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+				<content>
+					<Button text="Refresh" width="80px" id="__button1" visible="false" press="onRefreshButton"/>
+					<Button text="Flush" width="70px" id="__button0" visible="false" press="onFlushButton"/>
+					<Button text="Cancelar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+						press="_onCancel"/>
+					<ToolbarSpacer width=""/>
+					<Button text="Cadastrar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+						press="_onButtonPress1"/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+		<headerContent>
+			<core:Icon src="sap-icon://paging" size="20px" height="48px" width="48px" visible="true"/>
+		</headerContent>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

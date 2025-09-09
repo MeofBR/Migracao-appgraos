@@ -1,0 +1,170 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.visitForm.SimplifiedContact"
+	xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:uxap="sap.uxap" xmlns:core="sap.ui.core" xmlns:t="sap.ui.table"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Page title="{i18n>lblSimplifiedContact}" showNavButton="true" navButtonPress="navBack" showFooter="false">
+		<headerContent></headerContent>
+		<content>
+			<VBox>
+				<Panel class="panel-expansive-default" width="auto" expandable="true" expanded="true" headerText="{i18n>textFilterSelected}">
+					<l:VerticalLayout width="100%" class="gridWrapper">
+						<form:SimpleForm class="editableForm" id="filterTablePriceForm" layout="ResponsiveGridLayout">
+						<form:content>
+								<VBox>
+									<VBox>
+										<Label width="100%" text="{i18n>labelbuyerGroup}" design="Standard" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<custom:CustomComboBox class="sapUiTinyMarginTop" width="100%"
+											items="{ path: '/Buyer_Groups', length: 999999999 , sorter: { path: 'EKGRP',descending: false}}" placeholder="{i18n>placeHolderGroup}"
+											selectedKey="{indexModel>/EKGRP}" editable="true" enabled="true" visible="true" valueState="None" change="_validateBuyerGroups">
+											<custom:items>
+												<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+											</custom:items>
+										</custom:CustomComboBox>
+									</VBox>
+								</VBox>
+							</form:content>
+						</form:SimpleForm>
+					</l:VerticalLayout>
+				</Panel>
+			</VBox>
+			<Page
+				showHeader="false"
+				enableScrolling="true"
+				growing="true"
+				class="sapUiContentPadding"
+			>
+				<content>
+	                <Table alternateRowColors="true" items="{path: 'indexModel>/oTableContact'}" id="table" itemPress="openDialog" width="auto" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" fixedLayout="false" class="sapUiSizeCompact">
+						<infoToolbar>
+							<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+								<content>
+									<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</content>
+							</Toolbar>
+						</infoToolbar>
+						<headerToolbar>
+							<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+								<content>
+									<Title class="textColorRed" wrapping="true" level="H3" text="Existe(m) {path: 'indexModel>/oVisitFormPending'} Fornecedor(es) sem ficha de visita no mês atual" visible="{= ${indexModel>/oVisitFormPending} > 0 ? true : false}" />
+									<ToolbarSpacer/>
+									<OverflowToolbarButton text="Ordenar" press="sortButtonPressed" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto"
+										enabled="true" visible="true" iconDensityAware="false"/>
+									<OverflowToolbarButton text="Filtro" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"
+										enabled="true" visible="true" iconDensityAware="false"/>
+								</content>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column width="15%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>lblCNPJCPF}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="23%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textProvider}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="10%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textVisitForm}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="10%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>lblContact}" width="auto" maxLines="1" wrapping="false" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="10%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>lblLastContact}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="15%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>lblUsers}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="15%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="Ranking" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="5%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header></header>
+								<footer/>
+							</Column>
+							<Column width="5%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header></header>
+								<footer/>
+							</Column>
+							<Column width="5%" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header></header>
+								<footer/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem type="Active" press="_onRowPress">
+								<cells>
+									<Text text="{path: 'indexModel>HCP_STCD1', formatter: '.formatter.maskCNPJ'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Text text="{indexModel>HCP_PARTNER_NAME}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<FormattedText htmlText="{path: 'indexModel>HCP_VISIT_FORM', formatter: '.formatter.formatterVisitForm'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<CheckBox wrapping="false" maxLines="1" width="auto" selected="{= ${indexModel>HCP_CONTACT} === 1 ? true : false }" select="onCheckBox"/>
+									<Text wrapping="false" maxLines="1" width="auto" text="{path: 'indexModel>HCP_UPDATED_AT', formatter: '.formatter.formatDate'}"/>
+									<Text text="{indexModel>HCP_UPDATED_BY}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<FormattedText htmlText="{path: 'indexModel>HCP_RANK', formatter: '.formatter.formatterRank'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button
+										id="OfferMapButton"
+										tooltip="{i18n>textOfferMap}"
+										wrapping="false"
+										maxLines="1"
+										width="2rem"
+		                            	press="openDialog"
+		                            	type="{= ${indexModel>Offer_Map_association/results}.length === 0 || ${indexModel>HCP_ACTIVE} === '0' ? 'Reject' : 'Accept'}"
+		                            	icon="sap-icon://map-2"
+	                            	/>
+	                            	<Button
+	                            		id="AppointmentsButton"
+	                            		tooltip="{i18n>titleSchedule}"
+										wrapping="false"
+										maxLines="1"
+										width="2rem"
+		                            	press="openDialog"
+		                            	type="{= ${indexModel>Appointments_association/results}.length === 0 || ${indexModel>HCP_ACTIVE} === '0' ? 'Reject' : 'Accept'}"
+		                            	icon="sap-icon://date-time"
+	                            	/>
+	                            	<Button
+	                            		id="PriceIntentionButton"
+	                            		tooltip="{i18n>lblPriceIntention}"
+										wrapping="false"
+										maxLines="1"
+										width="2rem"
+		                            	press="openDialog"
+		                            	type="{= ${indexModel>Price_Intention_association/results}.length === 0 || ${indexModel>HCP_ACTIVE} === '0' ? 'Reject' : 'Accept'}"
+		                            	icon="sap-icon://lead"
+	                            	/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+        		</content>
+			</Page>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+				<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Ultima atualização {indexModel>/lastUpdate}" showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

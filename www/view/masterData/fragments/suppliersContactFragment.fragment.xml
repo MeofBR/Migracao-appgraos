@@ -1,0 +1,50 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="{i18n>textAddSimplifiedContact}" type="Standard"
+		verticalScrolling="true">
+		<content>
+			<Panel width="auto">
+				<form:SimpleForm class="simpleFormCommerc" editable="true" id="formPrice" maxContainerCols="1">
+					<form:content>
+						
+						<Label text="{i18n>textVendor}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>			
+						<Input id="Partner" visible="true" required="true" editable="true"
+							enabled="true" placeholder="{i18n>placeSelectVendor}" showValueHelp="true" type="Text" value="{suppliersContactModel>/HCP_PARTNER}"
+							description="{suppliersContactModel>/PROVIDER_DESC}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress"/>
+							
+						<Label width="100%" text="{i18n>labelbuyerGroup}" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox
+							items="{ path: '/Buyer_Groups', length: 999999999 , sorter: { path: 'EKGRP',descending: false}}"
+							placeholder="{i18n>placeHolderGroup}" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+							selectedKey="{suppliersContactModel>/HCP_EKGRP}" selectionChange="_validateForm">
+							<custom:items>
+								<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						
+						<Label width="100%" text="{i18n>selectRank}" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox placeholder="{i18n>selectRank}" selectedKey="{suppliersContactModel>/HCP_RANK}" selectionChange="_validateForm" editable="true" enabled="true"
+							visible="true" width="auto" valueState="None" maxWidth="100%">
+							<custom:items>
+								<core:Item text="Bronze" enabled="true" key="1"/>
+								<core:Item text="Prata" enabled="true" key="2"/>
+								<core:Item text="Ouro" enabled="true" key="3"/>
+								<core:Item text="Diamante" enabled="true" key="4"/>
+							</custom:items>
+						</custom:CustomComboBox>
+					</form:content>
+				</form:SimpleForm>
+			</Panel>
+		</content>
+		<beginButton/>
+		<buttons>
+			<Button text="{i18n>buttonCancel}" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+				press="_onDialogSuppliersContactCancelPress"/>
+			<Button text="{i18n>confirm}" type="Emphasized" iconFirst="true" width="auto" enabled="{filterPageModel>/enableCreate}" visible="true" iconDensityAware="false"
+				press="_onSave"/>
+		</buttons>
+		<customHeader/>
+		<endButton/>
+		<subHeader/>
+	</Dialog>
+</core:FragmentDefinition>

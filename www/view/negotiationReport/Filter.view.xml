@@ -1,0 +1,105 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.negotiationReport.Filter"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="navBack"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Relato de Negociação da Região" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+					<Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${filterPageModel>/enableCreate} &amp;&amp; ${filterPageModel>/enableCreateRegioValid} &amp;&amp; ${profileModel>/create}}" visible="true" iconDensityAware="false"
+						press="goToCreate"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="">
+						<uxap:blocks>
+							<f:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="NegotiationReportKeysForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+								<f:content>
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${profileModel>/create} === true ? false : true}"/>
+									<MessageStrip text="Você não tem permissão para criar Relato de Negociação da Região" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${profileModel>/create} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<Label text="Safra" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/Crop_Year', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], length: 999999 , sorter: { path: 'HCP_CROP_ID',descending: false}}"
+										placeholder="Selecione Safra" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filterPageModel>/cropYear}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_CROP_DESC}" enabled="true" key="{HCP_CROP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Estado Origem" id="state" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: false} }"
+										placeholder="Selecione Estado" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filterPageModel>/state}" selectionChange="_changeState" change="_changeState">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${filterPageModel>/enableCreateRegioValid} === true ? false : true}"/>
+									<MessageStrip text="Estado não permitido para o seu perfil" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${filterPageModel>/enableCreateRegioValid} === true ? false : true}"/>
+									<Label text="Região" design="Standard" width="100%" required="{filterPageModel>/enableRegion}" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox id="region"
+										items="{ path: '/Regions', length: 999999 , filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, sorter: { path: 'HCP_ID',descending: false} }"
+										placeholder="Selecione Região" editable="true" enabled="{filterPageModel>/enableRegion}" visible="{filterPageModel>/enableRegion}"
+										width="auto" valueState="None" maxWidth="100%" selectedKey="{filterPageModel>/regio}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_BEZEI}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Material" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false} }"
+										placeholder="Selecione Material" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{filterPageModel>/matnr}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Tipo Material" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Material_Type', length: 999999 , sorter: { path: 'TPCEREAL',descending: false} }"
+										placeholder="Selecione Tipo de Material" editable="true" enabled="true" selectedKey="{filterPageModel>/material_type}" visible="true"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{TPCEREAL} - {DETPCEREAL}" enabled="true" key="{TPCEREAL}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Grupo Comprador" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox name="TABLE_PRICE"
+										items="{ path: '/View_Account_Groups', length: 999999 , sorter: { path: 'EKGRP',descending: false} }" placeholder="Selecione Comprador"
+										editable="true" enabled="true" selectedKey="{filterPageModel>/branch}" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_changeBranch" change="_changeBranch">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

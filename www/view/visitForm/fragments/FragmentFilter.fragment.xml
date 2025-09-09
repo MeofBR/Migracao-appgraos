@@ -1,0 +1,95 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ResponsivePopover title="Filtro Lista de Visitas" placement="Bottom">
+		<content>
+			<form:Form width="100%" editable="true" visible="true">
+				<form:title/>
+				<form:formContainers>
+					<form:FormContainer visible="true">
+						<form:formElements>
+							<form:FormElement visible="true">
+								<SegmentedButton selectedKey="{visitFormModel>/partnerProspect}" width="auto" class="sapUiSmallMarginBottom"
+									selectionChange="_onInputFormSelect">
+									<items>
+										<SegmentedButtonItem text="Fornecedor" key="Fornecedor"/>
+										<SegmentedButtonItem text="Prospect" key="Prospect"/>
+									</items>
+								</SegmentedButton>
+								<form:fields>
+									<Input placeholder="{filters>/typeFilterr}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto"
+										valueHelpOnly="false" maxLength="0" value="{filters>/NAME1}"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Tipo de Contato" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<custom:CustomComboBox placeholder="Selecione o Tipo de Contato" selectedKey="{filters>/HCP_CONTACT_TYPE}" editable="true" enabled="true"
+									visible="true" width="auto" valueState="None" maxWidth="100%">
+									<custom:items>
+										<core:Item text="Presencial" enabled="true" key="presencial"/>
+										<core:Item text="Telefone" enabled="true" key="telefone"/>
+										<core:Item text="Mensagem via Telefone" enabled="true" key="mensagemtelefone"/>
+										<core:Item text="Skype" enabled="true" key="skype"/>
+										<core:Item text="E-mail" enabled="true" key="email"/>
+										<core:Item text="Outros" enabled="true" key="outros"/>
+									</custom:items>
+								</custom:CustomComboBox>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Iniciativa do Contato" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<ComboBox placeholder="Selecione a Iniciativa do Contato" selectedKey="{filters>/HCP_CONTACT_INICIATIVE}" editable="true" enabled="true"
+									visible="true" width="auto" valueState="None" maxWidth="100%">
+									<items>
+										<core:Item text="BRF" enabled="true" key="BRF"/>
+										<core:Item text="Fornecedor" enabled="true" key="Fornecedor"/>
+									</items>
+								</ComboBox>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Usuário" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<Input placeholder="Digite o Usuário" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="0" value="{filters>/HCP_CREATED_BY}"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Data de" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<DatePicker placeholder="Dia / Mês / Ano" displayFormat="short"
+										value="{ path: 'filters>/HCP_START_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+										dateValue="" change="test"/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Data Até" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<form:fields>
+									<DatePicker placeholder="Dia / Mês / Ano" displayFormat="short"
+										value="{ path: 'filters>/HCP_END_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+										dateValue=""/>
+								</form:fields>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:fields>
+									<Button text="Pesquisar" type="Emphasized" press="submitFilterList"/>
+								</form:fields>
+							</form:FormElement>
+						</form:formElements>
+						<form:title/>
+					</form:FormContainer>
+				</form:formContainers>
+				<form:layout>
+					<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+				</form:layout>
+			</form:Form>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

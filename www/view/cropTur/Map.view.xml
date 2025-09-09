@@ -1,0 +1,29 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.cropTur.Map"
+	xmlns="sap.m" xmlns:layout="sap.ui.layout" xmlns:unified="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:vbm="sap.ui.vbm" xmlns:f="sap.f">
+	<Page id="map" class="sapUiStdPage" showHeader="true" title="Check-In CropTour" showFooter="false" showNavButton="true"
+		navButtonPress="navBack">
+		<content>
+			<vbm:GeoMap id="GeoMap" legendVisible="true" scaleVisible="true" width="100%" height="100%"
+				centerPosition="{cropTurModel>/long};{cropTurModel>/lat}" initialZoom="13" zoomlevel="13" enableAnimation="true"
+				refMapLayerStack="Default" disableZoom="false" disablePan="false" navcontrolVisible="false">
+				<vbm:resources>
+					<vbm:Resource name="ref1" src="/webapp/resources/pin.png"/>
+				</vbm:resources>
+				<vbm:legend/>
+				<vbm:vos>
+					<vbm:Spots>
+						<vbm:items>
+							<vbm:Spot position="{cropTurModel>/long};{cropTurModel>/lat}" text="" image="ref1" alignment="5"/>
+						</vbm:items>
+					</vbm:Spots>
+					<vbm:Circles>
+						<vbm:items/>
+					</vbm:Circles>
+					<vbm:Routes>
+						<vbm:items/>
+					</vbm:Routes>
+				</vbm:vos>
+			</vbm:GeoMap>
+		</content>
+	</Page>
+</mvc:View>

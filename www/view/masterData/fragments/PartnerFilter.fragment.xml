@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar">
+	<Dialog afterClose="onPartnerDialogClose" contentWidth="100%" title="Selecione o Fornecedor">
+		<fb:FilterBar reset="_onPartnerReset" search="_onPartnerApplySearch" showClearButton="false" showRestoreButton="true" id="fbPartner">
+			<fb:filterItems>
+				<fb:FilterItem label="Nome do Fornecedor" name="NAME1">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem label="CNPJ / ID1" name="STCD1">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem label="CPF / ID2" name="STCD2">
+					<fb:control>
+						<Input type="Text"/>
+					</fb:control>
+				</fb:FilterItem>
+			</fb:filterItems>
+		</fb:FilterBar>
+		<List growing="true" id="partnerListID" items="{ path: '/View_Grouping_Provider_Simplified_Contact', sorter: { path: 'NAME1' } }" mode="SingleSelectMaster"
+			includeItemInSelection="true" selectionChange="onPartnerSelected">
+			<StandardListItem title="{NAME1}" description="{LAND1} ({STCD1}{STCD2})"/>
+		</List>
+		<buttons>
+			<Button text="{i18n&gt;Cancelar}" width="auto" press="onPartnerDialogClose" type="Transparent"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

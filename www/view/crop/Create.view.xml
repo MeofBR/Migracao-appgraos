@@ -1,0 +1,382 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.crop.Create"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="false" showHeaderContent="false" showAnchorBar="false" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="_onCancel"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="{i18n>titleCrop}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>					
+					<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${createCropModel>/enableSave} &amp;&amp; ${createCropModel>/stagesValid} &amp;&amp; ${createCropModel>/maturationAboveHarvest} &amp;&amp; ${profileModel>/create}}"
+						visible="true" iconDensityAware="false" press="_onSave"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Características" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Características" mode="Expanded">
+						<uxap:blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="cropCreateFormID"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+								<f:content>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${profileModel>/create} === true ? false : true}"/>
+									<MessageStrip text="Você não tem permissão para criar Acompanhamento de Lavoura" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${profileModel>/create} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<Label text="Início/Fim Plantio" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<DateRangeSelection valueStateText="{createCropModel>/dateValueStateText}" valueState="{createCropModel>/dateValueState}"
+										placeholder="Data Início/Data Fim" dateValue="{createCropModel>/newCropTracking/HCP_START_CROP}"
+										secondDateValue="{createCropModel>/newCropTracking/HCP_END_CROP}" width="auto" displayFormat="dd/MM/YYYY"
+										enabled="{createCropModel>/isEnable}" visible="true" change="validateDateRange"/>
+									<Label text="Início/Fim Colheita" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<DateRangeSelection valueStateText="{createCropModel>/dateValueStateText}" valueState="{createCropModel>/dateValueState}"
+										placeholder="Data Início/Data Fim" dateValue="{createCropModel>/newCropTracking/HCP_START_HRVST}"
+										secondDateValue="{createCropModel>/newCropTracking/HCP_END_HRVST}" width="auto" displayFormat="dd/MM/YYYY"
+										enabled="{createCropModel>/isEnable}" visible="true" change="validateDateRange"/>
+									<Label text="Área de plantio (HA)" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite Área de Plantio (Ex: 1.000)" type="Tel" name="plantingArea"
+										value="{ path: 'createCropModel>/newCropTracking/HCP_PLANTING_AREA' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										showValueHelp="false" enabled="{createCropModel>/isEnable}" visible="true" width="auto" valueHelpOnly="false"
+										change="_validateProductionAmount"/>
+									<Label text="Produtividade (T/HA)" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite Produtividade (Ex: 5,5)" name="Productivity"
+										value="{ path: 'createCropModel>/newCropTracking/HCP_PRODUCTIVITY' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{createCropModel>/isEnable}" visible="true" width="auto" valueHelpOnly="false" maxLength="0"
+										change="_validateProductionAmount"/>
+									<Label text="Produção Total (T)" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Numérico" name="totalProduction"
+										value="{ path: 'createCropModel>/newCropTracking/HCP_TOTAL_PRODUCTION' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="false" visible="true" width="auto" valueHelpOnly="false" maxLength="0"
+										change="_validateProductionAmount"/>
+									<Label text="Volume de chuvas acumulado no ciclo de produção (MM)" design="Standard" required="true" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<Input placeholder="Médio em milimetros (Ex: 1.000 MM)"
+										value="{ path: 'createCropModel>/newCropTracking/HCP_RAINFALL_LEVEL' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="{createCropModel>/isEnable}" visible="true" width="auto" valueHelpOnly="false" maxLength="0"
+										change="_valideInputNumber"/>
+									<Label text="Condições de Lavoura" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{createCropModel>/isEnable}"/>
+									<custom:CustomComboBox
+										items="{ path: '/Crop_Conditions', length: 999999 ,filters: [{path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}] }"
+										placeholder="Selecione Condições de Lavoura" id="comboCropCondition" editable="true" enabled="true" visible="{createCropModel>/isEnable}"
+										width="auto" valueState="None" maxWidth="100%" required="true" selectedKey="{createCropModel>/newCropTracking/HCP_CROP_CONDITION}"
+										selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_TEXT}" enabled="true" key="{HCP_COND_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Nível de Tecnologia" design="Standard" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{createCropModel>/isEnable}"/>
+									<custom:CustomComboBox
+										items="{ path: '/Crop_Tech_Level', length: 999999 ,filters: [{path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'},{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}] }"
+										placeholder="Selecione Nível de Tecnologia" id="comboCropTechnology" editable="true" enabled="true" visible="{createCropModel>/isEnable}"
+										width="auto" valueState="None" selectedKey="{createCropModel>/newCropTracking/HCP_TECH_LEVEL}" maxWidth="100%"
+										selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_TEXT}" enabled="true" key="{HCP_TECH_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Custo de Produção (R$/HA)" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o Custo (Ex: R$2.000)" type="Tel" showValueHelp="false" enabled="{createCropModel>/isEnable}" visible="true"
+										value="{ path: 'createCropModel>/newCropTracking/HCP_PROD_COST' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										width="auto" valueHelpOnly="false" maxLength="0" change="_valideInputNumber"/>
+									<Label text="Fornecedor" design="Standard" required="false" textAlign="Begin" textDirection="Inherit" visible="{createCropModel>/isEnable}"/>
+									<Input placeholder="Local referência das fotos" visible="{createCropModel>/isEnable}" change="_validateForm" editable="true" enabled="true"
+										id="inputpartnerID" description="{createCropModel>/newCropTracking/HCP_SUPPLIER_DESC}" showValueHelp="true" type="Text"
+										value="{createCropModel>/newCropTracking/HCP_SUPPLIER}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress"/>
+									<Label text="Comercialização" design="Standard" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Informe valor de comercialização" showValueHelp="false"
+										enabled="false" visible="{= %{createCropModel>/isEnable} ? false : true}"
+										value="{ path: 'createCropModel>/newCropTracking/HCP_COMMERCIALIZATION/HCP_CAPACITY_PERCENT' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}%"
+										type="Tel" width="auto" valueHelpOnly="false" maxLength="0" change="_valideInputNumber"/>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection showTitle="true" title="Estágios" titleUppercase="true" visible="{createCropModel>/isEnable}">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Estágios" mode="Expanded">
+						<uxap:blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" id="stageEditFormID" labelSpanL="3" labelSpanM="3"
+								layout="ResponsiveGridLayout" maxContainerCols="2" emptySpanL="2" emptySpanM="2" emptySpanS="2">
+								<f:content>
+									<Label text=""/>
+									<Title text="Plantio" level="H1">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_PLANTING_STAGE}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="PLANTING_STAGE" value="{createCropModel>/newCropTracking/HCP_PLANTING_STAGE}" min="0" max="100"
+										showAdvancedTooltip="false" step="1" width="100%" enabled="true" visible="true" progress="true" enableTickmarks="false">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<core:Icon class="grow" src="sap-icon://camera" size="30px" color="{createCropModel>/iconColor}" visible="true" press="onPictureIconPress">
+										<core:layoutData>
+											<l:GridData span="L2 M2 S4"/>
+										</core:layoutData>
+									</core:Icon>
+									<Label text=""/>
+									<Title text="Germinação" level="H1" class="sapUiLargeMarginTop">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_GERMINATION_STAGE}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator sapUiLargeMarginTop" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="GERMINATION_STAGE" liveChange="onStagesChange" min="0" max="100" showAdvancedTooltip="false"
+										value="{createCropModel>/newCropTracking/HCP_GERMINATION_STAGE}" step="1" width="100%" enabled="true" visible="true" progress="true"
+										enableTickmarks="false" change="_showMessageToastStages">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<core:Icon class="grow" src="sap-icon://camera" size="30px" color="{createCropModel>/iconColor}" visible="true" press="onPictureIconPress">
+										<core:layoutData>
+											<l:GridData span="L2 M2 S4"/>
+										</core:layoutData>
+									</core:Icon>
+									<Label text=""/>
+									<Title text="Desenvolvimento Vegetativo" level="H1">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_VEG_DEV_STAGE}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="VEG_DEV_STAGE" liveChange="onStagesChange" min="0" max="100" showAdvancedTooltip="false"
+										value="{createCropModel>/newCropTracking/HCP_VEG_DEV_STAGE}" step="1" width="100%" enabled="true" visible="true" progress="true"
+										enableTickmarks="false" change="_showMessageToastStages">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<core:Icon class="grow" src="sap-icon://camera" size="30px" color="{createCropModel>/iconColor}" visible="true" press="onPictureIconPress">
+										<core:layoutData>
+											<l:GridData span="L2 M2 S4"/>
+										</core:layoutData>
+									</core:Icon>
+									<Label text=""/>
+									<Title text="Floração" level="H1">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_FLOWERING_STAGE}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="FLOWERING_STAGE" liveChange="onStagesChange" min="0" max="100" showAdvancedTooltip="false"
+										value="{createCropModel>/newCropTracking/HCP_FLOWERING_STAGE}" step="1" width="100%" enabled="true" visible="true" progress="true"
+										enableTickmarks="false" change="_showMessageToastStages">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<core:Icon class="grow" src="sap-icon://camera" size="30px" color="{createCropModel>/iconColor}" visible="true" press="onPictureIconPress">
+										<core:layoutData>
+											<l:GridData span="L2 M2 S4"/>
+										</core:layoutData>
+									</core:Icon>
+									<Label text=""/>
+									<Title text="Formação de Grãos" level="H1">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_GRAIN_FORMATION_STAGE}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="GRAIN_FORMATION_STAGE" liveChange="onStagesChange" min="0" max="100" showAdvancedTooltip="false"
+										value="{createCropModel>/newCropTracking/HCP_GRAIN_FORMATION_STAGE}" step="1" width="100%" enabled="true" visible="true" progress="true"
+										enableTickmarks="false" change="_showMessageToastStages">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<core:Icon class="grow" src="sap-icon://camera" size="30px" color="{createCropModel>/iconColor}" visible="true" press="onPictureIconPress">
+										<core:layoutData>
+											<l:GridData span="L2 M2 S4"/>
+										</core:layoutData>
+									</core:Icon>
+									<Label text=""/>
+									<Title text="Enchimento de Grãos" level="H1">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_GRAIN_FILLING_STAGE}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="GRAIN_FILLING_STAGE" liveChange="onStagesChange" min="0" max="100" showAdvancedTooltip="false"
+										value="{createCropModel>/newCropTracking/HCP_GRAIN_FILLING_STAGE}" step="1" width="100%" enabled="true" visible="true" progress="true"
+										enableTickmarks="false" change="_showMessageToastStages">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<core:Icon class="grow" src="sap-icon://camera" size="30px" color="{createCropModel>/iconColor}" visible="true" press="onPictureIconPress">
+										<core:layoutData>
+											<l:GridData span="L2 M2 S4"/>
+										</core:layoutData>
+									</core:Icon>
+									<Label text=""/>
+									<Title text="Maturação" level="H1">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_MATURATION_STAGE}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="MATURATION_STAGE" liveChange="onStagesChange" min="0" max="100" showAdvancedTooltip="false"
+										value="{createCropModel>/newCropTracking/HCP_MATURATION_STAGE}" step="1" width="100%" enabled="true" visible="true" progress="true"
+										enableTickmarks="false" change="_showMessageToastStages">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<core:Icon class="grow" src="sap-icon://camera" size="30px" color="{createCropModel>/iconColor}" visible="true" press="onPictureIconPress">
+										<core:layoutData>
+											<l:GridData span="L2 M2 S4"/>
+										</core:layoutData>
+									</core:Icon>
+									<Label/>
+									<Title text="Total:" level="H1" class="sapUiLargeMarginTop">
+										<layoutData>
+											<l:GridData span="L2 M2 S2"/>
+										</layoutData>
+									</Title>
+									<NumericContent valueColor="{createCropModel>/totalPercentageState}" animateTextChange="true"
+										value="{createCropModel>/totalPercentageCount}" width="" scale="%" class="percentageIndicator sapUiLargeMarginTop" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<Title text="Colheita" level="H1" class="sapUiLargeMarginTop">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_HARVEST_STAGE}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator sapUiLargeMarginTop" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="HARVEST_STAGE" min="0" max="100" showAdvancedTooltip="false"
+										value="{createCropModel>/newCropTracking/HCP_HARVEST_STAGE}" step="1" width="100%" enabled="true" visible="true" progress="true"
+										liveChange="onStagesChange" enableTickmarks="false" change="_showMessageToastStages">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<core:Icon class="grow" src="sap-icon://camera" size="30px" color="{createCropModel>/iconColor}" visible="true" press="onPictureIconPress">
+										<core:layoutData>
+											<l:GridData span="L2 M2 S4"/>
+										</core:layoutData>
+									</core:Icon>
+									<Label text=""/>
+									<Title text="Comercialização" level="H1">
+										<layoutData>
+											<l:GridData span="L2 M2 S6"/>
+										</layoutData>
+									</Title>
+									<NumericContent animateTextChange="true" value="{createCropModel>/newCropTracking/HCP_COMMERCIALIZATION/HCP_CAPACITY_PERCENT}" width="" scale="%" adaptiveFontSize="true"
+										class="percentageIndicator" withMargin="true">
+										<layoutData>
+											<l:GridData span="L2 M2 S5"/>
+										</layoutData>
+									</NumericContent>
+									<Label text=""/>
+									<custom:CustomSlider name="HCP_COMMERCIALIZATION" value="{createCropModel>/newCropTracking/HCP_COMMERCIALIZATION/HCP_CAPACITY_PERCENT}" min="0" max="100"
+										showAdvancedTooltip="false" step="1" width="100%" change="_validateForm" enabled="true" visible="true" progress="true" enableTickmarks="false">
+										<custom:layoutData>
+											<l:GridData span="L4 M4 S8"/>
+										</custom:layoutData>
+									</custom:CustomSlider>
+									<!--<Label class="sapUiTinyMarginTop"/>-->
+									<!--<MessageStrip text="A soma dos estágios, fora o plantio e colheita, não deve passar de 100%" showIcon="true" type="Error"-->
+									<!--	visible="{= ${createCropModel>/totalPercentageCount} > 100 ? true : false}">-->
+									<!--	<layoutData>-->
+									<!--		<l:GridData span="L4 M4 S12"/>-->
+									<!--	</layoutData>-->
+									<!--</MessageStrip>-->
+									<!--<Label class="sapUiTinyMarginTop"/>-->
+									<!--<MessageStrip text="O percentual de colheita não pode ser maior que o percentual de maturação." showIcon="true" type="Error"-->
+									<!--	visible="{= ${createCropModel>/maturationAboveHarvest} === false ? true : false}">-->
+									<!--	<layoutData>-->
+									<!--		<l:GridData span="L4 M4 S12"/>-->
+									<!--	</layoutData>-->
+									<!--</MessageStrip>-->
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+		<uxap:footer>
+			<!--<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">-->
+			<!--	<content>-->
+			<!--		<Button text="Voltar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onCancel"/>-->
+			<!--		<ToolbarSpacer width=""/>-->
+			<!--		<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto"-->
+			<!--			enabled="{= ${createCropModel>/enableSave} === true &amp;&amp; ${createCropModel>/stagesValid} === true}" visible="true"-->
+			<!--			iconDensityAware="false" press="_onSave"/>-->
+			<!--	</content>-->
+			<!--</OverflowToolbar>-->
+		</uxap:footer>
+	</uxap:ObjectPageLayout>
+</mvc:View>

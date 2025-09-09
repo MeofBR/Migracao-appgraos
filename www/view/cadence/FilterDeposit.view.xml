@@ -1,0 +1,68 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.cadence.FilterDeposit"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" xmlns:l="sap.ui.layout">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<Button type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="backToIndex"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Cadência de Pedido Fixo" wrapping="true" visible="false" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+					<uxap:navigationActions>
+<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true" />
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Filtro" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Cadência Depósito" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="cadenceFormID"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="Fornecedor" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input visible="true" change="_validateForm" editable="true" enabled="{true}" placeholder="Selecione o Fornecedor" showValueHelp="true"
+										type="Text" value="{cadenceFormModel>/HCP_PROVIDER}" description="{cadenceFormModel>/PROVIDER_DESC}" valueHelpOnly="true"
+										valueHelpRequest="_handlePartnerFilterPress"/>
+									<Label text="{i18n>labelMaterial}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false}}"
+										placeholder="{i18n>placeholderMaterial}" selectedKey="{cadenceFormModel>/HCP_MATNR}" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>labelPlant}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Center', length: 999999 , sorter: { path: 'WERKS',descending: false}}"
+										placeholder="{i18n>placeholderPlant}" selectionChange="_validateForm" visible="true" change="_validateForm" selectedKey="{cadenceFormModel>/HCP_WERKS}"
+										showSecondaryValues="true">
+										<custom:items>
+											<core:Item text="{WERKS} - {NAME1}" enabled="true" key="{WERKS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Pedido Depósito" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Documento de Compras" type="Text" value="{cadenceFormModel>/HCP_OFFER_NUMBER}" showValueHelp="false" required="false"
+										enabled="true" liveChange="_validateForm" change="_validateForm" visible="{cadenceFormModel>/yesSequence}" width="100%"
+										valueHelpOnly="false" maxLength="0"/>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button text="Confirmar" type="Emphasized" iconFirst="true" width="100%" enabled="{cadenceFormModel>/enableFilter}" visible="true"
+										iconDensityAware="false" press="_onFilterPress"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

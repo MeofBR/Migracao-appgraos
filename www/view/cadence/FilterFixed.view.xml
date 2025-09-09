@@ -1,0 +1,54 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.cadence.FilterFixed"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" xmlns:l="sap.ui.layout">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<Button type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="backToIndex"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Cadência de Pedido Fixo" wrapping="true" visible="false" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Filtro" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Cadência de Pedido Fixo" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="cadenceFormID"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="Sequencial" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"
+										required="{cadenceFormModel>/requiredSequence}"/>
+									<Input placeholder="Digite o Sequencial" type="Text" value="{cadenceFormModel>/HCP_ZSEQUE}" showValueHelp="false" enabled="true"
+										liveChange="_validateForm" change="_validateForm" visible="{cadenceFormModel>/yesSequence}" width="100%" valueHelpOnly="false" maxLength="0"
+										name="FIELD_SEQUENCE"/>
+									<Label text="Documento de Compras" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"
+										required="{cadenceFormModel>/requiredDoc}"/>
+									<Input placeholder="Documento de Compras" type="Text" value="{cadenceFormModel>/HCP_OFFER_NUMBER}" showValueHelp="false" enabled="true"
+										liveChange="_validateForm" name="FIELD_DOC" change="_validateForm" visible="{cadenceFormModel>/yesSequence}" width="100%"
+										valueHelpOnly="false" maxLength="0"/>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button text="Confirmar" type="Emphasized" iconFirst="true" width="100%" enabled="{cadenceFormModel>/enableFilter}" visible="true"
+										iconDensityAware="false" press="_onFilterPress"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

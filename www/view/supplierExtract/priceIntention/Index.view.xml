@@ -1,0 +1,78 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.priceIntention.Index"
+	xmlns="sap.m">
+	<Page showHeader="true" title="Intenção de Preços" showFooter="true" showNavButton="true" navButtonPress="navBack">
+			<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+		<IconTabBar
+		id="idIconTabBarMulti"
+		expanded="true"
+		class="sapUiResponsiveContentPadding gridIntencao"
+		select="handleIconTabBarSelect"
+		expandable="false">
+		<items>
+			<IconTabFilter
+				icon="sap-icon://complete" key="Ativo" text="Ativo" iconColor="Positive" >
+				<List id="listIntention"
+				items="{ path: 'priceIntention>/ItemIntention', sorter: { path: 'priceIntention>HCP_STATE', descending: false, group: true }}">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="Intenção de Preços"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<ObjectListItem intro="{priceIntention>View_Intention_Material_Type/DETPCEREAL}"  press="_onRowPress" title="{priceIntention>View_Intention_Suppliers/NAME1}" number="{ path: 'priceIntention>HCP_PRICE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}" numberUnit="{priceIntention/HCP_MOEDA}" numberState="Success" type="Active" selected="true">
+                        <attributes>
+                        	<ObjectAttribute text="Id: {priceIntention>HCP_PRICE_INTENTION_ID}" active="false" visible="true"/>
+                            <ObjectAttribute text="Mês Entrega: {priceIntention>HCP_MONTH}" active="false" visible="true"/>
+                            <ObjectAttribute text="Volume: {priceIntention>HCP_VOLUME}" active="false" visible="true"/>
+                        </attributes>
+                         <firstStatus>
+                            <ObjectStatus text="Preço de Alerta: {= parseFloat(${priceIntention>HCP_MIN_PRICE}).toFixed(2) }" state="None" visible="true"/>
+                        </firstStatus>
+                        <secondStatus>
+                            <ObjectStatus text="" state="None" visible="true"/>
+                        </secondStatus>
+                    </ObjectListItem>
+				</items>
+			</List>
+			</IconTabFilter>
+			<IconTabFilter
+				icon="sap-icon://collapse"
+				text="Inativo" key="Inativo" iconColor="Negative">
+				<List id="listIntentionInactive"
+				items="{ path: 'priceIntention>/ItemIntentionInactive', sorter: { path: 'priceIntention>HCP_STATE', descending: false, group: true }}">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="Intenção de Preços"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<ObjectListItem intro="{priceIntention>View_Intention_Material_Type/DETPCEREAL}"  press="_onRowPress" title="{priceIntention>View_Intention_Suppliers/NAME1}" number="{ parts:[{path:'priceIntention>HCP_PRICE'}, 'BRL'], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }" numberUnit="{priceIntention/HCP_MOEDA}" numberState="Success" type="Active" selected="true">
+                        <attributes>
+                        	<ObjectAttribute text="Id: {priceIntention>HCP_PRICE_INTENTION_ID}" active="false" visible="true"/>
+                            <ObjectAttribute text="Mês Entrega: {priceIntention>HCP_MONTH}" active="false" visible="true"/>
+                            <ObjectAttribute text="Volume: {priceIntention>HCP_VOLUME}" active="false" visible="true"/>
+                        </attributes>
+                         <firstStatus>
+                            <ObjectStatus text="Preço de Alerta: {= parseFloat(${priceIntention>HCP_MIN_PRICE}).toFixed(2) }" state="None" visible="true"/>
+                        </firstStatus>
+                        <secondStatus>
+                            <ObjectStatus text="" state="None" visible="true"/>
+                        </secondStatus>
+                    </ObjectListItem>
+				</items>
+			</List>
+			</IconTabFilter>
+			
+		</items>
+	</IconTabBar>
+			
+			
+		</content>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

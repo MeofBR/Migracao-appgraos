@@ -1,0 +1,24 @@
+/* Message asking permission to access the camera. */
+"NSCameraUsageDescription" = "Dette gjør det mulig for deg å ta bilder og skanne QR-koder";
+
+/* Message asking permission to access the microphone */
+"NSMicrophoneUsageDescription" = "Dette gir oss tilgang til mikrofonen din.";
+
+/* Message asking permission to access the calendar */
+"NSCalendarsUsageDescription" = "Dette gir oss tilgang til kalenderen din.";
+
+/* Message asking permission to access photo library */
+"NSPhotoLibraryUsageDescription" = "Dette gir oss tilgang til biblioteket ditt.";
+
+/* Message asking permission to access contacts */
+"NSContactsUsageDescription" = "Dette gir oss tilgang til kontaktene dine.";
+
+/* Message asking permission to access location */
+"NSLocationWhenInUseUsageDescription" = "Dette gir oss tilgang til lokaliseringen din når den er i bruk.";
+
+/* Message asking permission to access location at any time */
+"NSLocationAlwaysUsageDescription" = "Dette gir oss tilgang til lokaliseringen din hele tiden.";
+
+/* Message asking permission to access Face ID */
+"NSFaceIDUsageDescription" = "Dette gir oss tilgang til Face ID for autentisering.";
+

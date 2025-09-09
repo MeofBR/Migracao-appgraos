@@ -1,0 +1,98 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ResponsivePopover id="AppointmentsResponsivePopover" title="{= ${/scheduleCreate} ? 'Criar Compromisso' : 'Compromisso'}" placement="Auto" resizable="false">
+		<content>
+			<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="ScheduleFormID"
+				labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1050"
+				title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+				<f:content>
+					<Label text="De" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<DateTimePicker id="scheduleStartDateID" name="firstDate" change="_onScheduleDateChange" placeholder="Data/Hora"
+						valueFormat="yyyy-MM-dd-HH-mm-ss" displayFormat="short"
+						value="{path: 'planningCalendarModel>HCP_START_DATE_AUX', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/YYYY HH:mm' } }"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" visible="true" width="auto"/>
+					<Label text="Até" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<DateTimePicker id="scheduleEndDateID" change="_onScheduleDateChange" placeholder="Data/Hora"
+						value="{path: 'planningCalendarModel>HCP_END_DATE_AUX', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/YYYY HH:mm' }}"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" visible="true" width="auto"/>
+					<Label text="Compromisso" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<!--<ComboBox items="{/Commitments}" selectedKey="{planningCalendarModel>HCP_APPOINTMENTS}" editable="true"-->
+					<!--	enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" visible="true" width="auto"-->
+					<!--	valueState="None" maxWidth="100%" selectionChange="onCommitmentChange" change="onCommitmentChange">-->
+					<!--	<items>-->
+					<!--		<core:Item text="{HCP_COMMITMENT_DESC}" enabled="true" key="{HCP_COMMITMENT_ID}"/>-->
+					<!--	</items>-->
+					<!--</ComboBox>-->
+					<custom:CustomComboBox items="{/Commitments}" selectedKey="{planningCalendarModel>HCP_APPOINTMENTS}" editable="true"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" visible="true" width="auto"
+						valueState="None" maxWidth="100%" selectionChange="onCommitmentChange" change="validateComboBoxInput" placeholder="Selecione Tipo de Compromisso">
+						<custom:items>
+							<core:Item text="{HCP_COMMITMENT_DESC}" enabled="true" key="{HCP_COMMITMENT_ID}"/>
+						</custom:items>
+					</custom:CustomComboBox>
+					<Label text="Fornecedor" design="Standard" width="auto" required="true" textAlign="Begin" textDirection="Inherit"/>
+					<Input visible="{= parseInt(${planningCalendarModel>HCP_APPOINTMENTS}) === 1 ? true : false}" change="_validateForm" editable="true"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" id="inputpartnerID" showValueHelp="true"
+						type="Text" value="{planningCalendarModel>HCP_NAME}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress" placeholder="Selecione Fornecedor"/>
+					<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+						visible="{= parseInt(${planningCalendarModel>HCP_APPOINTMENTS}) === 1 ? true : false}"/>
+					<Title text="{planningCalendarModel>HCP_NAME_DESC}" visible="{= parseInt(${planningCalendarModel>HCP_APPOINTMENTS}) === 1 ? true : false}"
+						level="Auto" width="auto" wrapping="true"/>
+					<Label text="Prospect" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"/>
+					<custom:CustomComboBox visible="{= parseInt(${planningCalendarModel>HCP_APPOINTMENTS}) === 2 ? true : false}" change="_validateForm"
+						selectionChange="_validateForm" items="{ path: '/Prospects',length: 999999 , parameters: { expand: 'Prosp_Characteristics,Prosp_Code'}}"
+						selectedKey="{planningCalendarModel>HCP_NAME}" editable="true"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" width="auto" valueState="None"
+						maxWidth="100%" placeholder="Selecione Prospect">
+						<custom:items>
+							<core:Item text="{NAME1}" key="{HCP_PROSP_ID}"/>
+						</custom:items>
+					</custom:CustomComboBox>
+					<Label text="Objetivo da Interação" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<custom:CustomComboBox change="_validateForm" selectionChange="_validateForm" items="{/Interact_Objectives}" editable="true"
+						selectedKey="{planningCalendarModel>HCP_INTERACTION_OBJECTIVE}"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" visible="true" width="auto"
+						valueState="None" maxWidth="100%" placeholder="Selecione Objetivo da Interação">
+						<custom:items>
+							<core:Item text="{HCP_INT_OBJ_DESC}" enabled="true" key="{HCP_INT_OBJ_ID}"/>
+						</custom:items>
+					</custom:CustomComboBox>
+					<Label text="Tipo da Interação" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<custom:CustomComboBox change="_validateForm" selectionChange="_validateForm" items="{/Interact_Types}" editable="true"
+						selectedKey="{planningCalendarModel>HCP_INTERACTION_TYPE}"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" visible="true" width="auto"
+						valueState="None" maxWidth="100%" placeholder="Selecione Tipo da Interação">
+						<custom:items>
+							<core:Item text="{HCP_INT_TYPE_DESC}" enabled="true" key="{HCP_INT_TYPE_ID}"/>
+						</custom:items>
+					</custom:CustomComboBox>
+					<Label text="Observações" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<TextArea value="{planningCalendarModel>HCP_COMMENTS}" rows="2" cols="20" maxLength="0" wrapping="None"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }" visible="true"/>
+					<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<ObjectStatus title="Status" text="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleStatus' }"
+						visible="{= ${planningCalendarModel>/scheduleCreate} ? false : true}"
+						state="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleState'}"/>
+					<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Button text="Realizar Checkin" type="Accept" iconFirst="true" width="auto" enabled="true"
+						visible="{= ${planningCalendarModel>HCP_STATUS} === '1' ? true : false}" iconDensityAware="false" press="onFeedListPress"/>
+					<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Button text="Realizar Checkout" type="Reject" iconFirst="true" width="auto" enabled="true"
+						visible="{= ${planningCalendarModel>HCP_STATUS} === '2' ? true : false}" iconDensityAware="false" press="onFeedListPress"/>
+					<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Button text="Cancelar Compromisso" type="Reject" iconFirst="true" width="auto"
+						enabled="{path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' }"
+						visible="{= ${planningCalendarModel>HCP_STATUS} === '1' ? true : false}" iconDensityAware="false" press="onCancelSchedule">
+						<customData>
+							<core:CustomData key="name" value="CancelScheduleButton"/>
+						</customData>
+					</Button>
+					<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Button text="Salvar"
+						enabled="{= {path: 'planningCalendarModel>HCP_STATUS', formatter: '.formatter.setScheduleEnable' } &amp;&amp; ${planningCalendarModel>/enableScheduleSave}}"
+						type="Emphasized" press="onSaveSchedule"/>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

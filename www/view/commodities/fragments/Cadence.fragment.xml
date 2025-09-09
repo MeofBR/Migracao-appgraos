@@ -1,0 +1,53 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Dialog showHeader="true" title="{i18n>textCadence}" type="Standard">
+		<content>
+			<Panel width="auto">
+				<form:SimpleForm class="simpleFormCommerc" id="cadenceKeysForm" editable="true" maxContainerCols="1">
+					<form:content>
+						<Table width="auto" showSeparators="All" class="sapUiResponsiveMargin" id="table" items="{ path:'cadenceFormModel>/tableCadence'}">
+							<infoToolbar>
+								<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+									<content>
+										<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</content>
+								</Toolbar>
+							</infoToolbar>
+							<columns>
+								<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textDate}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textQuantityCadence}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem type="Active">
+									<cells>
+										<ObjectIdentifier titleActive="false" visible="true"
+											title="{ path: 'cadenceFormModel>HCP_DATA_ATUAL', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy' } }"/>
+										<Input placeholder="" name="HCP_QUANTIDADE"
+											value="{ path: 'cadenceFormModel>HCP_QUANTIDADE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+											type="Tel" change="_changeValueCadence" showValueHelp="false" enabled="true" required="false"
+											visible="true" width="auto" valueHelpOnly="false" maxLength="0"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</form:content>
+				</form:SimpleForm>
+			</Panel>
+		</content>
+		<buttons>
+			<Button text="{i18n>buttonCancel}" press="_onCadenceCancelPress" type="Transparent"/>
+			<Button text="{i18n>buttonConfirm}" press="_onCadenceConfirPress" type="Emphasized" iconFirst="true" width="auto"
+				enabled="{cadenceFormModel>/enabledConfCadence}" visible="true" iconDensityAware="false"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

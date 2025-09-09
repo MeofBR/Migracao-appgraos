@@ -1,0 +1,140 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.commodities.Consult"
+	xmlns="sap.m">
+	<Page title="{i18n>textConsultCommodities}" showNavButton="true" navButtonPress="onCancelPress" showFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<Table width="auto" showSeparators="All" growing="true" growingThreshold="5" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				id="table" alternateRowColors="true"
+				items="{ path:'filterTableCommodities>/itemCommodities', sorter : [{ path:'filterTableCommodities>HCP_WERKS' , descending:false, group: true } , { path:'filterTableCommodities>HCP_CREATED_AT' , descending:true } ], groupHeaderFactory: '.getGroupHeader' }">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar>
+					<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+						<content>
+							<Title text="{filterTableCommodities>/textOrderType}({filterTableCommodities>/count})" titleStyle="Auto" width="auto" textAlign="Begin"
+								visible="true" wrapping="false"/>
+							<ToolbarSpacer/>
+							<OverflowToolbarButton text="Sort" press="sortButtonPressed" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+							<!--<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"-->
+							<!--	enabled="true" visible="true" iconDensityAware="false"/>-->
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="5%" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{filterTableCommodities>/textOrder}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="5%" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Oferta" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="10%" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textVendor}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="10%" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textMaterial}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="10%" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textBuyer}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="8%" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textShippingPeriod}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="8%" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textStatus}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="5%" hAlign="Center" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Ações" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="5%" hAlign="Center" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textButtonMessage}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="5%" hAlign="Center" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Emitir CND" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="5%" hAlign="Center" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textCadence}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="8%" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textDateCreation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="5%" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textUser}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active" press="_onRowPress">
+						<cells>
+							<Text text="{path:'filterTableCommodities>HCP_ZSEQUE'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"></Text>
+							<Text text="{path:'filterTableCommodities>HCP_OFFER_NUMBER'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"></Text>
+							<ObjectIdentifier title="{path:'filterTableCommodities>NAME1'}"/>
+							<ObjectIdentifier title="{= parseFloat(${path: 'filterTableCommodities>HCP_MATNR'}) } - {path: 'filterTableCommodities>MAKTX'}"/>
+							<ObjectIdentifier title="{path:'filterTableCommodities>HCP_EKGRP'} - {path: 'filterTableCommodities>EKNAM'}"/>
+							<ObjectIdentifier title="{ path: 'filterTableCommodities>HCP_ZDTREMDE', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy' } } - { path: 'filterTableCommodities>HCP_ZDTREMATE', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy' } }"/>
+							<ObjectIdentifier title="{path:'filterTableCommodities>TEXT_STATUS'}"/>
+							<Button visible="true" width="auto" text="{i18n>textButtonCancel}" type="Reject" iconDensityAware="false" iconFirst="true"
+								press="_onCancelButton" enabled="{path:'filterTableCommodities>isCancel'}"/>
+							<Button visible="true" width="auto" text="{i18n>textButtonDisplay}" type="Default" iconDensityAware="false"  iconFirst="true"
+								press="_onMessageButton" enabled="{path:'filterTableCommodities>isCancel'}"/>
+							<ObjectIdentifier title="{= ${filterTableCommodities>cndIsExceeded} === true ? 'Sim' : 'Não'}"/>
+							<Button visible="true" width="auto" text="{i18n>textButtonDisplay}" type="Default" iconDensityAware="false"
+								enabled="{= ${path:'filterTableCommodities>enabledCadence'} &amp;&amp; ${path:'filterTableCommodities>isCancel'}}" iconFirst="true" press="_onCadenceButton"/>
+							<Text
+								text="{ path: 'filterTableCommodities>HCP_CREATED_AT', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy HH:mm' } }"
+								maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{path: 'filterTableCommodities>HCP_CREATED_BY'}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+								textDirection="Inherit" visible="true"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</Page>
+</mvc:View>

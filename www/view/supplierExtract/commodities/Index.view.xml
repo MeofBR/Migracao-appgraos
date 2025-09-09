@@ -1,0 +1,106 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.commodities.Index" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Page showHeader="true" xmlns:l="sap.ui.layout" title="Compras Gerais" showFooter="true" showNavButton="true" navButtonPress="navBack">
+        <content>
+          	<Panel height="auto" width="100%" headerText="Filtro Selecionado" expandable="true" expanded="true" expandAnimation="true"
+				backgroundDesign="Solid" class="sapUiTinyMarginBottom">
+				<l:VerticalLayout width="100%" class="gridWrapper">
+					<l:Grid containerQuery="true" defaultSpan="XL3 L4 M12 S12">
+						<VBox>
+							<Label text="Fornecedor" design="Standard" width="100%" visible="true" class="labelBold"/>
+							<ObjectStatus icon="sap-icon://factory" text="{indexModel>/supplierName}"/>
+						</VBox>
+						<VBox visible="false">
+							<Label text="Período:" design="Standard" width="100%" visible="true" class="labelBold"/>
+							<ObjectStatus icon="sap-icon://calendar" text="{indexModel>/start_date} - {indexModel>/end_date}"/>
+						</VBox>
+					</l:Grid>
+				</l:VerticalLayout>
+			</Panel>
+            <Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
+                <infoToolbar>
+                    <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+                        <content>
+                            <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </content>
+                    </Toolbar>
+                </infoToolbar>
+                <headerToolbar/>
+                <columns>
+                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Ano" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="2016" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="2017" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="2019" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                        <header>
+                            <Text text="Total" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                        </header>
+                        <footer/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <ObjectIdentifier title="Compra Fixa" text="" titleActive="false" visible="true"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpFixoAno4' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpFixoAno3' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpFixoAno2' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpFixoAno1' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpTotalFixo' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                        </cells>
+                    </ColumnListItem>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <ObjectIdentifier title="Compra Depósito" text="" titleActive="false" visible="true"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpDepAno4' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpDepAno3' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpDepAno2' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpDepAno1' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpTotalDep' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                        </cells>
+                    </ColumnListItem>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <ObjectIdentifier title="Total por Ano" text="" titleActive="false" visible="true"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpAno4Total' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpAno3Total' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpAno2Total' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpAno1Total' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                            <ObjectNumber number="{ path: 'indexModel>/hcpTotal' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}" unit="" emphasized="true" state="None"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+            <Label text="Todas as compras estão em Toneladas" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit" visible="true" class="sapUiSmallMarginBottom sapUiSmallMarginBegin sapUiSmallMarginEnd"/>
+        </content>
+        <footer/>
+        <headerContent/>
+        <subHeader/>
+        <customHeader/>
+    </Page>
+</mvc:View>

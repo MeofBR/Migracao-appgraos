@@ -1,0 +1,52 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+	<ResponsivePopover title="Ordenação" placement="Bottom">
+		<content>
+			<form:Form width="100%" editable="true" visible="true">
+				<form:title/>
+				<form:formContainers>
+					<form:FormContainer visible="true">
+						<form:formElements>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Coluna" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<RadioButtonGroup id="group_column">
+									<buttons>
+										<RadioButton id="HCP_COLLECT" text="Coleta" selected="true"/>
+										<RadioButton id="HCP_COUNTRY" text="País"/>
+										<RadioButton id="HCP_CROP" text="Safra"/>
+										<RadioButton id="HCP_STATE" text="Estado"/> 
+										<RadioButton id="HCP_REGIO_NAME" text="Região"/>
+										<RadioButton id="HCP_MATERIAL" text="Material"/>
+										<RadioButton id="HCP_CREATED_AT" text="Data Criação"/>
+										<RadioButton id="HCP_CREATED_BY" text="Criado Por"/>
+									</buttons>
+								</RadioButtonGroup>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:label>
+									<Label text="Tipo ordenação" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</form:label>
+								<RadioButtonGroup id="group_sort">
+									<buttons>
+										<RadioButton id="ascending" text="Ascendente" selected="true"/>
+										<RadioButton id="descending" text="Descendente"/>
+									</buttons>
+								</RadioButtonGroup>
+							</form:FormElement>
+							<form:FormElement visible="true">
+								<form:fields>
+									<Button text="Ordenar" type="Emphasized" press="submitSortList"/>
+								</form:fields>
+							</form:FormElement>
+						</form:formElements>
+						<form:title/>
+					</form:FormContainer>
+				</form:formContainers>
+				<form:layout>
+					<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+				</form:layout>
+			</form:Form>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

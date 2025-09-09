@@ -1,0 +1,88 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.cropTur.Filter"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="navBack"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="CropTour" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:navigationActions>
+					<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+					<Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto" visible="true" iconDensityAware="false" press="_onConfirm" enabled="{filterModel>/enableCreate}"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="false" title="" titleUppercase="false" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="">
+						<uxap:blocks>
+							<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="cropTurKeysForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+								<f:content>
+									
+									<Label text="País" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="Pais" name="CountryName" width="100%"
+										items="{filterPageModel>/itemsCountry}" placeholder="Selecione o País"
+										selectedKey="{filterPageModel>/HCP_LAND1}" editable="true" enabled="true" visible="true" valueState="None" liveChange="_validateForm" change="_validateForm" required="true">
+										<custom:items>
+											<core:Item text="{filterPageModel>HCP_LAND1} - {filterPageModel>HCP_COUNTRY_NAME}" enabled="true" key="{filterPageModel>HCP_LAND1}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									<Label text="Safra" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{filterPageModel>/itemsCropYearFiltered}"
+										placeholder="Selecione Safra" editable="true" enabled="{filterPageModel>/enableCrop}" visible="true" width="auto" valueState="None" maxWidth="100%" id="cropYear"
+										selectedKey="{filterPageModel>/HCP_CROP_ID}" selectionChange="_validateForm" change="_validateForm" required="true">
+										<custom:items>
+											<core:Item text="{filterPageModel>HCP_CROP_DESC}" enabled="true" key="{filterPageModel>HCP_CROP_ID}-{filterPageModel>HCP_CROP_DESC}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									<Label text="Estado" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="Estado" name="StateName"  width="100%"
+										items="{ path: 'filterPageModel>/itemStates', sorter: { path: 'BEZEI', descending: false } }" placeholder="Selecione o Estado"
+										selectedKey="{filterPageModel>/HCP_BLAND}" editable="true" enabled="{filterPageModel>/enableState}" visible="true" valueState="None" liveChange="_validateStates" change="_validateStates">
+										<custom:items>
+											<core:Item text="{filterPageModel>BLAND} - {filterPageModel>BEZEI}" enabled="true" key="{filterPageModel>BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									<Label text="Região" design="Standard" width="100%" required="true" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="regions" items="{ path: '/Regions_Croptour',filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}],sorter: { path: 'HCP_BEZEI', descending: false }, length: 999999}"
+										placeholder="Selecione a Região" editable="true" enabled="{filterPageModel>/regionEnabled}" visible="true" width="auto" valueState="None"
+										maxWidth="100%" selectedKey="{filterPageModel>/HCP_REGIO}" selectionChange="_validateForm" change="_validateForm" required="true">
+										<custom:items>
+											<core:Item text="{HCP_BEZEI}" enabled="true" key="{HCP_ID}-{HCP_BEZEI}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+
+									<Label text="Material" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<SegmentedButton id="InputMaterialId" selectedKey="{filterPageModel>/HCP_MATERIAL}" width="100%" selectionChange="onInputMaterialFormSelect">
+										<items>
+											<SegmentedButtonItem text="Milho Granel" key="000000000000013307"/>
+											<SegmentedButtonItem text="Soja Granel"  key="000000000000030562"/>
+										</items>
+									</SegmentedButton>
+								
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

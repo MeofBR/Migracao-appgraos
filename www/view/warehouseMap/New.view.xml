@@ -1,0 +1,228 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.warehouseMap.New"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancelPress"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Mapeamento de Armazéns" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+						<Button class="button_blue" text="Check-In" icon="sap-icon://map" iconFirst="true" width="auto" enabled="true"
+						visible="true" iconDensityAware="false" press="onMapIconPress"/>
+						<Button class="button_blue" icon="sap-icon://add-photo"  iconFirst="true" width="auto" enabled="true"
+						visible="true" iconDensityAware="false" press="onPictureIconPress"/>
+					<Button text="Cadastrar" type="Emphasized" iconFirst="true" width="auto" enabled="{warehouseMapFormModel>/enableCreate}"
+						visible="true" iconDensityAware="false" press="onSavePress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="{i18n>textRegister}" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="{i18n>textRegister}" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="{i18n>textVendorProspect}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true"
+										visible="true"/>
+									<SegmentedButton selectedKey="{warehouseMapFormModel>/HCP_PARTNER_TYPE}" width="100%" selectionChange="_onInputPartnerFormSelect">
+										<items>
+											<SegmentedButtonItem text="{i18n>textVendor}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textProspect}" key="2"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textVendor}" design="Standard" width="100%" required="{warehouseMapFormModel>/yesPartner}" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPartner" visible="{warehouseMapFormModel>/yesPartner}" required="{warehouseMapFormModel>/yesPartner}" change="_validateForm"
+										editable="true" enabled="{true}" placeholder="{i18n>placeSelectVendor}" showValueHelp="true" type="Text"
+										value="{warehouseMapFormModel>/HCP_PARTNER}" description="{warehouseMapFormModel>/PROVIDER_DESC}" valueHelpOnly="true"
+										valueHelpRequest="_handlePartnerFilterPress"/>
+									<Label text="{i18n>textProspect}" design="Standard" width="100%" required="{warehouseMapFormModel>/yesProspect}" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="yesProspect" placeholder="{i18n>placeProspect}" selectedKey="{warehouseMapFormModel>/HCP_PARTNER}"
+										editable="true" enabled="true" visible="{warehouseMapFormModel>/yesProspect}" required="{warehouseMapFormModel>/yesProspect}" width="auto"
+										valueState="None" maxWidth="100%"
+										items="{ path: '/Prospects', length: 999999, filters: [{path: 'HCP_STATUS', operator: 'EQ', value1: '1'}, {path: 'HCP_STATUS', operator: 'EQ', value1: '2'}], sorter: { path: 'NAME1',descending: false} }"
+										selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_PROSP_ID} - {NAME1} {NAME2}" enabled="true" key="{HCP_PROSP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+										<Label text="Estado" id="state" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: false} }"
+										placeholder="Selecione Estado" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{warehouseMapFormModel>/HCP_STATE}" selectionChange="_changeState" change="_changeState">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									<Label id="countyLabel" text="Município" design="Standard" width="100%" required="true" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="county" items="{ path: 'warehouseMapFormModel>/cities', length: 999999, sorter: { path: 'TAXJURCODE',descending: false} }"
+										placeholder="Selecione o Município" editable="{warehouseMapFormModel>/enableCity}" enabled="{warehouseMapFormModel>/enableCity}" required="false"
+										visible="true" width="auto" valueState="None" maxWidth="100%" selectedKey="{warehouseMapFormModel>/HCP_CITY}" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{warehouseMapFormModel>TEXT}" enabled="true" key="{warehouseMapFormModel>TAXJURCODE}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Região" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox id="region" items="{ path: '/Regions', length: 999999 , filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'} ,sorter: { path: 'HCP_ID',descending: false} }"
+										placeholder="Selecione Região" editable="true" enabled="{warehouseMapFormModel>/enableRegion}" visible="{warehouseMapFormModel>/enableRegion}"
+										width="auto" valueState="None" maxWidth="100%" selectedKey="{warehouseMapFormModel>/HCP_REGIO}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_BEZEI}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									
+									<Label text="{i18n>textWarehouse}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{warehouseMapFormModel>/yesFob}"/>
+									<SegmentedButton selectedKey="{warehouseMapFormModel>/HCP_WAREHOUSE}" selectionChange="_validateForm" width="100%"
+										visible="true">
+										<items>
+											<SegmentedButtonItem text="{i18n>textOwn}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textRented}" key="2"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textStorageCapacity}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input placeholder="{i18n>placeEnterStorageCapacity}"
+										value="{ path: 'warehouseMapFormModel>/HCP_STORAGE_CAPACITY' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber" change="_valideInputNumber"/>
+									<Label text="{i18n>textDailyRecFlow}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<Input placeholder="{i18n>placeEnterDailyRecFlow}"
+										value="{ path: 'warehouseMapFormModel>/HCP_TONS_FLOW' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber" change="_valideInputNumber"/>
+										
+											<Label text="Capacidade Expedição(T/Dia)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite a capacidade em Toneladas"
+										value="{ path: 'warehouseMapFormModel>/HCP_EXPEDITION_CAPACITY' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber" change="_valideInputNumber"/>
+										
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<form:SimpleForm class="simpleForm" width="100%" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4"
+										id="materialSimpleForm" labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+										<form:content></form:content>
+									</form:SimpleForm>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button id="add-material" class="sapUiLargeMarginBottom" text="Adicionar Material" type="Emphasized" iconFirst="true" enabled="true" visible="true" iconDensityAware="false"
+										press="_onAddNewForm">
+										<customData>
+											<core:CustomData key="id" value="materialSimpleForm"/>
+										</customData>
+										<layoutData>
+											<l:GridData span="L5 M5 S12"/>
+										</layoutData>
+									</Button>	
+										
+								
+											<Label  text="Consegue expedir mais de um tipo de material?" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{warehouseMapFormModel>/yesFob}"/>
+									<SegmentedButton selectedKey="{warehouseMapFormModel>/HCP_CAN_EXPAND_MATERIAL}" selectionChange="_validateForm" width="100%"
+										visible="true">
+										<items>
+											<SegmentedButtonItem text="Sim" key="1"/>
+											<SegmentedButtonItem text="Não" key="2"/>
+										</items>
+									</SegmentedButton>
+									
+											<Label text="Horário Funcionamento" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									
+										<custom:CustomComboBox items="{ path: '/Working_Hours', length: 999999 , sorter: { path: 'HCP_ID',descending: false}}"
+										placeholder="Selecione Período Funcionando" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{warehouseMapFormModel>/HCP_WORKING_HOURS}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									
+											<Label text="Tipo Armazenagem" design="Standard" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<MultiComboBox
+										items="{ path: '/Storage_Type', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, {path: 'HCP_WAREHOUSE', operator: 'EQ', value1: '1'}], length: 999999 , sorter: { path: 'HCP_ID',descending: false}}"
+										placeholder="Selecione Tipo de Armazenagem" required="false" editable="true" selectedKeys="{warehouseMapFormModel>/HCP_STORAGE_TYPE}" enabled="true"
+										valueState="None" selectionChange="_validateStorageTypeInputs">
+										<items>
+											<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+										</items>
+									</MultiComboBox>
+									<Label text="Quantidade de Estruturas" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite a Quantidade de Silos/Armazéns"
+										value="{ path: 'warehouseMapFormModel>/HCP_STORAGE_QUANTITY' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber" change="_valideInputNumber"/>
+										<Label text="Condição Expedição" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							
+										<custom:CustomComboBox items="{ path: '/Expedition_Condition', length: 999999 , sorter: { path: 'HCP_ID',descending: false}}"
+										placeholder="Selecione Condição" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{warehouseMapFormModel>/HCP_EXPEDITION_CONDITION}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									
+									<Label text="Tipo de descarga" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{warehouseMapFormModel>/yesFob}"/>
+									<SegmentedButton selectedKey="{warehouseMapFormModel>/HCP_DISCHARGE_TYPE}" selectionChange="_validateForm" width="100%"
+										visible="true">
+										<items>
+											<SegmentedButtonItem text="Manual" key="1"/>
+											<SegmentedButtonItem text="Tombador" key="2"/>
+										</items>
+									</SegmentedButton>
+									
+									<Label text="Possui Balança" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="false"
+										visible="{warehouseMapFormModel>/yesFob}"/>
+									<SegmentedButton selectedKey="{warehouseMapFormModel>/HCP_HAS_SCALES}" selectionChange="_validateScales" width="100%"
+										visible="true">
+										<items>
+											<SegmentedButtonItem text="Sim" key="1"/>
+											<SegmentedButtonItem text="Não" key="2"/>
+										</items>
+									</SegmentedButton>
+									
+										<Label text="Tamanho da Balança(M)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="{warehouseMapFormModel>/hasScales}"/>
+									<Input placeholder="Digite o Tamanho em Metros"
+										value="{ path: 'warehouseMapFormModel>/HCP_SCALE_SYZE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false" visible="{warehouseMapFormModel>/hasScales}" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber" change="_valideInputNumber"/>
+										
+										<Label text="Condição Visual do Armazém" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									
+										<custom:CustomComboBox items="{ path: '/Warehouse_Visual_Condition', length: 999999 , filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], sorter: { path: 'HCP_ID',descending: false}}"
+										placeholder="Selecione Condição" editable="true" enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{warehouseMapFormModel>/HCP_WAREHOUSE_VISUAL_CONDITION}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

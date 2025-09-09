@@ -1,0 +1,61 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.Certifications"
+	xmlns="sap.m" xmlns:l="sap.ui.layout">
+	<Page title="Extrato Fornecedor" showNavButton="true" navButtonPress="_onCancel" showFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+				<List id="listIntentionInactive"
+					items="{certificationsModel>/data}">
+					<headerToolbar>
+						<OverflowToolbar>
+							<Title text="Intenção de Preços"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<items>
+						<ObjectListItem intro="teste1" press="_onRowPress"
+							title="teste2"
+							number="123"
+							numberUnit="12345" numberState="Success" type="Active" selected="true">
+							<attributes>
+								<ObjectAttribute text="Id: {certificationsModel>HCP_UNIQUE_KEY}" active="false" visible="true"/>
+								<ObjectAttribute text="Mês Entrega: {certificationsModel>HCP_CERTIFICATION}" active="false" visible="true"/>
+							</attributes>
+							<firstStatus>
+								<ObjectStatus text="Preço de Alerta: 123" state="None" visible="true"/>
+							</firstStatus>
+							<secondStatus>
+								<ObjectStatus text="" state="None" visible="true"/>
+							</secondStatus>
+						</ObjectListItem>
+					</items>
+				</List>
+				
+					<List id="listIntentionInactive2"
+					items="{certificationsModel>/data2}" visible="false">
+					<headerToolbar>
+						<OverflowToolbar>
+							<Title text="Intenção de Preços reverse"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<items>
+						<ObjectListItem intro="teste1" press="_onRowPress"
+							title="teste2"
+							number="123"
+							numberUnit="12345" numberState="Success" type="Active" selected="true">
+							<attributes>
+								<ObjectAttribute text="Id: {certificationsModel>HCP_UNIQUE_KEY}" active="false" visible="true"/>
+								<ObjectAttribute text="Mês Entrega: {certificationsModel>HCP_CERTIFICATION}" active="false" visible="true"/>
+							</attributes>
+							<firstStatus>
+								<ObjectStatus text="Preço de Alerta: 123" state="None" visible="true"/>
+							</firstStatus>
+							<secondStatus>
+								<ObjectStatus text="" state="None" visible="true"/>
+							</secondStatus>
+						</ObjectListItem>
+					</items>
+				</List>
+		</content>
+	</Page>
+</mvc:View>

@@ -1,0 +1,343 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.negotiationReport.Edit"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" xmlns:l="sap.ui.layout">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<Button type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="_onCancel"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Relato de Negociação da Região {editNegotiationReportModel>/HCP_NEGO_REPORT_ID}" wrapping="true"
+							class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto" visible="{editNegotiationReportModel>/isEdit}"
+						enabled="{= ${editNegotiationReportModel>/enableCreate} &amp;&amp; ${profileModel>/edit}}" iconDensityAware="false" press="_onSave"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="false" title="" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="">
+						<uxap:blocks>
+							<form:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4"
+								id="negociationReportCreateFormID" labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${profileModel>/edit} === true ? false : true}"/>
+									<MessageStrip text="Você não tem permissão para editar Relato de Negociação da Região" type="Error" showIcon="true" showCloseButton="false"
+										visible="{= ${profileModel>/edit} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+									<Label text="Safra" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/Crop_Year', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], length: 999999 , sorter: { path: 'HCP_CROP_ID',descending: false}}"
+										editable="false" enabled="false" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectedKey="{editNegotiationReportModel>/HCP_CROP}" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_CROP_DESC}" enabled="true" key="{HCP_CROP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Estado Origem" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<ComboBox
+										items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: false} }"
+										editable="false" enabled="false" width="auto" valueState="None" maxWidth="100%" selectedKey="{editNegotiationReportModel>/HCP_STATE}">
+										<items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</items>
+									</ComboBox>
+									<Label text="Região" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{editNegotiationReportModel>/hasRegio}"/>
+									<ComboBox
+										items="{ path: '/Regions', length: 999999 , filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, sorter: { path: 'HCP_BEZEI',descending: false} }"
+										editable="false" enabled="false" width="auto" valueState="None" maxWidth="100%" selectedKey="{editNegotiationReportModel>/HCP_REGIO}"
+										visible="{editNegotiationReportModel>/hasRegio}">
+										<items>
+											<core:Item text="{HCP_BEZEI}" enabled="true" key="{HCP_ID}"/>
+										</items>
+									</ComboBox>
+									<Label text="Material" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MAKTX',descending: false} }" editable="false"
+										enabled="false" visible="true" width="auto" valueState="None" maxWidth="100%" selectedKey="{editNegotiationReportModel>/HCP_MATERIAL}"
+										selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Grupo Comprador" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Account_Groups', length: 999999 , sorter: { path: 'EKNAM',descending: false} }"
+										editable="false" enabled="false" width="auto" valueState="None" maxWidth="100%" selectedKey="{editNegotiationReportModel>/HCP_BRANCH}"
+										selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Tipo de material" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Material_Type', length: 999999 , sorter: { path: 'DETPCEREAL',descending: false} }"
+										placeholder="Selecione Tipo de Material" editable="false" enabled="false" selectedKey="{editNegotiationReportModel>/HCP_MATERIAL_TYPE}"
+										visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{TPCEREAL} - {DETPCEREAL}" enabled="true" key="{TPCEREAL}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Modalidade" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"
+										class="sapUiSmallMarginTop"/>
+									<SegmentedButton width="100%" enabled="{editNegotiationReportModel>/isEdit}" class="sapUiSmallMarginTop" selectionChange="_changeModality"
+										selectedKey="{editNegotiationReportModel>/HCP_MODALITY}">
+										<items>
+											<SegmentedButtonItem text="Fixo" key="0"/>
+											<SegmentedButtonItem text="Déposito" key="1"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Condição Depósito" design="Standard" width="100%" required="{editNegotiationReportModel>/requiredDeposit}" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/Deposit_Condition', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], length: 999999 , sorter: { path: 'HCP_ID',descending: false} }"
+										placeholder="Selecione Condição Depósito" visible="{editNegotiationReportModel>/enableModality}"
+										editable="{editNegotiationReportModel>/isEdit}" enabled="{editNegotiationReportModel>/isEdit}"
+										selectedKey="{editNegotiationReportModel>/HCP_DEPOSIT_CONDITION}" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_ID} - {HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<TextArea rows="2" value="{editNegotiationReportModel>/HCP_DEPOSIT_CONDITION_DESC}" change="_validateForm"
+										placeholder="Ex: (CBOT x 70% x BRL;BMF -5)" cols="20" maxLength="255" wrapping="None" enabled="{editNegotiationReportModel>/isEdit}"
+										visible="{editNegotiationReportModel>/enableModalityDesc}"/>
+									<Label text="Fonte de Informação" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/Source_Information', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}]}"
+										placeholder="Selecione Fonte de Informação" selectedKey="{editNegotiationReportModel>/HCP_REPORT_BROKER}" editable="true"
+										enabled="{editNegotiationReportModel>/isEdit}" visible="true" required="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{HCP_SOURCE_ID} - {HCP_TEXT}" enabled="true" key="{HCP_SOURCE_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label id="countyLabel" text="Município de Origem" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox id="county" items="{ path: '/View_City', length: 999999 , sorter: { path: 'TEXT',descending: false}}"
+										placeholder="Selecione Município" editable="{editNegotiationReportModel>/isEdit}"
+										selectedKey="{editNegotiationReportModel>/HCP_CITY_ORIGIN}" visible="true" width="auto" enabled="{editNegotiationReportModel>/isEdit}"
+										valueState="None" maxWidth="100%" change="_validateForm" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{TEXT}" enabled="true" key="{TAXJURCODE}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="" class="sapUiSmallMarginTop sapUiSmallMarginBegin" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<SegmentedButton class="sapUiSmallMarginTop" selectedKey="{editNegotiationReportModel>/HCP_TYPE_PERSON}"
+										enabled="{editNegotiationReportModel>/isEdit}" width="100%" selectionChange="_onInputPartnerProsp">
+										<items>
+											<SegmentedButtonItem text="Vendedor" key="Fornecedor"/>
+											<SegmentedButtonItem text="Prospect" key="Prospect"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Prospect" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="yesProspect" placeholder="Selecione Prospect" selectedKey="{editNegotiationReportModel>/HCP_SUPPLIER}"
+										editable="true" enabled="{editNegotiationReportModel>/isEdit}" visible="{editNegotiationReportModel>/yesProspect}" required="false"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm" change="_validateForm"
+										items="{ path: '/Prospects', length: 999999, filters: [{path: 'HCP_STATUS', operator: 'EQ', value1: '1'}, {path: 'HCP_STATUS', operator: 'EQ', value1: '2'}] }">
+										<custom:items>
+											<core:Item text="{HCP_PROSP_ID} - {NAME1}" enabled="true" key="{HCP_PROSP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Vendedor Base de Fornecedores BRF?" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${editNegotiationReportModel>/yesProspect} === false }"/>
+									<SegmentedButton width="100%" enabled="{editNegotiationReportModel>/isEdit}"
+										visible="{= ${editNegotiationReportModel>/yesProspect} === false }" selectedKey="{editNegotiationReportModel>/HCP_PARTNER_BRF_SUP}"
+										selectionChange="_onInputPartnerFormSelect">
+										<items>
+											<SegmentedButtonItem text="Sim" key="1"/>
+											<SegmentedButtonItem text="Não" key="0"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Vendedor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="yesPartner" visible="{editNegotiationReportModel>/yesPartner}" required="false" change="_validateForm" editable="true"
+										enabled="{editNegotiationReportModel>/isEdit}" placeholder="Selecione Vendedor" showValueHelp="true" type="Text"
+										value="{editNegotiationReportModel>/HCP_SUPPLIER}" description="{editNegotiationReportModel>/HCP_SUPPLIER_DESC}" valueHelpOnly="true"
+										valueHelpRequest="_handlePartnerFilterPress"/>
+									<Label text="Vendedor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="noPartner" placeholder="Digite o Vendedor" type="Text" value="{editNegotiationReportModel>/HCP_SUPPLIER}" showValueHelp="false"
+										enabled="{editNegotiationReportModel>/isEdit}" visible="{editNegotiationReportModel>/noPartner}" width="auto" required="false"
+										change="_validateForm" valueHelpOnly="false" maxLength="0"/>
+									<Label text="" class="sapUiSmallMarginTop" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<SegmentedButton enabled="{editNegotiationReportModel>/isEdit}" class="sapUiSmallMarginTop" width="100%"
+										selectedKey="{editNegotiationReportModel>/HCP_TYPE_BUYER_PERSON}" selectionChange="_onInputBuyerProsp">
+										<items>
+											<SegmentedButtonItem text="Comprador" key="Comprador"/>
+											<SegmentedButtonItem text="Prospect" key="Prospect"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Prospect" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="yesBuyerProspect" placeholder="Selecione Prospect" selectedKey="{editNegotiationReportModel>/HCP_BUYER}"
+										editable="true" enabled="{editNegotiationReportModel>/isEdit}" visible="{editNegotiationReportModel>/yesBuyerProspect}" required="false"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm" change="_validateForm"
+										items="{ path: '/Prospects', length: 999999, filters: [{path: 'HCP_STATUS', operator: 'EQ', value1: '1'}, {path: 'HCP_STATUS', operator: 'EQ', value1: '2'}] }">
+										<custom:items>
+											<core:Item text="{HCP_PROSP_ID} - {NAME1}" enabled="true" key="{HCP_PROSP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Comprador Base de Fornecedores BRF?" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{= ${editNegotiationReportModel>/yesBuyerProspect} === false }"/>
+									<SegmentedButton visible="{= ${editNegotiationReportModel>/yesBuyerProspect} === false }" width="100%"
+										enabled="{editNegotiationReportModel>/isEdit}" selectedKey="{editNegotiationReportModel>/HCP_BUYER_BRF_SUP}"
+										selectionChange="_onInputBuyerFormSelect">
+										<items>
+											<SegmentedButtonItem text="Sim" key="1"/>
+											<SegmentedButtonItem text="Não" key="0"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textBuyer}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<!-- Removido Pacote Mlehorias(01/06/2022) Removido campo Comprador para Adicionar Players
+									<Input id="yesBuyer" class="sapUiSmallMarginBottom " visible="{editNegotiationReportModel>/yesBuyer}" required="false"
+										change="_validateForm" editable="true" enabled="{editNegotiationReportModel>/isEdit}" placeholder="Selecione Comprador" showValueHelp="true"
+										type="Text" value="{editNegotiationReportModel>/HCP_BUYER}" description="{editNegotiationReportModel>/HCP_BUYER_DESC}" valueHelpOnly="true"
+										valueHelpRequest="_handlePartnerFilterPress"/>
+									-->
+									<custom:CustomComboBox placeholder="{i18n>textOtherPlayers}" selectedKey="{editNegotiationReportModel>/HCP_PLAYERS_ID}" editable="true"
+										selectionChange="_validateForm"
+										items="{ path: '/Players', length: 999999, filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, sorter: { path: 'HCP_ID',descending: true}}"
+										enabled="true" visible="{editNegotiationReportModel>/yesBuyer}" required="true" width="auto" valueState="None" maxWidth="100%">
+										<custom:items>
+											<core:Item text="{HCP_NAME} / {HCP_STATE}" enabled="true" key="{HCP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Comprador" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="noBuyer" class="sapUiSmallMarginBottom " placeholder="Digite Comprador" type="Text"
+										value="{editNegotiationReportModel>/HCP_BUYER}" showValueHelp="false" enabled="{editNegotiationReportModel>/isEdit}"
+										visible="{editNegotiationReportModel>/noBuyer}" width="auto" required="false" change="_validateForm" valueHelpOnly="false" maxLength="0"/>
+									<Label text="Incoterms" class="sapUiSmallMarginTop" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<SegmentedButton width="100%" enabled="{editNegotiationReportModel>/isEdit}" selectedKey="{editNegotiationReportModel>/HCP_INCOTERMS}"
+										selectionChange="_validateIncoterms" class="sapUiSmallMarginBottom sapUiSmallMarginTop">
+										<items>
+											<SegmentedButtonItem text="{i18n>textCIF}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textFOB}" key="2"/>
+											<SegmentedButtonItem text="{i18n>textCPT}" key="3"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Volume(T)" design="Standard" width="100%" required="{editNegotiationReportModel>/isEdit}" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<Input placeholder="Volume em Toneladas" type="Tel" name="HCP_TONNAGE"
+										value="{ path: 'editNegotiationReportModel>/HCP_TONNAGE' , type: 'sap.ui.model.type.Int', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"
+										showValueHelp="false" enabled="{editNegotiationReportModel>/isEdit}" visible="true" width="auto" valueHelpOnly="false" maxLength="100"
+										change="_valideInputNumber"/>
+									<Label text="Moeda" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Currency', length: 999999 , sorter: { path: 'KTEXT',descending: false}}"
+										placeholder="Selecione Moeda" editable="{editNegotiationReportModel>/isEdit}" enabled="{editNegotiationReportModel>/isEdit}"
+										selectedKey="{editNegotiationReportModel>/HCP_CURRENCY}" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{WAERS} - {KTEXT}" enabled="true" key="{WAERS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Preço" design="Standard" width="100%" required="{editNegotiationReportModel>/requiredPrice}" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite Preço" type="Tel" name="FIELD_CALC"
+										value="{ path: 'editNegotiationReportModel>/HCP_PRICE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										showValueHelp="false" enabled="{editNegotiationReportModel>/isEdit}" visible="true" width="auto" valueHelpOnly="false" maxLength="100"
+										change="_validateForm"/>
+									<Label text="Unidade de medida preço" design="Standard" width="100%" required="{editNegotiationReportModel>/requiredPrice}"
+										textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox enabled="{editNegotiationReportModel>/isEdit}" placeholder="Selecione Unidade"
+										editable="{editNegotiationReportModel>/isEdit}" selectedKey="{editNegotiationReportModel>/HCP_UNIT_MEASURE}" selectionChange="_validateForm"
+										change="_validateForm" visible="true" width="auto" valueState="None" maxWidth="100%" name="FIELD_CALC_COMBO">
+										<custom:items>
+											<core:Item text="SC - Saca" enabled="true" key="SC"/>
+											<core:Item text="TO - Tonelada" enabled="true" key="TO"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Destino" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/View_States', length: 999999 ,filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'} , sorter: { path: 'BLAND',descending: false} }"
+										placeholder="Selecione Destino - UF" enabled="{editNegotiationReportModel>/isEdit}" editable="{editNegotiationReportModel>/isEdit}"
+										selectedKey="{editNegotiationReportModel>/HCP_STATE_DESTINATION}" visible="true" width="auto" valueState="None" maxWidth="100%"
+										selectionChange="_onInputUfFormSelectDestination" change="_onInputUfFormSelectDestination">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label id="countyLabelDestination" text="Município de Destino" design="Standard" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="countyDestination" items="{ path: '/View_City', length: 999999, sorter: { path: 'TEXT',descending: false} }"
+										placeholder="Selecione Município" editable="{editNegotiationReportModel>/isEdit}"
+										selectedKey="{editNegotiationReportModel>/HCP_CITY_DESTINATION}" visible="true" width="auto"
+										enabled="{editNegotiationReportModel>/enableCountyDestination}" valueState="None" maxWidth="100%" change="_validateCountyDestination"
+										selectionChange="_validateCountyDestination">
+										<custom:items>
+											<core:Item text="{TEXT}" enabled="true" key="{TAXJURCODE}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Prazo de pagamento" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<SegmentedButton width="100%" enabled="{editNegotiationReportModel>/isEdit}" selectedKey="{editNegotiationReportModel>/HCP_PAYMENT_TERM}"
+										selectionChange="_validatePayment" class="sapUiSmallMarginBottom">
+										<items>
+											<SegmentedButtonItem text="Prazo" key="0"/>
+											<SegmentedButtonItem text="Vista" key="1"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Quantidade de Dias" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{editNegotiationReportModel>/enableDaysQuantity}"/>
+									<Input placeholder="Digite Quantidade de Dias" type="Number" enabled="{editNegotiationReportModel>/isEdit}"
+										value="{editNegotiationReportModel>/HCP_NUMBER_DAYS}" showValueHelp="false" visible="{editNegotiationReportModel>/enableDaysQuantity}"
+										width="auto" valueHelpOnly="false" maxLength="100" change="_validateForm"/>
+									<Label text="Mês de Entrega:" design="Standard" required="true" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="Selecione o Mês" name="TABLE_PRICE" id="comboMes" selectedKey="{editNegotiationReportModel>/HCP_MONTH}"
+										visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm" change="_validateForm"
+										editable="{editNegotiationReportModel>/isEdit}" enabled="{editNegotiationReportModel>/isEdit}"></custom:CustomComboBox>
+									<Label text="Ano de Entrega" design="Standard" required="true" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="comboAno" placeholder="Selecione o Ano" name="TABLE_PRICE" selectedKey="{editNegotiationReportModel>/HCP_YEAR}"
+										visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm" change="_validateForm"
+										editable="{editNegotiationReportModel>/isEdit}" enabled="{editNegotiationReportModel>/isEdit}"></custom:CustomComboBox>
+									<Label text="Centro Destino BRF comparação" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Center', length: 999999 , sorter: { path: 'WERKS',descending: false} }" name="TABLE_PRICE"
+										placeholder="Selecione Centro" editable="{editNegotiationReportModel>/isEdit}" enabled="{editNegotiationReportModel>/isEdit}"
+										selectedKey="{editNegotiationReportModel>/HCP_CENTER}" visible="true" width="auto" valueState="None" maxWidth="100%" change="_validateForm"
+										selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{WERKS} - {NAME1}" enabled="true" key="{WERKS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Valor do Frete em Toneladas para o Centro Destino de comparação" design="Standard" width="100%" required="false"
+										textAlign="Begin" textDirection="Inherit" visible="{editNegotiationReportModel>/enableFreight}"/>
+									<Input placeholder="Digite o Valor de Frete Negociado em (T)" type="Tel" name="FIELD_CALC" class="sapUiSmallMarginBottom"
+										value="{ path: 'editNegotiationReportModel>/HCP_VALUE_FREIGHT' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										showValueHelp="false" enabled="{editNegotiationReportModel>/isEdit}" visible="{editNegotiationReportModel>/enableFreight}" width="auto"
+										valueHelpOnly="false" maxLength="100" change="_validateForm"/>
+									<Label text="Tabela de Preço BRF(R$)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<ObjectNumber class="customObjectNumber"
+										number="{ parts:[{path:'editNegotiationReportModel>/HCP_PRICE_LIST'}, 'BRL'], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+										unit="BRL" state="{editNegotiationReportModel>/priceListStatus}"/>
+									<Label text="Preço final" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<ObjectNumber class="customObjectNumber"
+										number="{ parts:[{path:'editNegotiationReportModel>/HCP_PRICE_CALCULATED'}, 'BRL'], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+										unit="BRL" visible="true"/>
+									<Label text="Diferença" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<ObjectNumber visible="true" class="customObjectNumber"
+										number="{ parts:[{path:'editNegotiationReportModel>/HCP_PRICE_DIFF'}, 'BRL'], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+										unit="BRL"/>
+									<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<MessageStrip text="Valor não encontrado, por favor verifique os dados." type="Warning" showIcon="true" showCloseButton="false"
+										visible="{editNegotiationReportModel>/noPriceBRF}"></MessageStrip>
+									<Label text="Inativar Cadastro" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Switch class="switchColorRed" state="{editNegotiationReportModel>/isNegotiationActive}" visible="{editNegotiationReportModel>/isEdit}"
+										customTextOff="Não" customTextOn="Sim" change="_validateForm"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

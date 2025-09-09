@@ -1,0 +1,148 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.cropTur.Consult" xmlns="sap.m">
+	<Page title="Consultar/Editar CropTour" showNavButton="true" navButtonPress="backToIndex" showFooter="true">
+		<content>
+			<PullToRefresh id="pullToRefreshID" visible="{consultModel>/isMobile}" refresh="refreshData"/>
+			<Table width="auto" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				id="table" items="{consultModel>/crop_tur}" updateFinished="onUpdateFinished" itemPress="onCropTurPress">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar>
+					<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+						<content>
+							<Title text="{consultModel>/cropTurCount} CropTour" titleStyle="Auto" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+							<ToolbarSpacer/>
+							<OverflowToolbarButton text="Sort" press="sortButtonPressed" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+							<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Coleta" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="150px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="País" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Safra" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Estado" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="200px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Região" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="200px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Material" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Quantidade" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Nº de Fileiras" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Nº de Grãos por Fileiras" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Nº Total de Grãos" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Saca/Hectare" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Produtividade Média Região" width="auto" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Right" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Data Criação" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Right" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="Criado Por" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active" press="_onRowPress">
+						<cells>
+							<Text text="{consultModel>HCP_COLLECT}" width="auto" maxLines="1"
+								wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{consultModel>HCP_COUNTRY} - {consultModel>HCP_COUNTRY_NAME}" width="auto" maxLines="1"
+								wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{consultModel>HCP_CROP_DESC}" width="auto" maxLines="1"
+								wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<ObjectAttribute text="{consultModel>HCP_STATE}"/>
+							<Text text="{consultModel>HCP_BEZEI}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{= parseInt(${consultModel>HCP_MATERIAL})} - {consultModel>MAKTX}" width="auto" wrapping="true"
+								textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{consultModel>HCP_QUANTITY}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{consultModel>HCP_ROW_COUNT}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{consultModel>HCP_GRAIN_COUNT_PER_ROW}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{consultModel>HCP_GRAIN_TOTAL}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{consultModel>HCP_PRODUCTIVITY_MEDIA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{consultModel>HCP_PRODUCTIVITY}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text
+								text="{ path: 'consultModel>HCP_CREATED_AT', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+								wrapping="false" textAlign="Right" textDirection="Inherit" visible="true"/>
+							<Text text="{consultModel>HCP_CREATED_BY}" width="auto" wrapping="false" textAlign="Right" textDirection="Inherit" visible="true"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</Page>
+</mvc:View>

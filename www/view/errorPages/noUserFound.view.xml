@@ -1,0 +1,10 @@
+<mvc:View height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.errorPages.noUserFound">
+	<MessagePage showHeader="false" text="Usuário" enableFormattedText="true"
+		description="O usuário não pôde ser carregado. Experimente recarregar o usuário ou feche a aplicação" icon="sap-icon://person-placeholder">
+		<buttons>
+			<Button text="Recarregar Usuário" press="reloadUser"/>
+			<!--<Button text="Voltar" press="navBack"/>-->
+		</buttons>
+	</MessagePage>
+</mvc:View>

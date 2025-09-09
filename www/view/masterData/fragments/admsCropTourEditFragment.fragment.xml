@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="Editar Usuário" type="Standard"
+		verticalScrolling="true">
+		<content>
+			<Panel width="auto">
+				<form:SimpleForm class="simpleFormCommerc" editable="true" id="formPrice" maxContainerCols="1">
+					<form:content>
+						<Label text="{i18n>lblUsers}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input value="{admsCropTourModel>/HCP_USER_ID}" placeholder="Digite o usuário" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto"
+							valueHelpOnly="false" valueStateText="Invalid entry" maxLength="0" change="_validateForm" liveChange="_validateForm"/>
+					</form:content>
+				</form:SimpleForm>
+			</Panel>
+		</content>
+		<beginButton/>
+		<buttons>
+			<Button text="Cancelar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+				press="_onDialogAdmsCropTourCancelPress"/>
+			<Button text="Editar" type="Emphasized" iconFirst="true" width="auto" enabled="{filterPageModel>/enableCreate}" visible="{filterPageModel>/enableEditButton}"
+			iconDensityAware="false" press="_onEdit"/>
+		</buttons>
+		<customHeader/>
+		<endButton/>
+		<subHeader/>
+	</Dialog>
+</core:FragmentDefinition>

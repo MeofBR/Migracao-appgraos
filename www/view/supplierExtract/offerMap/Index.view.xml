@@ -1,0 +1,218 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.offerMap.Index"
+	xmlns="sap.m">
+	<Page showHeader="true" title="Consulta Mapa de Ofertas" showFooter="true" showNavButton="true" navButtonPress="navBack">
+			<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+		<IconTabBar
+		id="idIconTabBarMulti"
+		expanded="true"
+		class="sapUiResponsiveContentPadding gridIntencao"
+		select="handleIconTabBarSelect"
+		expandable="false">
+		<items>
+			<IconTabFilter
+				icon="sap-icon://add-document" key="Abertas" text="Abertas" iconColor="Positive">
+				<Table width="auto" showSeparators="All" growing="true" growingThreshold="5" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				id="table"
+				items="{ path:'offerMap>/ItemOffeMap', sorter : [{ path:'offerMap>HCP_WERKS' , descending:false, group: true } , { path:'offerMap>HCP_CREATED_AT' , descending:true } ], groupHeaderFactory: '.getGroupHeader' }">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar> 
+				<headerToolbar> 
+					<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+						<content>
+							<Title text="{i18n>textOfferMap}({offerMap>/count})" titleStyle="Auto" width="auto" textAlign="Begin" visible="true"
+								wrapping="false"/>
+							<ToolbarSpacer/> 
+							<OverflowToolbarButton text="Sort" press="sortButtonPressed" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+							<!--<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"-->
+							<!--	enabled="true" visible="true" iconDensityAware="false"/>-->
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textOfferNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="190px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textMaterial}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textQuantity}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+			
+					<Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textInco}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textDateDelivery}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="190px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textPurchGroup}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textStatus}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textDateCreation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active" press="_onRowPress">
+						<cells>
+							<Text text="{path:'offerMap>HCP_OFFER_ID'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"></Text>
+							<ObjectIdentifier title="{path: 'offerMap>MAKTX'}"/>
+							<Text
+								text="{path:'offerMap>HCP_VOLUME', type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+								maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"></Text>
+				
+							<Text text="{ path: 'offerMap>HCP_INCOTERM'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{path:'offerMap>DT_DELIVERY'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"></Text>
+							<ObjectIdentifier title="{path: 'offerMap>EKNAM'}"/>
+							<Text text="{path:'offerMap>HCP_STATES_OFFER'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"></Text>
+							<ObjectIdentifier
+								text="{ path: 'offerMap>HCP_CREATED_AT', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy HH:mm:ss' } }"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			</IconTabFilter>
+			<IconTabFilter
+				icon="sap-icon://collapse"
+				text="Parcialmente" key="Parcialmente" iconColor="Critical">
+				<Table width="auto" showSeparators="All" growing="true" growingThreshold="5" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				id="table2"
+				items="{ path:'offerMap>/ItemOffeMapState2', sorter : [{ path:'offerMap>HCP_WERKS' , descending:false, group: true } , { path:'offerMap>HCP_CREATED_AT' , descending:true } ], groupHeaderFactory: '.getGroupHeader' }">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar> 
+				<headerToolbar> 
+					<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+						<content>
+							<Title text="{i18n>textOfferMap}({offerMap>/count2})" titleStyle="Auto" width="auto" textAlign="Begin" visible="true"
+								wrapping="false"/>
+							<ToolbarSpacer/> 
+							<OverflowToolbarButton text="Sort" press="sortButtonPressed" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto"
+								enabled="true" visible="true" iconDensityAware="false"/>
+							<!--<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"-->
+							<!--	enabled="true" visible="true" iconDensityAware="false"/>-->
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textOfferNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="190px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textMaterial}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textQuantity}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="60px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textInco}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textDateDelivery}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="190px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textPurchGroup}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textStatus}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>textDateCreation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active" press="_onRowPress2">
+						<cells>
+							<Text text="{path:'offerMap>HCP_OFFER_ID'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"></Text>
+							<ObjectIdentifier title="{path: 'offerMap>MAKTX'}"/>
+							<Text
+								text="{path:'offerMap>HCP_VOLUME', type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+								maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"></Text>
+							<Text text="{ path: 'offerMap>HCP_INCOTERM'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{path:'offerMap>DT_DELIVERY'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"></Text>
+							<ObjectIdentifier title="{path: 'offerMap>EKNAM'}"/>
+							<Text text="{path:'offerMap>HCP_STATES_OFFER'}" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"></Text>
+							<ObjectIdentifier
+								text="{ path: 'offerMap>HCP_CREATED_AT', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: false, pattern: 'dd/MM/yyyy HH:mm:ss' } }"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			</IconTabFilter>
+			
+		</items>
+	</IconTabBar>
+			
+			
+		</content>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

@@ -1,0 +1,125 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.masterData.typeInteract"
+	xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout">
+	<Page showHeader="true" title="{i18n>textMasterData}" showFooter="{indexModel>/isMobile}" showNavButton="true" navButtonPress="backToIndex">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<IconTabBar id="idIconTabBarMulti" expanded="true" class="sapUiResponsiveContentPadding gridIntencao" select="handleIconTabBarSelect"
+				expandable="false">
+				<items>
+					<IconTabFilter icon="sap-icon://complete" key="Ativo" text="Ativo" iconColor="Positive">
+						<Table id="table" width="auto"
+							items="{path:'filterTypeInteract>/itemTypeInteract', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], sorter: { path: 'HCP_ID',descending: false}}"
+							noDataText="Sem Dados" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+							class="sapUiResponsiveMargin">
+							<infoToolbar>
+								<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+									<content>
+										<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</content>
+								</Toolbar>
+							</infoToolbar>
+							<headerToolbar>
+								<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+									<content>
+										<ToolbarSpacer width=""/>
+										<OverflowToolbarButton text="Sort" type="Emphasized" icon="sap-icon://add" iconFirst="true" width="auto" enabled="true" visible="true"
+											iconDensityAware="false" press="_openDialogCertification"/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column width="90%" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Tipos de Interação" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Ações" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem type="Active">
+									<cells>
+										<Label text="{filterTypeInteract>HCP_INT_TYPE_DESC}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<VBox class="teste">
+											<Button text="Inativar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+												press="_onDeleteButton"/>
+										</VBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://collapse" text="Inativo" key="Inativo" iconColor="Negative">
+						<Table id="tableInative" width="auto"
+							items="{path:'filterTypeInteract>/itemTypeInteract', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '0'}], sorter: { path: 'HCP_ID',descending: false}}"
+							noDataText="Sem Dados" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+							class="sapUiResponsiveMargin">
+							<infoToolbar>
+								<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+									<content>
+										<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</content>
+								</Toolbar>
+							</infoToolbar>
+							<headerToolbar>
+								<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+									<content>
+										<ToolbarSpacer width=""/>
+										<OverflowToolbarButton text="Sort" type="Emphasized" icon="sap-icon://add" iconFirst="true" width="auto" enabled="true" visible="true"
+											iconDensityAware="false" press="_openDialogCertification"/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column width="90%" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Tipos de Interação" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="Ações" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem type="Active">
+									<cells>
+										<Label text="{filterTypeInteract>HCP_INT_TYPE_DESC}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<VBox class="teste">
+											<Button text="Ativar" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+												press="_onActiveButton"/>
+										</VBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+				<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Ultima atualização {indexModel>/lastUpdate}" showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

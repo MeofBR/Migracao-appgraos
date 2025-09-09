@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<ResponsivePopover title="{planningCalendarModel>HCP_SUBJECT}" showArrow="true" placement="Auto" class="outlookScheduleDialog">
+		<content>
+			<f:SimpleForm editable="false" columnsL="1" columnsM="1" emptySpanL="4" emptySpanM="4" labelSpanL="3" labelSpanM="3"
+				layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+				<f:content>
+					<Label text="De" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<DateTimePicker
+						value="{path: 'planningCalendarModel>HCP_START_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/YYYY HH:mm' } }"
+						enabled="false" visible="true" width="auto"/>
+					<Label text="Até" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<DateTimePicker
+						value="{path: 'planningCalendarModel>HCP_END_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM/YYYY HH:mm' }}"
+						enabled="false" visible="true" width="auto"/>
+					<Label text="Descrição" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<TextArea value="{planningCalendarModel>HCP_COMMENTS}" rows="5" cols="20" maxLength="0" wrapping="None" enabled="false" visible="true"/>
+					<Button text="Fechar" type="Default" press="onCloseOutlookSchedule"/>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

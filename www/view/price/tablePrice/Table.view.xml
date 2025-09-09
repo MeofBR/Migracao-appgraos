@@ -1,0 +1,78 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.price.tablePrice.Table"
+	xmlns="sap.m" xmlns:uxap="sap.uxap" xmlns:l="sap.ui.layout">
+	<Page title="Tabela de Preço" showNavButton="true" navButtonPress="navBack" showFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<Panel width="auto" class="sapUiResponsiveMargin panel-expansive-default" expandable="true" expanded="true"
+				headerText="Atualizado em {filterTable>/data} - {filterTable>/hora}">
+				<l:VerticalLayout width="100%" class="gridWrapper">
+					<l:Grid containerQuery="true" defaultSpan="XL3 L4 M12 S12">
+						<VBox class="demoBox">
+							<Label text="{i18n>labelbuyerGroup}" design="Standard" width="100%" visible="true" class="labelBold"/>
+							<ObjectStatus icon="sap-icon://capital-projects" text="{filterTable>/grupoTexto}"/>
+						</VBox>
+						<VBox class="demoBox">
+							<Label text="{i18n>labelCenter}" design="Standard" width="100%" visible="true" class="labelBold"/>
+							<ObjectStatus icon="sap-icon://factory" text="{filterTable>/centroTexto}"/>
+						</VBox>
+						<VBox class="demoBox">
+							<Label text="{i18n>labelMaterial}" design="Standard" width="100%" visible="true" class="labelBold"/>
+							<ObjectStatus icon="sap-icon://e-care" text="{= parseFloat(${filterTable>/materialNumero})} - {filterTable>/materialTexto}"/>
+						</VBox>
+						<VBox class="demoBox">
+							<Label text="Período" design="Standard" width="100%" visible="true" class="labelBold"/>
+							<ObjectStatus icon="sap-icon://calendar" text="{filterTable>/mesTexto} / {filterTable>/anoTexto}"/>
+						</VBox>
+					</l:Grid>
+				</l:VerticalLayout>
+			</Panel>
+			<Table width="auto" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				id="table" items="{path:'filterTable>/ItemPrice', sorter: { path: 'mes', descending: false, group: false}}">
+				<headerToolbar>
+					<OverflowToolbar width="auto" height="auto" design="Transparent" visible="false" enabled="true">
+						<content>
+							<Title text="Última atualização feita em {filterTable>/data} - {filterTable>/hora}" titleStyle="Auto" width="auto" textAlign="Left"
+								visible="true" wrapping="true"/>
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>labelMaterial}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>purchasePrice}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>purchaseVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active">
+						<cells>
+							<ObjectIdentifier title="{path:'filterTable>cereal'}" text="{= parseFloat(${path:'filterTable>material'})}"/>
+							<ObjectNumber
+								number="{ parts:[{path:'filterTable>precoCompra'},{path:'filterTable>moeda'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+								unit="{path:'filterTable>moeda'}"/>
+							<ObjectNumber
+								number="{ path: 'filterTable>volumeCompra' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+								unit="{path:'filterTable>unidade'}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<footer></footer>
+	</Page>
+</mvc:View>

@@ -1,0 +1,76 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<ResponsivePopover placement="Auto" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+		<content>
+			<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="cancelFormID" labelSpanL="3"
+				labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+				title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+				<f:content>
+					<MessageStrip visible="{planningCalendarModel>/doingCheckout}" text="Para finalizar a visita é necessário informar um motivo."
+						showIcon="true"/>
+					<MessageStrip visible="{planningCalendarModel>/doingCancel}" text="Para cancelar o compromisso é necessário informar um motivo."
+						showIcon="true"/>
+					<Label text="Motivo" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<custom:CustomComboBox items="{path: '/Cancel_Reason', length: 999999, filters: {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}, sorter: { path: 'HCP_CNC_RSN_DESC',descending: false}}"
+						selectedKey="{planningCalendarModel>reasonID}" editable="true" enabled="true" visible="true"
+						width="auto" valueState="None" maxWidth="100%" selectionChange="_validateCancelForm" change="_validateCancelForm"
+						placeholder="Selecione Motivo"> 
+						<custom:items>
+							<core:Item text="{HCP_CNC_RSN_DESC}" enabled="true" key="{HCP_CNC_RSN_ID}"/>
+						</custom:items>
+					</custom:CustomComboBox>
+					<Label text="Observações" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<TextArea value="{planningCalendarModel>obs}" rows="2" cols="20" maxLength="0" wrapping="None" enabled="true" visible="true"
+						change="_validateCancelForm"/>
+					<Button text="Salvar" enabled="{planningCalendarModel>/enableCancelSave}" type="Emphasized" press="onSaveCancelReason"/>
+				</f:content>
+			</f:SimpleForm>
+			<!--<form:Form width="100%" editable="true" visible="true" id="cancelFormID">-->
+			<!--	<form:title/>-->
+			<!--	<form:formContainers>-->
+			<!--		<form:FormContainer visible="true">-->
+			<!--			<form:formElements>-->
+			<!--				<form:FormElement visible="true">-->
+			<!--					<form:label>-->
+			<!--						<Label text="Motivo" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</form:label>-->
+			<!--					<form:fields>-->
+			<!--						<ComboBox items="{/Cancel_Reason}" selectedKey="{planningCalendarModel>reasonID}" editable="true" enabled="true" visible="true" width="auto"-->
+			<!--							valueState="None" maxWidth="100%">-->
+			<!--							<items>-->
+			<!--								<core:Item text="{HCP_CNC_RSN_DESC}" enabled="true" key="{HCP_CNC_RSN_ID}"/>-->
+			<!--							</items>-->
+			<!--						</ComboBox>-->
+			<!--					</form:fields>-->
+			<!--				</form:FormElement>-->
+			<!--			</form:formElements>-->
+			<!--			<form:title/>-->
+			<!--		</form:FormContainer>-->
+			<!--	</form:formContainers>-->
+			<!--	<form:layout>-->
+			<!--		<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>-->
+			<!--	</form:layout>-->
+			<!--</form:Form>-->
+			<!--<form:Form width="100%" editable="true" visible="true">-->
+			<!--	<form:title/>-->
+			<!--	<form:formContainers>-->
+			<!--		<form:FormContainer visible="true">-->
+			<!--			<form:formElements>-->
+			<!--				<form:FormElement visible="true">-->
+			<!--					<form:label>-->
+			<!--						<Label text="Observações" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</form:label>-->
+			<!--					<form:fields>-->
+			<!--						<TextArea value="{planningCalendarModel>obs}" rows="2" cols="20" maxLength="0" wrapping="None" enabled="true" visible="true"/>-->
+			<!--					</form:fields>-->
+			<!--				</form:FormElement>-->
+			<!--			</form:formElements>-->
+			<!--			<form:title/>-->
+			<!--		</form:FormContainer>-->
+			<!--	</form:formContainers>-->
+			<!--	<form:layout>-->
+			<!--		<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>-->
+			<!--	</form:layout>-->
+			<!--</form:Form>-->
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

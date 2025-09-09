@@ -1,0 +1,104 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.Index"
+	xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:microchart="sap.suite.ui.microchart" xmlns:core="sap.ui.core">
+	<Page showHeader="true" title="Extrato Fornecedor" showFooter="true" showNavButton="true" navButtonPress="backToIndex">
+		<content>
+			<Panel height="auto" width="100%" headerText="Filtros Selecionados" expandable="true" expanded="true" expandAnimation="true"
+				backgroundDesign="Solid" class="sapUiTinyMarginBottom">
+				<l:VerticalLayout width="100%" class="gridWrapper">
+					<l:Grid containerQuery="true" defaultSpan="XL3 L4 M12 S12">
+						<VBox>
+							<Label text="Fornecedor" design="Standard" width="100%" visible="true" class="labelBold"/>
+							<ObjectStatus icon="sap-icon://factory" text="{indexModel>/supplierName}"/>
+						</VBox>
+						<VBox>
+							<Label text="Período:" design="Standard" width="100%" visible="true" class="labelBold"/>
+							<ObjectStatus icon="sap-icon://calendar" text="{indexModel>/start_date} - {indexModel>/end_date}"/>
+						</VBox>
+					</l:Grid>
+				</l:VerticalLayout>
+			</Panel>
+			<GenericTile visible="{indexModel>/isMobile}" header="Compras Totais (ton)" subheader="" frameType="TwoByOne"
+				class=" sapUiSmallMarginBottom sapUiTinyMarginBegin tileStyle tileStyleTop semMargin" press="_onCommoditiesFormTile">
+				<tileContent>
+					<TileContent footer="" unit="" class="extractCards">
+						<content>
+							<microchart:ComparisonMicroChart size="S" scale="" view="" shrinkable="false" width="auto">
+								<microchart:data>
+									<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Compras Totais" displayValue="{ path: 'indexModel>/hcpTotalPedidos' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"/>
+									<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Compras Fixas" displayValue="{ path: 'indexModel>/hcpTotalPedidosFixo' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"/>
+									<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Compras Depósitos" displayValue="{ path: 'indexModel>/hcpTotalPedidosDep' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }}"/>
+								</microchart:data>
+							</microchart:ComparisonMicroChart>
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+			<GenericTile visible="{indexModel>/isMobile}" header="Prazo Pagamentos de Compras" subheader="" frameType="TwoByOne"
+				class="sapUiSmallMarginBottom sapUiTinyMarginBegin tileStyle semMargin">
+				<tileContent>
+					<TileContent footer="" unit="" class="extractCards">
+						<content>
+							<microchart:ComparisonMicroChart size="S" scale="" maxValue="50" view="Normal" shrinkable="false" width="auto">
+								<microchart:data>
+									<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Prazo Médio" displayValue="{ path: 'indexModel>/hcpPrazoMedio' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 0 }} Dias"/>
+									<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Última Condição" displayValue="{indexModel>/hcpZterm}"/>
+									<microchart:ComparisonMicroChartData value="0" color="Neutral" title="Último Pedido" displayValue="{indexModel>/hcpPedido}"/>
+								</microchart:data>
+							</microchart:ComparisonMicroChart>
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+			<GenericTile header="Ofertas (ton)" press="_onOfferMapFormTile" subheader="Vol Ofer {indexModel>/offerMapResult}" frameType="OneByOne"
+				class="sapUiSmallMarginBottom sapUiTinyMarginBegin tileStyle panel-mobile">
+				<tileContent>
+					<TileContent footer="Comprados" unit="{indexModel>/percentageOfferMap}%">
+						<content>
+							<microchart:HarveyBallMicroChart total="100" formattedLabel="false" size="M" width="300px" totalLabel="" totalScale="" showTotal="false"
+								showFractions="false">
+								<microchart:items>
+									<microchart:HarveyBallMicroChartItem color="Good" fraction="{= parseFloat(${indexModel>/percentageOfferMap}) }" fractionLabel=""
+										formattedLabel="false" fractionScale="%"/>
+								</microchart:items>
+							</microchart:HarveyBallMicroChart>
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+			<GenericTile header="Intenções de Preços" press="_onPriceIntentionTile" subheader="" frameType="OneByOne"
+				class="sapUiSmallMarginBottom sapUiTinyMarginBegin panel-mobile">
+				<tileContent>
+					<TileContent footer="Nº de Intenções" unit="">
+						<content>
+							<NumericContent value="{indexModel>/intentionResult}" valueColor="Good" indicator="None" icon="sap-icon://opportunities"/>
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+			<GenericTile header="Agendamentos" press="_onAppointmentFormTile" subheader="" frameType="OneByOne"
+				class="sapUiSmallMarginBottom sapUiTinyMarginBegin tileStyle panel-mobile">
+				<tileContent>
+					<TileContent footer="Nº de Visitas" unit="">
+						<content>
+							<NumericContent value="{indexModel>/appointmentsResult}" valueColor="Good" indicator="None" icon="sap-icon://date-time"/>
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+			<GenericTile header="Fichas de Visitas" press="_onVisitFormTile" subheader="" frameType="OneByOne"
+				class="sapUiSmallMarginBottom sapUiTinyMarginBegin panel-mobile">
+				<tileContent>
+					<TileContent footer="Nº de Fichas" unit="">
+						<content>
+							<NumericContent value="{indexModel>/visitFormResult}" valueColor="Good" indicator="None" icon="sap-icon://payment-approval"/>
+						</content>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+		</content>
+		<footer/>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

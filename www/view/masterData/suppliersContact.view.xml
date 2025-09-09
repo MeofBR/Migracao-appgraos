@@ -1,0 +1,206 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.masterData.suppliersContact"
+	xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:u="sap.ui.unified">
+	<Page showHeader="true" title="{i18n>textMasterData}" showFooter="{indexModel>/isMobile}" showNavButton="true" navButtonPress="backToIndex">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<IconTabBar id="idIconTabBarMulti" expanded="true" class="sapUiResponsiveContentPadding gridIntencao" select="handleIconTabBarSelect"
+				expandable="false">
+				<items>
+					<IconTabFilter icon="sap-icon://complete" key="Ativo" text="Ativo" iconColor="Positive">
+						<Table id="table" width="auto"
+							items="{path:'filterSuppliersContact>/itemSuppliersContact', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], sorter: { path: 'HCP_ID',descending: false}}"
+							noDataText="Sem dados" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+							class="sapUiResponsiveMargin">
+							<infoToolbar>
+								<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+									<content>
+										<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</content>
+								</Toolbar>
+							</infoToolbar>
+							<headerToolbar>
+								<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+									<content>
+										<ToolbarSpacer width=""/>
+										<OverflowToolbarButton text="Sort" press="sortButtonPressed" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto"
+											enabled="true" visible="true" iconDensityAware="false"/>
+										<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"
+											enabled="true" visible="true" iconDensityAware="false"/>
+										<u:FileUploader sameFilenameAllowed="true" icon="sap-icon://cause" id="fileUploader" buttonText="{i18n>textImport}" name="myFileUpload"
+											buttonOnly='true' tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete" change="onImport"/>
+										<MenuButton text="{i18n>textExport}" icon="sap-icon://excel-attachment" type="Transparent" enabled="true">
+											<menu>
+												<Menu>
+													<MenuItem text="{i18n>textExportSimplifiedContact}" icon="sap-icon://action" press="onExportSuppliersContact"/>
+													<MenuItem text="{i18n>textExportProvider}" icon="sap-icon://action" press="onExportProvider"/>
+													<MenuItem text="{i18n>textExportBoth}" icon="sap-icon://action" press="onExport"/>
+												</Menu>
+											</menu>
+										</MenuButton>
+										<OverflowToolbarButton text="Sort" type="Emphasized" icon="sap-icon://add" iconFirst="true" width="auto" enabled="true" visible="true"
+											iconDensityAware="false" press="_openDialogRegion"/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column width="50px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>lblCNPJCPF}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="30%" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textProviderName}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="50px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textProvider}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="25px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>buyers}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textRank}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textActions}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem type="Active">
+									<cells>
+										<Text text="{path: 'filterSuppliersContact>HCP_STCD1', formatter: '.formatter.maskCNPJ'}" design="Standard" width="auto" required="false"
+											textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<Label text="{filterSuppliersContact>HCP_PARTNER_NAME}" design="Standard" width="auto" required="false" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<Label text="{filterSuppliersContact>HCP_PARTNER}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<Label text="{filterSuppliersContact>HCP_EKGRP}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<FormattedText htmlText="{path: 'filterSuppliersContact>HCP_RANK', formatter: '.formatter.formatterRank'}" design="Standard" width="auto"
+											required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<VBox class="displayBlock">
+											<Button text="{i18n>inactivate}" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+												press="_onDeleteButton"/>
+											<Button text="{i18n>edit}" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+												press="_onEditButton"/>
+										</VBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://collapse" text="Inativo" key="Inativo" iconColor="Negative">
+						<Table id="tableInative" width="auto"
+							items="{path:'filterSuppliersContact>/itemSuppliersContact', filters: [{path: 'HCP_ACTIVE', operator: 'EQ', value1: '0'}], sorter: { path: 'HCP_ID',descending: false}}"
+							noDataText="Sem dados" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+							class="sapUiResponsiveMargin">
+							<infoToolbar>
+								<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+									<content>
+										<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</content>
+								</Toolbar>
+							</infoToolbar>
+							<headerToolbar>
+								<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+									<content>
+										<ToolbarSpacer width=""/>
+										<OverflowToolbarButton text="Sort" type="Emphasized" icon="sap-icon://add" iconFirst="true" width="auto" enabled="true" visible="true"
+											iconDensityAware="false" press="_openDialogRegion"/>
+									</content>
+								</OverflowToolbar>
+							</headerToolbar>
+							<columns>
+								<Column width="50px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>lblCNPJCPF}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="30%" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textProviderName}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="50px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textProvider}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="25px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>buyers}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textRank}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+								<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<header>
+										<Text text="{i18n>textActions}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									</header>
+									<footer/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem type="Active">
+									<cells>
+										<Label text="{path: 'filterSuppliersContact>HCP_STCD1', formatter: '.formatter.maskCNPJ'}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<Label text="{filterSuppliersContact>HCP_PARTNER_NAME}" design="Standard" width="auto" required="false" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<Label text="{filterSuppliersContact>HCP_PARTNER}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<Label text="{filterSuppliersContact>HCP_EKGRP}" design="Standard" width="auto" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="true"/>
+										<FormattedText htmlText="{path: 'filterSuppliersContact>HCP_RANK', formatter: '.formatter.formatterRank'}" design="Standard" width="auto"
+											required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<VBox class="displayBlock">
+											<Button text="{i18n>activate}" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+												press="_onActiveButton"/>
+										</VBox>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+				<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Ultima atualização {indexModel>/lastUpdate}" showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

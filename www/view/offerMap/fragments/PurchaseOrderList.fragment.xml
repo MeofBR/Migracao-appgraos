@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+	<ResponsivePopover placement="Auto" contentHeight="350px" contentWidth="500px" showHeader="false">
+		<content>
+			<List growing="true" id="partnerListID" items="{editOfferMapFormModel>/purchaseOfferList}" mode="None" includeItemInSelection="true"
+				headerText="{i18n>textPurchaseOrderList}" noDataText="Não há compras para essa oferta">
+				<!--<StandardListItem title="{editOfferMapFormModel>HCP_EBELN}" description="{editOfferMapFormModel>HCP_MENGE} KG"/>-->
+				<ObjectListItem title="{editOfferMapFormModel>HCP_EBELN}" type="Active"
+					number="{ parts:[{path:'editOfferMapFormModel>HCP_MENGE'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+					numberUnit="TO" numberState="{editOfferMapFormModel>state}" icon="{editOfferMapFormModel>icon}">
+					<attributes>
+						<!--<ObjectAttribute text="{= ${editOfferMapFormModel>HCP_WERKS}"/>-->
+						<ObjectAttribute
+							text="{path: 'planningCalendarModel>HCP_END_DATE', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: false, pattern: 'dd/MM HH:mm' }}"/>
+					</attributes>
+					<!--<ObjectAttribute text="{planningCalendarModel>Appoint_Commit/HCP_COMMITMENT_DESC}" class="CommitmentTypeContainer"/>-->
+				</ObjectListItem>
+			</List>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

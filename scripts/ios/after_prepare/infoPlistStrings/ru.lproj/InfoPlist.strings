@@ -1,0 +1,24 @@
+/* Message asking permission to access the camera. */
+"NSCameraUsageDescription" = "Это позволит вам делать фотографии и сканировать QR-код.";
+
+/* Message asking permission to access the microphone */
+"NSMicrophoneUsageDescription" = "Это позволит нам получить доступ к вашему микрофону.";
+
+/* Message asking permission to access the calendar */
+"NSCalendarsUsageDescription" = "Это позволит нам получить доступ к вашему календарю.";
+
+/* Message asking permission to access photo library */
+"NSPhotoLibraryUsageDescription" = "Это позволит нам получить доступ к вашей библиотеке.";
+
+/* Message asking permission to access contacts */
+"NSContactsUsageDescription" = "Это позволит нам получить доступ к вашим контактам.";
+
+/* Message asking permission to access location */
+"NSLocationWhenInUseUsageDescription" = "Это позволит нам получить доступ к вашему местоположению в момент использования устройства.";
+
+/* Message asking permission to access location at any time */
+"NSLocationAlwaysUsageDescription" = "Это позволит нам получить доступ к вашему местоположению в любое время.";
+
+/* Message asking permission to access Face ID */
+"NSFaceIDUsageDescription" = "Это позволит нам получить доступ к вашему Face ID для аутентификации.";
+

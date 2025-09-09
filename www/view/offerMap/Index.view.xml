@@ -1,0 +1,55 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.offerMap.Index"
+	xmlns="sap.m">
+	<Page showHeader="true" title="{i18n>textOfferMap}" showFooter="{indexModel>/isMobile}" showNavButton="true" navButtonPress="backToIndex">
+			<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<Panel width="auto" class="sapUiResponsiveMargin linhaDadosMestre">
+				<headerToolbar>
+					<OverflowToolbar height="3rem">
+						<Title text="Geral"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<content>
+					<GenericTile header="{i18n>optionNewOffer}" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onCreateOfferFormPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+									<ImageContent src="sap-icon://target-group" />
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					<GenericTile header="{i18n>optionEditDisplayOffer}" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onEditOfferFormPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+									<ImageContent src="sap-icon://search" />
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+					
+					<GenericTile header="{i18n>optionCheckFreights}" subheader="" frameType="OneByOne" class="sapUiSmallMargin" press="_onEditFreightFormPress">
+						<tileContent>
+							<TileContent footer="" unit="">
+									<ImageContent src="sap-icon://search" />
+							</TileContent>
+						</tileContent>
+					</GenericTile>
+			
+			</content>
+			</Panel>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter">
+					<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Ultima atualização {indexModel>/lastUpdate}"
+					showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

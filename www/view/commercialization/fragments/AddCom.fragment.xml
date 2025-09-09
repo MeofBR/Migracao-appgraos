@@ -1,0 +1,50 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Dialog showHeader="true" title="Adicionar Volume Não Mapeado" type="Standard">
+		<content>
+			<Panel width="auto">
+				<Label text="Valor" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				<SegmentedButton width="100%" id="segmentedPersonID" selectedKey="{createCommercializationModel>/HCP_CAPACITY_TYPE}" class="sapUiSmallMarginBottom"
+					selectionChange="_onChangeCheck">
+					<items>
+						<SegmentedButtonItem text="Tonelada" key="0"/>
+						<SegmentedButtonItem text="Porcentagem" key="1"/>
+					</items>
+				</SegmentedButton>
+				<form:SimpleForm class="simpleFormCommerc" editable="true" id="commercializationKeysForm" maxContainerCols="1">
+					<form:content>
+						<Label text="Valor Disponível (T)" design="Standard" width="100%" required="{createCommercializationModel>/enableTonelada}"
+							textAlign="Begin" textDirection="Inherit" visible="{createCommercializationModel>/enableTonelada}"/>
+						<Input placeholder="Valor em Toneladas (Ex: 1.000)" name="HCP_CAPACITY_TONNE"
+							value="{ path: 'createCommercializationModel>/HCP_CAPACITY_TONNE_CLONE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+							type="Tel" showValueHelp="false" enabled="true" required="{createCommercializationModel>/enableTonelada}"
+							visible="{createCommercializationModel>/enableTonelada}" width="100%" valueHelpOnly="false" maxLength="0" change="_validateForm" liveChange="_validateForm"/>
+						
+						<Label text="Valor(% do Disponível)" design="Standard" width="100%" required="{createCommercializationModel>/enablePorcentagem}"
+							textAlign="Begin" textDirection="Inherit" visible="{createCommercializationModel>/enablePorcentagem}"/>
+						<custom:CustomSlider name="HCP_CAPACITY_PERCENT" value="{createCommercializationModel>/HCP_CAPACITY_PERCENT_CLONE}" min="0" max="100"
+							showAdvancedTooltip="false" step="1" width="100%" enabled="true" visible="{createCommercializationModel>/enablePorcentagem}" progress="true"
+							enableTickmarks="false" change="_validateForm" liveChange="_validateForm">
+								<custom:layoutData>
+									<l:GridData span="L4 M4 S9"/>
+								</custom:layoutData>
+						</custom:CustomSlider>
+							<NumericContent animateTextChange="true" value="{createCommercializationModel>/HCP_CAPACITY_PERCENT_CLONE}" width="100%" scale="%" class="percentageIndicator"
+										withMargin="true" visible="{createCommercializationModel>/enablePorcentagem}">
+										<layoutData>
+									<l:GridData span="L1 M1 S3"/>
+								</layoutData>
+									</NumericContent>
+							
+						<Label text="Observações" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<TextArea value="{createCommercializationModel>/HCP_TEXT}" placeholder="Descritivo" maxLength="40" width="100%" showExceededText="false" />
+					</form:content>
+				</form:SimpleForm>
+			</Panel>
+		</content>
+		<buttons>
+			<Button text="Cancelar" press="onCancelDialogPressed" visible="true" type="Transparent"/>
+			<Button text="Confirmar"  press="onConfirm" type="Emphasized" iconFirst="true" width="auto" enabled="{createCommercializationModel>/enableCreate}" visible="true" iconDensityAware="false"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

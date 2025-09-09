@@ -1,0 +1,88 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:g="sap.ui.layout.Grid" xmlns:t="sap.ui.table">
+	<Dialog 
+    id="Appointments"
+    title="{i18n>titleSchedule}"
+    contentWidth="80%">
+
+    <content>  
+        <VBox fitContainer="true">
+            <items> 
+                <Table items="{path: 'indexModel>/oTableDialog'}" alternateRowColors="true" id="idCockpitTable" width="auto" showSeparators="All" growing="true" growingThreshold="5" growingScrollToLoad="true" fixedLayout="false" class="sapUiSizeCompact">
+						<infoToolbar>
+							<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+								<content>
+									<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</content>
+							</Toolbar>
+						</infoToolbar>
+						<headerToolbar>
+							<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+								<content>
+									<ToolbarSpacer/>
+		                            <Button text="{i18n>btnCreateAppointment}" iconFirst="false" type="Transparent" enabled="true" press="handleCreate" />
+								</content>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textVendorProspect}" width="auto" maxLines="1" wrapping="false" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textDateHour}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textCommitment}" width="auto" maxLines="1" wrapping="false" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textGoal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header>
+									<Text text="{i18n>textType}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								</header>
+								<footer/>
+							</Column>
+							<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<header></header>
+								<footer/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem type="Active" press="_onRowPress">
+								<cells>
+									<Text text="{indexModel>HCP_PARTNER_NAME}" wrapping="false" maxLines="1" width="auto"/>
+									<Text text="{
+										  path: 'indexModel>HCP_START_DATE',
+										  formatter: '.formatter.formatDate'
+										}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" />
+									<Text text="{indexModel>Appoint_Commit/HCP_COMMITMENT_DESC}" wrapping="false" maxLines="1" width="auto"/>
+									<Text text="{indexModel>Appoint_IntObj/HCP_INT_OBJ_DESC}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Text text="{indexModel>Appoint_IntTyp/HCP_INT_TYPE_DESC}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button press="handleEdit" icon="sap-icon://edit" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+            </items>
+        </VBox>
+    </content>
+    <buttons>
+      <Button
+        text="{i18n>buttonCancel}"
+        press="handleCancel"
+        />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

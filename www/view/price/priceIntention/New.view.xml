@@ -1,0 +1,262 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.price.priceIntention.New"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" xmlns:l="sap.ui.layout">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<Button type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="_onCancel"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Intenção de Preço" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto" enabled="{priceIntentionFormModel>/enableCreate}" visible="true"
+						iconDensityAware="false" press="_onSave"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Cadastro" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Cadastro" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="priceIntentionCreateFormID"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label text="Grupo de Comprador" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/Buyer_Groups', length: 999999 , sorter: { path: 'EKGRP',descending: false}}" placeholder="Selecione Grupo de Comprador"
+										selectedKey="{priceIntentionFormModel>/HCP_BUYER_GROUP}" name="TABLE_PRICE" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									<Label text="{i18n>textPurchOrg}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Purchasing_Org', length: 999999 , sorter: { path: 'EKOTX',descending: false}}"
+										placeholder="{i18n>placePurchOrg}" selectedKey="{priceIntentionFormModel>/HCP_EKORG}" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_onPurchaseOrgChange">
+										<custom:items>
+											<core:Item text="{EKORG} - {EKOTX}" enabled="true" key="{EKORG}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									
+									
+									<Label text="{i18n>textBroker}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeBroker}" selectedKey="{priceIntentionFormModel>/HCP_LIFNR}" editable="true" enabled="true"
+										visible="true" required="false" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm"
+										items="{ path: '/View_Suppliers', filters: {path: 'FDGRV', operator: 'EQ', value1: '02.13.05'} , sorter: { path: 'NAME1' } }">
+										<custom:items>
+											<core:Item text="{= parseFloat(${LIFNR}) } - {NAME1}" enabled="true" key="{LIFNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									
+									
+									
+									<Label text="{i18n>textVendorProspect}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true"
+										visible="true"/>
+									<SegmentedButton selectedKey="{priceIntentionFormModel>/HCP_PARTNER_TYPE}" width="100%" selectionChange="_onInputPartnerFormSelect">
+										<items>
+											<SegmentedButtonItem text="{i18n>textVendor}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textProspect}" key="2"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Fornecedor" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input visible="{priceIntentionFormModel>/yesPartner}" change="_validateForm" editable="true" enabled="{true}"
+										placeholder="Selecione o Fornecedor" showValueHelp="true" type="Text" value="{priceIntentionFormModel>/HCP_PROVIDER}"
+										description="{priceIntentionFormModel>/PROVIDER_DESC}" valueHelpOnly="true" valueHelpRequest="_handlePartnerFilterPress"/>
+									
+									
+									<Label text="{i18n>textProspect}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="yesProspect" placeholder="{i18n>placeProspect}" selectedKey="{priceIntentionFormModel>/HCP_PROVIDER}" editable="true"
+										enabled="true" visible="{priceIntentionFormModel>/yesProspect}" required="{priceIntentionFormModel>/yesProspect}" width="auto" valueState="None"
+										maxWidth="100%"
+										items="{ path: '/Prospects', length: 999999, filters: [{path: 'HCP_STATUS', operator: 'EQ', value1: '1'}, {path: 'HCP_STATUS', operator: 'EQ', value1: '2'}], sorter: { path: 'NAME1',descending: false} }"
+										selectionChange="_onInputProspect">
+										<custom:items>
+											<core:Item text="{HCP_PROSP_ID} - {NAME1} {NAME2}" enabled="true" key="{HCP_PROSP_ID}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									
+									<Label text="Centro" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Center', length: 999999 , sorter: { path: 'WERKS',descending: false}}" placeholder="Selecione Centro"
+										selectedKey="{priceIntentionFormModel>/HCP_CENTER}" name="TABLE_PRICE" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{WERKS} - {NAME1}" enabled="true" key="{WERKS}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Material" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false}}"
+										placeholder="Selecione Material" selectedKey="{priceIntentionFormModel>/HCP_MATERIAL}" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" name="TABLE_PRICE" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>labelCereal}" required="true" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Material_Type', length: 999999 , sorter: { path: 'TPCEREAL',descending: false}}"
+										placeholder="{i18n>placeHolderCereal}" selectedKey="{priceIntentionFormModel>/TPCEREAL}" editable="true" enabled="true" visible="true"
+										width="auto" valueState="None" maxWidth="100%" name="TABLE_PRICE" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{TPCEREAL} - {DETPCEREAL}" enabled="true" key="{TPCEREAL}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									
+									<Label text="Estado" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox
+										items="{ path: '/View_States', length: 999999 , filters: {path: 'LAND1', operator: 'EQ', value1: 'BR'}, sorter: { path: 'LAND1',descending: false}}"
+										placeholder="Selecione Estado" selectedKey="{priceIntentionFormModel>/HCP_STATE}" editable="true" enabled="{priceIntentionFormModel>/enabledBland}"
+										visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Data de Entrega" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Select forceSelection="false" id="comboMes" name="TABLE_PRICE" selectedKey="{priceIntentionFormModel>/HCP_MONTH}" change="_validateForm"></Select>
+									<Select forceSelection="false" id="comboAno" name="TABLE_PRICE" selectedKey="{priceIntentionFormModel>/HCP_YEAR}" change="_validateForm"></Select>
+									<Label text="Incoterms" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<SegmentedButton width="100%" selectedKey="{priceIntentionFormModel>/HCP_INCOTERM}" selectionChange="_changeModality">
+										<items>
+											<SegmentedButtonItem text="CIF" key="0"/>
+											<SegmentedButtonItem text="FOB" key="1"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Armazém" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{priceIntentionFormModel>/enablefob}"/>
+									<SegmentedButton width="100%" visible="{priceIntentionFormModel>/enablefob}" selectionChange="_onInputArmazemFormSelect" selectedKey="{priceIntentionFormModel>/HCP_WAREHOUSE}">
+										<items>
+											<SegmentedButtonItem text="Próprio" key="0"/>
+											<SegmentedButtonItem text="Terceiro" key="1"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textLocalOrigin}" design="Standard" width="100%" required="{priceIntentionFormModel>/yesRequiredLocal}" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeLocalOrigin}" selectedKey="{priceIntentionFormModel>/HCP_LOCAL}" editable="true"
+										enabled="{priceIntentionFormModel>/enabledLocal}" visible="{priceIntentionFormModel>/yesLocalItem}"
+										required="{priceIntentionFormModel>/yesLocalItem}" width="100%" valueState="None" maxWidth="100%" selectionChange="_onInputLocal"
+										items="{ path: 'priceIntentionFormModel>/ItemLocal', length: 999999 , sorter : { path : 'priceIntentionFormModel>NAME1' }}">
+										<custom:items>
+											<core:Item
+											text="{= parseFloat(${path:'priceIntentionFormModel>LIFNR'}) } - {path:'priceIntentionFormModel>NAME1'} - {path:'priceIntentionFormModel>REGIO'} - {path:'priceIntentionFormModel>STCDX'}"
+											enabled="true" key="{path:'priceIntentionFormModel>LIFNR'}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textLocalOrigin}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+									visible="true"/>
+									<Input placeholder="{i18n>placeEnterLocalOrigin}" type="Text" value="{priceIntentionFormModel>/HCP_OTHER_LOCAL}" showValueHelp="false" required="false"
+									enabled="{priceIntentionFormModel>/enableEdit}" liveChange="_validateForm" change="_validateForm" visible="{priceIntentionFormModel>/yesTerceiro}"
+									width="100%" valueHelpOnly="false" maxLength="0"/>
+									
+									<Label text="{i18n>textQuantity}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input
+										value="{ path: 'priceIntentionFormModel>/HCP_VOLUME' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" placeholder="{i18n>placeQuantity}" enabled="true" required="true" visible="true" width="100%" valueHelpOnly="false" maxLength="0"
+										liveChange="_valideInputNumber"  change="_validateForm"/>
+									<Label text="{i18n>textPriceFOB}" design="Standard" width="100%" required="{priceIntentionFormModel>/enablefob}"
+										visible="{priceIntentionFormModel>/enablefob}" textAlign="Begin" textDirection="Inherit"/>
+									<Input placeholder="{i18n>placeEnterPriceFOB}" name="HCP_PRICE_FOB"
+										value="{ path: 'priceIntentionFormModel>/HCP_PRICE_FOB' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="{priceIntentionFormModel>/enablefob}"
+										visible="{priceIntentionFormModel>/enablefob}" width="100%" valueHelpOnly="false" maxLength="0" liveChange="_validateForm"
+										change="_valideInputPrice"/>
+									<Label text="{i18n>textUMPrice}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectUMPrice}" selectedKey="{priceIntentionFormModel>/HCP_UM}" editable="true"
+										enabled="true" visible="true" required="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_calculatePriceFreight">
+										<custom:items>
+											<core:Item text="{i18n>textTonnes}" enabled="true" key="TO"/>
+											<core:Item text="{i18n>textBag}" enabled="true" key="SC"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textCurrency}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectCurrency}" selectionChange="_validateForm"
+										selectedKey="{priceIntentionFormModel>/HCP_MOEDA}" editable="true" enabled="true" required="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%">
+										<custom:items>
+											<core:Item text="{i18n>textArgentPeso}" enabled="true" key="ARS"/>
+											<core:Item text="{i18n>textBrasilReal}" enabled="true" key="BRL"/>
+											<core:Item text="{i18n>textAmericanDollar}" enabled="true" key="USD"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Quilometragem (Km)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{priceIntentionFormModel>/enablefob}"/>
+									<Input
+										value="{ path: 'priceIntentionFormModel>/HCP_KM' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										placeholder="Digite a Quilometragem" name="HCP_KM" type="Tel" showValueHelp="false" enabled="true" visible="{priceIntentionFormModel>/enablefob}"
+										width="auto" valueHelpOnly="false" maxLength="0" change="_validateDistance"/>
+									
+									<Label text="{i18n>questionUnpavedStretch}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{priceIntentionFormModel>/enablefob}"/>
+									<SegmentedButton width="100%" visible="{priceIntentionFormModel>/enablefob}" selectionChange="_onInputPavedFormSelect" selectedKey="{priceIntentionFormModel>/HCP_PAVED}">
+										<items>
+											<SegmentedButtonItem text="Não" key="1"/>
+											<SegmentedButtonItem text="Sim" key="2"/>
+										</items>
+									</SegmentedButton>
+									
+									<Label text="Trecho (Km)" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit"
+										visible="{priceIntentionFormModel>/yesPaved}"/>
+									<Input
+										value="{ path: 'priceIntentionFormModel>/HCP_TRECHO_KM' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										placeholder="Digite o Trecho" type="Tel" name="HCP_TRECHO_KM" showValueHelp="false" enabled="true" visible="{priceIntentionFormModel>/yesPaved}"
+										width="auto" valueHelpOnly="false" maxLength="0" change="_validateDistance"/>
+									
+									<Label text="" design="Standard" width="100%" visible="{priceIntentionFormModel>/errorKm}" required="false" textAlign="Begin" textDirection="Inherit"/>
+									<MessageStrip text="{i18n>errorUnpavedDistance}" type="Warning" showIcon="true" showCloseButton="false"
+									visible="{priceIntentionFormModel>/errorKm}"></MessageStrip>
+								
+									
+									<Label text="Preço do Frete (R$/T)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{priceIntentionFormModel>/enablefob}"/>
+									<Input
+										value="{ path: 'priceIntentionFormModel>/HCP_FREIGHT' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										placeholder="Valor do Frete" change="_validateForm" type="Text" description="" showValueHelp="false" enabled="{priceIntentionFormModel>/enablefreight}" visible="{priceIntentionFormModel>/enablefob}"
+										width="auto" valueHelpOnly="false" maxLength="0" name="FIELD_FRETE"/>
+									
+									<Label text="" design="Standard" width="100%" visible="{priceIntentionFormModel>/noPricesCalculator}" required="false" textAlign="Begin" textDirection="Inherit"/>
+									<MessageStrip text="{i18n>errorFreightNotCalculated}" type="Warning" showIcon="true" showCloseButton="false"
+									visible="{priceIntentionFormModel>/noPricesCalculator}"></MessageStrip>
+									
+									<Label text="Alterar Valor do Frete?" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="{priceIntentionFormModel>/enableManualFreight}"/>
+									<SegmentedButton width="100%" visible="{priceIntentionFormModel>/enableManualFreight}" selectionChange="_onInputFreightManualSelect" selectedKey="{priceIntentionFormModel>/manualFreight}">
+										<items>
+											<SegmentedButtonItem text="Não" key="1"/>
+											<SegmentedButtonItem text="Sim" key="0"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Preço Final" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o Preço {priceIntentionFormModel>/HCP_MOEDA}" type="Tel"
+											value="{ parts:[{path:'priceIntentionFormModel>/HCP_PRICE'}, {path:'USD'}], path: 'priceIntentionFormModel>/HCP_PRICE' , type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false }}"
+									showValueHelp="false" name="FIELD_PRICE" enabled="{priceIntentionFormModel>/noPriceBRF}" visible="true" width="auto" valueHelpOnly="false" maxLength="100" change="_validateForm"/>
+									
+									<Label text="Preço Tabela BRF (R$/SC)" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<ObjectNumber class="customObjectNumber"
+										number="{ parts:[{path:'priceIntentionFormModel>/HCP_TABLE_PRICE'}, 'USD'], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+										unit="BRL"/>
+									<Label text="Preço Mínimo" design="Standard" width="100%" required="false"
+										visible="true" textAlign="Begin" textDirection="Inherit"/>
+									<Input placeholder="Digite Preço Mínimo" name="HCP_MIN_PRICE"
+										value="{ path: 'priceIntentionFormModel>/HCP_MIN_PRICE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+										type="Tel" showValueHelp="false" enabled="true" required="false"
+										visible="true" width="100%" valueHelpOnly="false" maxLength="0" liveChange="_validateForm"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

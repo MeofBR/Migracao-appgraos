@@ -1,0 +1,182 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.crop.ComposeEx"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:grid="sap.ui.layout.cssgrid" xmlns:u="sap.ui.unified" xmlns:l="sap.ui.layout" xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<ScrollContainer height="100%" width="100%" horizontal="true" vertical="true" focusable="true">
+		<l:VerticalLayout id="containerLayout" width="100%">
+			<l:BlockLayout id="BlockLayout" background="Dashboard" keepFontSize="true" class="background-index">
+				<l:BlockLayoutRow accentCells="Accent1">
+					<l:BlockLayoutCell titleLevel="H3" id="Accent1" width="2"
+						title="Desenvolvimento da Lavoura - {composeExModel>/firstCrop/Crop_Track_Material/MAKTX}">
+						<core:HTML content='&lt;div id=&quot;chartdiv&quot; style=&quot; height: 440px;&quot;&gt;&lt;/div&gt;'></core:HTML>
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell titleLevel="H3" title="Região - {composeExModel>/firstCrop/Crop_Track_Region/HCP_BEZEI}">
+						<l:VerticalLayout width="100%">
+							<Table width="auto" id="table">
+								<columns>
+									<Column width="150px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Right" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="{composeExModel>/firstCrop/Crop_Track_Crop_Year/HCP_CROP_DESC} - {= ${composeExModel>/firstCrop/HCP_PERIOD}.slice(0,2) }"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Right" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="{composeExModel>/secondCrop/Crop_Track_Crop_Year/HCP_CROP_DESC} -{= ${composeExModel>/secondCrop/HCP_PERIOD}.slice(0,2) }"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Right" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Variação" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem type="Inactive" press="_onRowPress">
+										<cells>
+											<ObjectIdentifier title="Data Início Plantio"/>
+											<Text
+												text="{ path: 'composeExModel>/firstCrop/HCP_START_CROP', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM' } }"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text
+												text="{ path: 'composeExModel>/secondCrop/HCP_START_CROP', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM' } }"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{composeExModel>/HCP_CROP_PLANT_VAR}d" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive" press="_onRowPress">
+										<cells>
+											<ObjectIdentifier title="Área Plantio(ha)"/>
+											<Text
+												text="{ path: 'composeExModel>/firstCrop/HCP_PLANTING_AREA' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text
+												text="{ path: 'composeExModel>/secondCrop/HCP_PLANTING_AREA' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{composeExModel>/HCP_PLANTING_AREA_VAR}%" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive" press="_onRowPress">
+										<cells>
+											<ObjectIdentifier title="Produtividade(t/ha)"/>
+											<Text
+												text="{ path: 'composeExModel>/firstCrop/HCP_PRODUCTIVITY' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text
+												text="{ path: 'composeExModel>/secondCrop/HCP_PRODUCTIVITY' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{composeExModel>/HCP_PPRODUCTIVITY_VAR}%" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive" press="_onRowPress">
+										<cells>
+											<ObjectIdentifier title="Custo Produção(R$/ha)"/>
+											<Text
+												text="{ path: 'composeExModel>/firstCrop/HCP_PROD_COST' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text
+												text="{ path: 'composeExModel>/secondCrop/HCP_PROD_COST' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{composeExModel>/HCP_PROD_COST_VAR}%" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive" press="_onRowPress">
+										<cells>
+											<ObjectIdentifier title="Custo Produção(R$/sc)"/>
+											<Text
+												text="{
+													path: 'composeExModel>/firstCrop/HCP_PROD_COST_SC',
+													formatter: '.formatter.formatDecimalValue'
+												}"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text
+												text="{
+													path: 'composeExModel>/secondCrop/HCP_PROD_COST_SC',
+													formatter: '.formatter.formatDecimalValue'
+												}"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{composeExModel>/HCP_PROD_COST_SC_VAR}%" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive" press="_onRowPress">
+										<cells>
+											<ObjectIdentifier title="Data Início Colheita"/>
+											<Text
+												text="{ path: 'composeExModel>/firstCrop/HCP_START_HRVST', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM' } }"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text
+												text="{ path: 'composeExModel>/secondCrop/HCP_START_HRVST', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM' } }"
+												width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{composeExModel>/HCP_CROP_HVST_VAR}d" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+							<Title level="H1" text="Produção Total" class="sapUiBlockCellTitle sapUiBlockCellBegin sapUiMediumMarginTop"/>
+							<l:BlockLayout id="BlockLayout2" background="Default">
+								<l:BlockLayoutRow accentCells="Accent1">
+									<l:BlockLayoutCell titleLevel="H3" title="">
+										<l:HorizontalLayout class="sapUiContentPadding">
+											<Title level="H1"
+												text="{composeExModel>/firstCrop/Crop_Track_Crop_Year/HCP_CROP_DESC} - {= ${composeExModel>/firstCrop/HCP_PERIOD}.slice(0,2) }"
+												class="sapUiBlockCellTitle sapUiBlockCellBegin"/>
+											<ObjectNumber class="sapUiSmallMarginEnd objectNumber"
+												number="{ path: 'composeExModel>/firstCrop/HCP_TOTAL_PRODUCTION' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+												unit="T" state="Success"/>
+										</l:HorizontalLayout>
+										<l:HorizontalLayout class="sapUiContentPadding">
+											<Title level="H1"
+												text="{composeExModel>/secondCrop/Crop_Track_Crop_Year/HCP_CROP_DESC} - {= ${composeExModel>/secondCrop/HCP_PERIOD}.slice(0,2) }"
+												class="sapUiBlockCellTitle sapUiBlockCellBegin"/>
+											<ObjectNumber class="objectNumber"
+												number="{ path: 'composeExModel>/secondCrop/HCP_TOTAL_PRODUCTION' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+												unit="T" state="Success"/>
+										</l:HorizontalLayout>
+									</l:BlockLayoutCell>
+								</l:BlockLayoutRow>
+							</l:BlockLayout>
+						</l:VerticalLayout>
+					</l:BlockLayoutCell>
+				</l:BlockLayoutRow>
+				<l:BlockLayoutRow accentCells="Accent2">
+					<l:BlockLayoutCell titleLevel="H3" id="Accent2" width="2" title="{composeExModel>/commercializationTitle}">
+						<core:HTML content='&lt;div id=&quot;chartdiv2&quot; style=&quot; height: 350px;&quot;&gt;&lt;/div&gt;'></core:HTML>
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell titleLevel="H3" id="Accent3" width="2" title="Avanço de Colheita">
+						<core:HTML content='&lt;div id=&quot;chartdiv3&quot; style=&quot; height: 250px;&quot;&gt;&lt;/div&gt;'></core:HTML>
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell titleLevel="H3" id="Accent4" width="1" title="Volume de Chuvas">
+						<Title level="H1" text="{composeExModel>/firstCrop/Crop_Track_Crop_Year/HCP_CROP_DESC} - {= ${composeExModel>/firstCrop/HCP_PERIOD}.slice(0,2) }"
+							class="sapUiBlockCellTitle sapUiBlockCellBegin numericContentRainSpan"/>
+						<NumericContent value="{composeExModel>/firstCrop/HCP_RAINFALL_LEVEL}" scale="mm" icon="sap-icon://cloud"
+							class="sapUiSmallMargin numericContentRainNumberMargin" animateTextChange="true" valueColor="Good"/>
+						<Title level="H1" text="{composeExModel>/secondCrop/Crop_Track_Crop_Year/HCP_CROP_DESC} - {= ${composeExModel>/secondCrop/HCP_PERIOD}.slice(0,2) }"
+							class="sapUiBlockCellTitle sapUiBlockCellBegin numericContentRainSpan"/>
+						<NumericContent value="{composeExModel>/secondCrop/HCP_RAINFALL_LEVEL}" scale="mm" icon="sap-icon://cloud"
+							class="sapUiSmallMargin numericContentRainNumberMargin" animateTextChange="true" valueColor="Good"/>
+					</l:BlockLayoutCell>
+					<l:BlockLayoutCell titleLevel="H3" id="Accent5" width="1" title="Fotos">
+						<ImageContent class="CropReportImageIcon" src="sap-icon://camera" description="Clique para acessar as imagens" press="onImagePress"></ImageContent>
+					</l:BlockLayoutCell>
+				</l:BlockLayoutRow>
+			</l:BlockLayout>
+		</l:VerticalLayout>
+	</ScrollContainer>
+</mvc:View>

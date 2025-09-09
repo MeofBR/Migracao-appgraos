@@ -1,0 +1,57 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Dialog horizontalScrolling="true" showHeader="true" state="None" stretch="false" title="Adicionar Material" type="Standard"
+		verticalScrolling="true">
+		<content>
+			<Panel width="auto">
+				<form:SimpleForm class="simpleFormCommerc" editable="true" id="formPrice" maxContainerCols="1">
+					<form:content>
+						<Label text="Posição" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input value="{tablePriceFormModel>/HCP_POSITION}" placeholder="Digite a Posição, Exemplo: 1'" type="Number" showValueHelp="false" enabled="true" visible="true" width="auto"
+							valueHelpOnly="false" valueStateText="Invalid entry" maxLength="0" change="_validateForm" liveChange="_validateForm"/>
+						
+						<Label text="Material" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox id="MATERIAL" name="MATERIAL" class="sapUiTinyMarginTop" width="100%"
+							items="{ path: '/View_Material', length: 999999 , sorter: { path: 'MATNR',descending: false}}" placeholder="{i18n>placeholderMaterial}"
+							selectedKey="{tablePriceFormModel>/HCP_MATERIAL}" editable="true" enabled="true" visible="true" valueState="None" liveChange="_validateForm" change="_validateForm">
+							<custom:items>
+								<core:Item text="{= parseFloat(${MATNR}) } - {MAKTX}" enabled="true" key="{MATNR}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						<Label text="Tipo de Material" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox id="CEREAL" name="CEREAL" class="sapUiTinyMarginTop" width="100%"
+							items="{ path: '/View_Material_Type', length: 999999 , sorter: { path: 'TPCEREAL',descending: false}}"
+							placeholder="{i18n>placeHolderCereal}" selectedKey="{tablePriceFormModel>/HCP_TYPE_MATERIAL}" editable="true" enabled="true" visible="true"
+							valueState="None" change="_validateForm" liveChange="_validateForm">
+							<custom:items>
+								<core:Item text="{TPCEREAL} - {DETPCEREAL}" enabled="true" key="{TPCEREAL}"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						<Label text="Cor do Ícone" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<custom:CustomComboBox placeholder="Selecione a Cor do Material" selectedKey="{tablePriceFormModel>/HCP_GROUP_COLOR}" editable="true"
+							enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" change="_validateForm" liveChange="_validateForm">
+							<custom:items>
+								<core:Item text="Azul" enabled="true" key="Default"/>
+								<core:Item text="Laranja" enabled="true" key="Critical"/>
+								<core:Item text="Verde" enabled="true" key="Positive"/>
+								<core:Item text="Vermelho" enabled="true" key="Negative"/>
+							</custom:items>
+						</custom:CustomComboBox>
+						<Label text="Descritivo" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						<Input value="{tablePriceFormModel>/HCP_GROUP_DESCRIPTION}" placeholder="Digite Descritivo, Exemplo: 1Milho - Seco'" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto"
+							valueHelpOnly="false" valueStateText="Invalid entry" maxLength="0" change="_validateForm" liveChange="_validateForm"/>
+					</form:content>
+				</form:SimpleForm>
+			</Panel>
+		</content>
+		<buttons>
+			<Button text="Cancelar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+				press="_onDialogTablePricCancelPress"/>
+			<Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto" enabled="{filterPageModel>/enableCreate}" visible="{filterPageModel>/enableCreateButton}"
+				iconDensityAware="false" press="_onSave"/>
+				
+			<Button text="Editar" type="Emphasized" iconFirst="true" width="auto" enabled="{filterPageModel>/enableCreate}" visible="{filterPageModel>/enableEditButton}"
+				iconDensityAware="false" press="_onEdit"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

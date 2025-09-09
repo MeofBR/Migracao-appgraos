@@ -1,0 +1,119 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.supplierExtract.ExtractView"
+	xmlns="sap.m" xmlns:l="sap.ui.layout">
+	<Page title="Consulta Agendamentos" showNavButton="true" navButtonPress="_onCancel" showFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+		<IconTabBar
+		id="idIconTabBarMulti"
+		expanded="true"
+		class="sapUiResponsiveContentPadding gridIntencao"
+		select="handleIconTabBarSelect"
+		expandable="false">
+		<items>
+			<IconTabFilter
+				icon="sap-icon://add-document" key="Ativo" text="Abertos" iconColor="Positive">
+					<List class="headerWeek" id="listIntentionInactive" items="{ExtractViewModel>/data}">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="{ExtractViewModel>/mainTitle}"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<ObjectListItem  intro="{ExtractViewModel>title2}" press="_onRowPress" title="{ExtractViewModel>title} {ExtractViewModel>id}"
+						number="{= ${ExtractViewModel>number1} ? ${ExtractViewModel>number1} : ''}" numberUnit="{ExtractViewModel>number_unit}"
+						numberState="Success" type="Active" selected="true">
+						<attributes>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title1}: {ExtractViewModel>sub_title1}" active="false"
+								visible="{ExtractViewModel>sub_title1Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title2}: {ExtractViewModel>sub_title2}" active="false"
+								visible="{ExtractViewModel>sub_title2Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title3}: {ExtractViewModel>sub_title3}" active="false"
+								visible="{ExtractViewModel>sub_title3Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title4}: {ExtractViewModel>sub_title4}" active="false"
+								visible="{ExtractViewModel>sub_title4Visible}"/>
+						</attributes>
+						<firstStatus>
+							<ObjectStatus text="{ExtractViewModel>name_number2}: {ExtractViewModel>number2}" state="None" visible="{ExtractViewModel>number2Visible}"/>
+						</firstStatus>
+						<secondStatus>
+							<ObjectStatus text="" state="None" visible="true"/>
+						</secondStatus>
+					</ObjectListItem>
+				</items>
+			</List>
+			</IconTabFilter>
+			<IconTabFilter
+				icon="sap-icon://permission" key="Ativo" text="Fechados" iconColor="Critical">
+					<List class="headerWeek" id="listIntentionInactive2" items="{ExtractViewModel>/data2}">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="{ExtractViewModel>/mainTitle2}"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<ObjectListItem  intro="{ExtractViewModel>title2}" press="_onRowPress" title="{ExtractViewModel>title} {ExtractViewModel>id}"
+						number="{= ${ExtractViewModel>number1} ? ${ExtractViewModel>number1} : ''}" numberUnit="{ExtractViewModel>number_unit}"
+						numberState="Success" type="Active" selected="true">
+						<attributes>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title1}: {ExtractViewModel>sub_title1}" active="false"
+								visible="{ExtractViewModel>sub_title1Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title2}: {ExtractViewModel>sub_title2}" active="false"
+								visible="{ExtractViewModel>sub_title2Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title3}: {ExtractViewModel>sub_title3}" active="false"
+								visible="{ExtractViewModel>sub_title3Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title4}: {ExtractViewModel>sub_title4}" active="false"
+								visible="{ExtractViewModel>sub_title4Visible}"/>
+						</attributes>
+						<firstStatus>
+							<ObjectStatus text="{ExtractViewModel>name_number2}: {ExtractViewModel>number2}" state="None" visible="{ExtractViewModel>number2Visible}"/>
+						</firstStatus>
+						<secondStatus>
+							<ObjectStatus text="" state="None" visible="true"/>
+						</secondStatus>
+					</ObjectListItem>
+				</items>
+			</List>
+			</IconTabFilter>
+			
+			<IconTabFilter
+				icon="sap-icon://cancel" key="Ativo" text="Cancelados" iconColor="Negative">
+					<List class="headerWeek" id="listIntentionInactive3" items="{ExtractViewModel>/data3}">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Title text="{ExtractViewModel>/mainTitle3}"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<ObjectListItem  intro="{ExtractViewModel>title2}" press="_onRowPress" title="{ExtractViewModel>title} {ExtractViewModel>id}"
+						number="{= ${ExtractViewModel>number1} ? ${ExtractViewModel>number1} : ''}" numberUnit="{ExtractViewModel>number_unit}"
+						numberState="Success" type="Active" selected="true">
+						<attributes>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title1}: {ExtractViewModel>sub_title1}" active="false"
+								visible="{ExtractViewModel>sub_title1Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title2}: {ExtractViewModel>sub_title2}" active="false"
+								visible="{ExtractViewModel>sub_title2Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title3}: {ExtractViewModel>sub_title3}" active="false"
+								visible="{ExtractViewModel>sub_title3Visible}"/>
+							<ObjectAttribute text="{ExtractViewModel>name_sub_title4}: {ExtractViewModel>sub_title4}" active="false"
+								visible="{ExtractViewModel>sub_title4Visible}"/>
+						</attributes>
+						<firstStatus>
+							<ObjectStatus text="{ExtractViewModel>name_number2}: {ExtractViewModel>number2}" state="None" visible="{ExtractViewModel>number2Visible}"/>
+						</firstStatus>
+						<secondStatus>
+							<ObjectStatus text="" state="None" visible="true"/>
+						</secondStatus>
+					</ObjectListItem>
+				</items>
+			</List>
+			</IconTabFilter>
+			
+		</items>
+	</IconTabBar>
+			
+			
+		</content>
+	</Page>
+</mvc:View>

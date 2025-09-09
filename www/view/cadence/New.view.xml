@@ -1,0 +1,48 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.cadence.New"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" xmlns:l="sap.ui.layout">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<Button type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="backToIndex"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Novo" wrapping="true" visible="false" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${cadenceFormModel>/isEnable} &amp;&amp; ${cadenceFormModel>/enableCreateWerksValid} &amp;&amp; ${profileModel>/edit}}"
+						visible="true" iconDensityAware="false" press="_onSave"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections showTitle="false">
+			<uxap:ObjectPageSection showTitle="false" title="" titleUppercase="true" visible="true" class="gridCadencia">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="" mode="Expanded">
+						<uxap:blocks width="100%">
+							<VBox width="100%" >
+								<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+									visible="{= ${profileModel>/edit} === true ? false : true}"/>
+								<MessageStrip text="Você não tem permissão para editar Cadência" type="Error" showIcon="true" showCloseButton="false"
+									visible="{= ${profileModel>/edit} === true ? false : true}"/>
+								<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+									visible="{= ${cadenceFormModel>/enableCreateWerksValid} === true ? false : true}"/>
+								<MessageStrip text="Centro {cadenceFormModel>/selectedWerks} não permitido para o seu perfil" type="Error" showIcon="true" showCloseButton="false"
+									visible="{= ${cadenceFormModel>/enableCreateWerksValid} === true ? false : true}"/>
+								<core:Fragment fragmentName="com.sap.build.standard.brfAppDeGraosModoEditar.view.cadence.fragment.Cadence" type="XML"/>
+							</VBox>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

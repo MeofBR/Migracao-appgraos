@@ -1,0 +1,79 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+	<!--<PullToRefresh visible="{device>/support/touch}" refresh="refreshData"/>-->
+	<Table
+		items="{ExtractViewModel>/data}"
+		width="auto" showSeparators="All" growing="true" growingThreshold="5" growingScrollToLoad="true" class="sapUiResponsiveMargin">
+		<infoToolbar>
+			<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+				<content>
+					<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</content>
+			</Toolbar>
+		</infoToolbar>
+		<headerToolbar>
+			<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+				<content>
+					<ToolbarSpacer/>
+					<OverflowToolbarButton text="Sort" press="sortButtonPressed" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto"
+						enabled="true" visible="true" iconDensityAware="false"/>
+					<OverflowToolbarButton text="Filter" press="filterButtonPressed" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto"
+						enabled="true" visible="true" iconDensityAware="false"/>
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Fornecedor/Prospect" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+			<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Tipo do Contato" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+			<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Iniciativa do Contato" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+			<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Ficha de Visita" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+			<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Data Criação" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+			<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Usuário" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem type="Active" press="_onRowPress">
+				<cells>
+					<ObjectIdentifier title="{ExtractViewModel>SUPPLIER_NAME}"/>
+					<!--<Text text="{= ${View_Visit_Partner_Yearly/NAME1} !== null ? ${View_Visit_Partner_Yearly/NAME1} : ${View_Visit_Prospect_Yearly/NAME1}}"-->
+					<!--	width="150px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+					<Text text="{ExtractViewModel>HCP_CONTACT_TYPE}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Text text="{ExtractViewModel>HCP_CONTACT_INICIATIVE}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Text text="{ExtractViewModel>HCP_VISIT_FORM}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Text
+						text="{ExtractViewModel>HCP_CREATED_AT}"
+						maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+					<Text text="{ExtractViewModel>HCP_CREATED_BY}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

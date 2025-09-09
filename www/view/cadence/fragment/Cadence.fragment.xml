@@ -1,0 +1,103 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<Panel class="panel-expansive-default" height="auto" width="100%" headerText="Filtro Selecionado" expandable="true"
+		expanded="true" expandAnimation="true" backgroundDesign="Transparent" visible="{cadenceFormModel>/enableHeader}">
+		<l:VerticalLayout width="100%" class="gridWrapper">
+			<l:Grid containerQuery="true" defaultSpan="XL4 L4 M12 S12">
+				<VBox class="demoBox sapUiSmallMarginTop">
+					<Label text="{cadenceFormModel>/labelOffer}" design="Standard" width="100%" visible="true" class="labelBold"/>
+					<ObjectStatus icon="sap-icon://activity-items" text="{cadenceFormModel>/offerNumber}"/>
+				</VBox>
+				<VBox class="demoBox sapUiSmallMarginTop">
+					<Label text="Fornecedor" design="Standard" width="100%" visible="true" class="labelBold"/>
+					<ObjectStatus icon="sap-icon://factory" text="{cadenceFormModel>/supplier}"/>
+				</VBox>
+				<VBox class="demoBox sapUiSmallMarginTop">
+					<Label text="Sequencial" design="Standard" width="100%" visible="true" class="labelBold"/>
+					<ObjectStatus icon="sap-icon://bullet-text" text=" {cadenceFormModel>/sequence}"/>
+				</VBox>
+			</l:Grid>
+		</l:VerticalLayout>
+	</Panel>
+	<form:SimpleForm class="simpleForm paddingCadencia" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="priceIntentionCreateFormID"
+		labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024" title="">
+		<form:content>
+			<Label text="Total Pedido" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+			<Input placeholder="Digite a quantidade"
+				value="{ path: 'cadenceFormModel>/valorTotal' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+				type="Tel" showValueHelp="false" enabled="false" required="false" visible="true" width="100%" valueHelpOnly="false" maxLength="0"/>
+			<Button text="Calcular" type="Emphasized" iconFirst="true" width="auto" enabled="{cadenceFormModel>/isSelected}" visible="true"
+				iconDensityAware="false" press="_calculateCadence"/>
+			<Label text="" design="Standard" width="100%" visible="{cadenceFormModel>/maxValue}" required="false" textAlign="Begin"
+				textDirection="Inherit"/>
+			<MessageStrip text="Total da cadência maior que o total do pedido." type="Error" showIcon="true" showCloseButton="false"
+				visible="{cadenceFormModel>/maxValue}" class="espacamentoMensagem"></MessageStrip>
+			<Label text="" design="Standard" width="100%" visible="{cadenceFormModel>/minValue}" required="false" textAlign="Begin"
+				textDirection="Inherit"/>
+			<MessageStrip text="A quantidade total da cadência é menor que o total pedido, valor restante, {cadenceFormModel>/valorRestante}." type="Warning" showIcon="true" showCloseButton="false"
+				visible="{cadenceFormModel>/minValue}" class="espacamentoMensagem" ></MessageStrip>
+			<Label text="" design="Standard" width="100%" visible="{cadenceFormModel>/dateWarning}" required="false" textAlign="Begin"
+				textDirection="Inherit"/>
+			<MessageStrip text="A Data de inicio da remessa é menor que a data atual." type="Error" showIcon="true" showCloseButton="false"
+				visible="{cadenceFormModel>/dateWarning}" class="espacamentoMensagem"></MessageStrip>
+		</form:content>
+	</form:SimpleForm>
+	<Table items="{ path: 'cadenceFormModel>/ItemCadence', sorter: { path: 'HCP_DATA_ATUAL', descending: false, group: false}}" width="auto" id="tableCadencia" noDataText="Sem Itens" mode="{cadenceFormModel>/modeSelect}"
+		showSeparators="All" growingScrollToLoad="false" class="sapUiResponsiveMargin gridCadenciaTable" selectionChange="onSelectionChange">
+		<infoToolbar>
+			<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="false">
+				<content>
+					<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</content>
+			</Toolbar>
+		</infoToolbar>
+		<headerToolbar>
+			<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="false">
+				<content>
+					<Title text="Itens ({cadenceFormModel>/count})" titleStyle="Auto" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+					<ToolbarSpacer width=""/>
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Data" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+			<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Quantidade (KG)" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+			<Column width="auto" hAlign="Left" vAlign="Top" visible="{cadenceFormModel>/enableColumn}" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Quantidade B3" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+			<Column width="auto" hAlign="Left" vAlign="Top" visible="{cadenceFormModel>/enableColumn}" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<header>
+					<Text text="Saldo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+				</header>
+				<footer/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem type="Active">
+				<cells>
+					<ObjectIdentifier titleActive="false" visible="true"
+											title="{ path: 'cadenceFormModel>HCP_DATA_ATUAL', type: 'sap.ui.model.type.DateTime', formatOptions: { style: 'full', UTC: true, pattern: 'dd/MM/yyyy' } }"/>
+					<Input placeholder="Digite a quantidade" name="HCP_MIN_PRICE"
+						value="{ path: 'cadenceFormModel>HCP_QUANTIDADE' , type: 'sap.ui.model.type.Float', formatOptions: { groupingEnabled: true, groupingSeparator: '.', decimalSeparator: ',', maxFractionDigits: 2 }}"
+						type="Tel" change="_changeValueCadence" showValueHelp="false" enabled="true" required="false" visible="true" width="100%"
+						valueHelpOnly="false" maxLength="0"/>
+					<ObjectStatus text="{cadenceFormModel>quantidadeb}" state="None" visible="{cadenceFormModel>/enableColumn}"/>
+					<ObjectStatus text="{cadenceFormModel>saldo}" state="None" visible="{cadenceFormModel>/enableColumn}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

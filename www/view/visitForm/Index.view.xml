@@ -1,0 +1,46 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.visitForm.Index"
+	xmlns="sap.m">
+	<Page showHeader="true" title="Ficha de Visita" showFooter="true" showNavButton="true" navButtonPress="backToIndex">
+		<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true" />
+		</headerContent>
+		<content>
+			<!--<PullToRefresh id="pullToRefreshID" visible="{indexModel>/isMobile}" refresh="refreshData"/>-->
+			<List mode="None" width="100%" headerText="Header" footerText="" backgroundDesign="Solid" showSeparators="All" growing="true"
+				growingThreshold="20" growingScrollToLoad="true" visible="true">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar>
+					<Toolbar enabled="false" visible="false" width="" design="Solid">
+						<content>
+							<SearchField placeholder="Search" showSearchButton="true" visible="true" width="100%"/>
+						</content>
+					</Toolbar>
+				</headerToolbar>
+				<items>
+					<StandardListItem icon="sap-icon://add" title="Criar Ficha" description="" info="" infoState="None" type="Navigation" selected="false"
+						visible="true" press="_onCreateVisitFormPress"/>
+					<StandardListItem icon="sap-icon://search" title="Consultar/Editar Ficha" description="" info="" infoState="Success" type="Navigation"
+						selected="false" visible="true" press="_onStandardListItemPress1"/>
+					<StandardListItem icon="sap-icon://account" title="{i18n>lblRegisterContact}" description="" info="" infoState="Success" type="Navigation"
+						selected="false" visible="true" press="_onSimplifiedContact"/>
+				</items>
+				
+			</List>
+		</content>
+		<footer>
+			<OverflowToolbar id="otbFooter" visible="{indexModel>/isMobile}">
+				<ToolbarSpacer/>
+				<MessageStrip class="sapUiTinyMarginEnd" text="Atualizado em {indexModel>/lastUpdate}" showIcon="true"></MessageStrip>
+				<Button type="Emphasized" icon="sap-icon://synchronize" press="refreshData">
+					<layoutData><OverflowToolbarLayoutData priority="NeverOverflow"/></layoutData>
+				</Button>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

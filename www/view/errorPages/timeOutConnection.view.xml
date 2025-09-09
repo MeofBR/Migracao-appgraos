@@ -1,0 +1,10 @@
+<mvc:View height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.errorPages.timeOutConnection">
+	<MessagePage showHeader="false" text="Time Out!" enableFormattedText="true"
+		description="Tempo de conexão encerrado. Experimente recarregar a pagina ou feche a aplicação" icon="sap-icon://disconnected">
+		<buttons>
+			<Button text="Ir para início" press="reloadApplication"/>
+			<!--<Button text="Voltar" press="navBack"/>-->
+		</buttons>
+	</MessagePage>
+</mvc:View>

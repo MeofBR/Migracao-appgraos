@@ -1,0 +1,96 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.offerMap.FilterLogisticsFreight" xmlns:uxap="sap.uxap"
+	xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified"
+	xmlns:l="sap.ui.layout" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancelPress"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="{i18n>textConsultFreights}" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent> 
+				<uxap:navigationActions>
+					<Button class="button_blue" icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+					<Button text="Consultar" type="Emphasized" iconFirst="true" width="100%" enabled="{filterFreightFormModel>/enableConsult}" visible="true"
+						iconDensityAware="false" press="onConsultPress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="{i18n>textRegister}" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="{i18n>textRegister}" mode="Expanded">
+						<uxap:blocks>
+							<form:SimpleForm class="editableForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4"
+								id="newEntitySimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="1" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<form:content>
+									<Label required="true" text="{i18n>textCreatePeriod}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<DateRangeSelection id="DT_CREATE" placeholder="{i18n>placeSelectCreatePeriod}" visible="true" width="auto"
+											dateValue="{filterFreightFormModel>/HCP_DT_START_CREATE}" secondDateValue="{filterFreightFormModel>/HCP_DT_END_CREATE}" change="_onDateCreateRangeSelectionChange" enabled="true" displayFormat="medium"/>
+									<Label text="{i18n>textPurchGroup}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectPurchGroup}" selectedKey="{filterFreightFormModel>/HCP_EKGRP}" editable="true"
+										selectionChange="_validateForm" enabled="true" visible="true" required="false" width="auto" valueState="None" maxWidth="100%"
+										items="{ path: '/View_Account_Groups', length: 999999, sorter: { path: 'EKGRP',descending: false}}">
+										<custom:items>
+											<core:Item text="{EKGRP} - {EKNAM}" enabled="true" key="{EKGRP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textPurchOrg}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Purchasing_Org', length: 999999 , sorter: { path: 'EKOTX',descending: false}}"
+										placeholder="{i18n>placePurchOrg}" selectedKey="{filterFreightFormModel>/HCP_EKORG}" editable="true" enabled="true" visible="true"
+										width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm" change="_validateForm">
+										<custom:items>
+											<core:Item text="{EKORG} - {EKOTX}" enabled="true" key="{EKORG}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textModality}" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" required="true" visible="true"/>
+									<SegmentedButton selectedKey="{filterFreightFormModel>/HCP_MODALITY}" width="100%">
+										<items>
+											<SegmentedButtonItem text="{i18n>textFixed}" key="1"/>
+											<SegmentedButtonItem text="{i18n>textDeposit}" key="2"/>
+											<SegmentedButtonItem text="{i18n>textAll}" key="3"/>
+										</items>
+									</SegmentedButton>
+									<Label text="{i18n>textStatus}" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox placeholder="{i18n>placeSelectStates}" selectedKey="{filterFreightFormModel>/HCP_STATES_FREIGHT}" editable="true"
+										enabled="true" visible="true" required="true" width="auto" valueState="None" maxWidth="100%" change="_validateForm"
+										selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{i18n>textOpened}" enabled="true" key="1"/>
+											<core:Item text="{i18n>textFinished}" enabled="true" key="3"/>
+											<!--<core:Item text="{i18n>textAll}" enabled="true" key="5"/>-->
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="{i18n>textUser}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="{i18n>placeUser}" type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="0" value="{filterFreightFormModel>/HCP_CREATED_BY}"/>
+								</form:content>
+							</form:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+		<!--<uxap:footer>-->
+		<!--	<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">-->
+		<!--		<content>-->
+		<!--			<Button text="Voltar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"-->
+		<!--				press="onCancelPress"/>-->
+		<!--			<ToolbarSpacer width=""/>-->
+		<!--			<Button text="Cadastrar" type="Emphasized" iconFirst="true" width="auto" enabled="{visitFormModel>/enableConfirm}" visible="true"-->
+		<!--				iconDensityAware="false" press="onConfirmPress"/>-->
+		<!--		</content>-->
+		<!--	</OverflowToolbar>-->
+		<!--</uxap:footer>-->
+	</uxap:ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+	<Dialog showHeader="true" title="Selecione o Código IRF" type="Standard">
+		<content>
+			<SelectList items="{ path: 'prospectModel>/data/'}" itemPress="onIrfPlantSelected">
+				<core:Item key="{prospectModel>WITHT}" text="{prospectModel>WITHT} - {prospectModel>TEXT40}"/>
+			</SelectList>
+		</content>
+		<buttons>
+			<Button text="Fechar" press="onCancelDialogPressed" type="Transparent"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

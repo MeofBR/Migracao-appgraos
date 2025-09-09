@@ -1,0 +1,49 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.cadence.Index"
+	xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+	<Page showHeader="true" title="Cadência de Recebimento" showFooter="false" showNavButton="true" navButtonPress="backToIndex">
+			<headerContent>
+			<Button icon="sap-icon://home" tooltip="Home" press="_onHome" visible="true"/>
+		</headerContent>
+		<content>
+			<PullToRefresh id="pullToRefreshID" visible="{indexModel>/isMobile}"/>
+			<List mode="None" width="100%" headerText="Header" footerText="" backgroundDesign="Solid" showSeparators="All" growing="true"
+				growingThreshold="20" growingScrollToLoad="true" visible="true">
+				<infoToolbar>
+					<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+						<content>
+							<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</content>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar>
+					<Toolbar enabled="false" visible="false" width="" design="Solid">
+						<content>
+							<SearchField placeholder="Search" showSearchButton="true" visible="true" width="100%"/>
+						</content>
+					</Toolbar>
+				</headerToolbar>
+				<items>
+					<StandardListItem icon="sap-icon://commission-check" title="Cadência Pedido Fixo" description="" info="" infoState="None" type="Navigation" selected="false"
+						visible="true" press="_onFixedPress"/>
+					<StandardListItem icon="sap-icon://my-sales-order" title="Cadência Depósito" description="" info="" infoState="Success" type="Navigation"
+						selected="false" visible="true" press="_onDepositPress"/>
+					<StandardListItem icon="sap-icon://search" title="Consultar" description="" info="" infoState="Success" type="Navigation"
+						selected="false" visible="true" press="_onSearchPress"/>
+				</items>
+			</List>
+		</content>
+		<footer>
+			<OverflowToolbar width="100%" height="46px" design="Auto" enabled="true" visible="true">
+				<content>
+					<Button text="Cancelar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+					<ToolbarSpacer width=""/>
+					<Button text="Confirmar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+						press="_onButtonPress"/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+		<headerContent/>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

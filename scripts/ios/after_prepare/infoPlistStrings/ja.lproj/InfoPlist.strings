@@ -1,0 +1,24 @@
+/* Message asking permission to access the camera. */
+"NSCameraUsageDescription" = "写真の撮影または QR コードのスキャンができるようになります。";
+
+/* Message asking permission to access the microphone */
+"NSMicrophoneUsageDescription" = "マイクにアクセスできるようになります。";
+
+/* Message asking permission to access the calendar */
+"NSCalendarsUsageDescription" = "カレンダにアクセスできるようになります。";
+
+/* Message asking permission to access photo library */
+"NSPhotoLibraryUsageDescription" = "ライブラリにアクセスできるようになります。";
+
+/* Message asking permission to access contacts */
+"NSContactsUsageDescription" = "担当者にアクセスできるようになります。";
+
+/* Message asking permission to access location */
+"NSLocationWhenInUseUsageDescription" = "使用時のロケーションにアクセスできるようになります。";
+
+/* Message asking permission to access location at any time */
+"NSLocationAlwaysUsageDescription" = "常にロケーションにアクセスできるようになります。";
+
+/* Message asking permission to access Face ID */
+"NSFaceIDUsageDescription" = "認証用の Face ID にアクセスできるようになります。";
+

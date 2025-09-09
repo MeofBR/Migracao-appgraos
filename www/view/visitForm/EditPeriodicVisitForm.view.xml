@@ -1,0 +1,190 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.visitForm.EditPeriodicVisitForm" xmlns:uxap="sap.uxap"
+	xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic" xmlns:u="sap.ui.unified"
+	xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" xmlns:l="sap.ui.layout">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="true" showHeaderContent="true" showAnchorBar="true" showFooter="true"
+		subSectionLayout="TitleOnTop">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="Voltar" press="onCancelPress"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Ficha de Visitas Periódico" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title
+							text="{i18n>textVendorProspect}: {editPeriodicVisitModel>/HCP_PROVIDER_ID} - {= ${editPeriodicVisitModel>/HCP_NAME_REGISTERED} !== null ? ${editPeriodicVisitModel>/HCP_NAME_REGISTERED} : ${editPeriodicVisitModel>/NAME_LIFNR} !== null ? ${editPeriodicVisitModel>/NAME_LIFNR} : ${editPeriodicVisitModel>/NAME_PROSPECT}}"
+							width="100%" textAlign="Begin" textDirection="Inherit" wrapping="true"/>
+					</FlexBox>
+				</uxap:expandedContent>
+				<uxap:snappedContent>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title
+							text="{i18n>textVendorProspect}: {editPeriodicVisitModel>/HCP_PROVIDER_ID} - {= ${editPeriodicVisitModel>/HCP_NAME_REGISTERED} !== null ? ${editPeriodicVisitModel>/HCP_NAME_REGISTERED} : ${editPeriodicVisitModel>/NAME_LIFNR} !== null ? ${editPeriodicVisitModel>/NAME_LIFNR} : ${editPeriodicVisitModel>/NAME_PROSPECT}}"
+							width="100%" textAlign="Begin" textDirection="Inherit" wrapping="true"/>
+					</FlexBox>
+				</uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto"
+						enabled="{= ${editPeriodicVisitModel>/enableSave} &amp;&amp; ${profileModel>/edit}}" visible="true" iconDensityAware="false"
+						press="onSavePress"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Cadastro" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Cadastro" mode="Expanded">
+						<uxap:blocks>
+							<VBox>
+								<form:SimpleForm class="responsiveLayout" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4"
+									emptySpanXL="4" id="newEntitySimpleForm" labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048"
+									title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+									<form:content class="responsiveLayout">
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+											visible="{= ${profileModel>/edit} === true ? false : true}"/>
+										<MessageStrip text="Você não tem permissão para editar Ficha de Visitas" type="Error" showIcon="true" showCloseButton="false"
+											visible="{= ${profileModel>/edit} === true ? false : true}" class="sapUiMediumMarginBottom"/>
+										<Label text="Quais são as Ferramentas de Comercialização Utilizadas?" design="Standard" width="100%" required="true" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<MultiComboBox
+											items="{ path: '/Visit_Tools', length: 999999 , filters: {path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, sorter: { path: 'HCP_ID',descending: false}}"
+											placeholder="Selecione as Ferramentas de Comercialização Utilizadas" required="true" editable="true"
+											selectedKeys="{editPeriodicVisitModel>/toolsInputs}" enabled="{editPeriodicVisitModel>/isEnable}" valueState="None"
+											selectionChange="_validateToolsInputs">
+											<items>
+												<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+											</items>
+										</MultiComboBox>
+										<Label text="Outras" design="Standard" width="100%" required="{editPeriodicVisitModel>/yesOthersTools}" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" value="{editPeriodicVisitModel>/HCP_OTHERS_TOOLS}" liveChange="_validateForm"
+											placeholder="Descritivo de Outras Ferramentas" cols="20" maxLength="255" wrapping="None" enabled="{editPeriodicVisitModel>/isEnable}"
+											required="{editPeriodicVisitModel>/yesOthersTools}" visible="{editPeriodicVisitModel>/yesOthersTools}"/>
+										<Label text="Descreva as modalidades de contrato mais utilizadas" design="Standard" width="100%" required="false" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<TextArea placeholder="Ex: CBOT x 70 x BRL BMF - 5" rows="2" value="{editPeriodicVisitModel>/HCP_CONTRACT_MODALITY}"
+											liveChange="_validateForm" cols="20" maxLength="255" wrapping="None" visible="true" enabled="{editPeriodicVisitModel>/isEnable}"
+											required="false"/>
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<!--<form:SimpleForm class="simpleForm" width="100%" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4"-->
+										<!--	id="newCultureSimpleForm" labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024" title="">-->
+										<!--	<form:content>-->
+										<!--		<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+										<!--		<Button id="cultureFormID" text="Adicionar Nova Cultura" type="Emphasized" iconFirst="true" enabled="true" visible="true"-->
+										<!--			iconDensityAware="false" press="_onAddCultureType"></Button>-->
+										<!--	</form:content>-->
+										<!--	<form:customData>-->
+										<!--		<core:CustomData key="id" value="newCultureSimpleForm"/>-->
+										<!--	</form:customData>-->
+										<!--</form:SimpleForm>-->
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<form:SimpleForm class="simpleForm" width="100%" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="0"
+											emptySpanXL="0" id="newCultureSimpleForm" labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2"
+											minWidth="2048">
+											<form:content></form:content>
+										</form:SimpleForm>
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<Button class="sapUiLargeMarginBottom" id="cultureFormID" text="Adicionar Nova Cultura" type="Emphasized" iconFirst="true"
+											enabled="{editPeriodicVisitModel>/isEnable}" visible="true" iconDensityAware="false" press="_onAddCultureType">
+											<customData>
+												<core:CustomData key="id" value="newCultureSimpleForm"/>
+											</customData>
+											<layoutData>
+												<l:GridData span="L5 M5 S12"/>
+											</layoutData>
+										</Button>
+										<Label text="Tipo de Contato" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<custom:CustomComboBox placeholder="Selecione o Tipo de Contato" selectedKey="{editPeriodicVisitModel>/HCP_CONTACT_TYPE}" editable="true"
+											enabled="true" visible="true" width="auto" valueState="None" maxWidth="100%" selectionChange="_validateForm">
+											<custom:items>
+												<core:Item text="Presencial" enabled="true" key="presencial"/>
+												<core:Item text="Telefone" enabled="true" key="telefone"/>
+												<core:Item text="Mensagem via Telefone" enabled="true" key="mensagemtelefone"/>
+												<core:Item text="Skype" enabled="true" key="skype"/>
+												<core:Item text="E-mail" enabled="true" key="email"/>
+												<core:Item text="Outros" enabled="true" key="outros"/>
+											</custom:items>
+										</custom:CustomComboBox>
+										<Label text="Qual o Local em que o Produto que não foi Comercializado está Armazenado?" design="Standard" required="true" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<MultiComboBox
+											items="{ path: '/Storage_Type', length: 999999 , filters: [{path: 'HCP_TYPE', operator: 'EQ', value1: 'Periodic'}, {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'}], sorter: { path: 'HCP_ID',descending: false}}"
+											placeholder="Selecione Local" required="true" editable="true" selectedKeys="{editPeriodicVisitModel>/storedProductInputs}"
+											enabled="{editPeriodicVisitModel>/isEnable}" valueState="None" selectionChange="_validateForm" change="_validateForm">
+											<items>
+												<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+											</items>
+										</MultiComboBox>
+										<Label text="" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<TextArea placeholder="Descritivo" rows="2" value="{editPeriodicVisitModel>/HCP_DESC_STORAGE_TYPE}" liveChange="_validateForm" cols="20"
+											maxLength="255" wrapping="None" enabled="{editPeriodicVisitModel>/isEnable}" required="false" visible="true"/>
+										<Label text="Certificações?" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<MultiComboBox
+											items="{ path: '/Visit_Certifications', length: 999999 , filters: [{path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, {path: 'HCP_ACTIVE', operator: 'EQ', value1: '1'} ], sorter: { path: 'HCP_ID',descending: false}}"
+											placeholder="Selecione as Certificações" required="false" editable="true" selectedKeys="{editPeriodicVisitModel>/certificationsInputs}"
+											enabled="{editPeriodicVisitModel>/isEnable}" valueState="None" selectionChange="_validateInputCertification">
+											<items>
+												<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+											</items>
+										</MultiComboBox>
+										<Label text="Outros" design="Standard" width="100%" required="{editPeriodicVisitModel>/yesOthersCertication}" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" value="{editPeriodicVisitModel>/HCP_OTHERS}" liveChange="_validateForm" placeholder="Descritivo" cols="20"
+											maxLength="255" wrapping="None" enabled="{editPeriodicVisitModel>/isEnable}" required="{editPeriodicVisitModel>/yesOthersCertication}"
+											visible="{editPeriodicVisitModel>/yesOthersCertication}"/>
+										<Label text="O que Falta para Aumentar o Volume de Comercialização com a BRF?" design="Standard" width="100%" required="true"
+											textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<MultiComboBox
+											items="{ path: '/Visit_Criterion', length: 999999 , filters: {path: 'HCP_LAND1', operator: 'EQ', value1: 'BR'}, sorter: { path: 'HCP_ID',descending: false}}"
+											placeholder="Seleção do Critério" required="true" editable="true" selectedKeys="{editPeriodicVisitModel>/criterionsInputs}"
+											enabled="{editPeriodicVisitModel>/isEnable}" valueState="None" selectionChange="_validateCriterionInputs">
+											<items>
+												<core:Item text="{HCP_DESC}" enabled="true" key="{HCP_ID}"/>
+											</items>
+										</MultiComboBox>
+										<Label text="Outros" design="Standard" width="100%" required="{editPeriodicVisitModel>/yesOthersCriterion}" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" value="{editPeriodicVisitModel>/HCP_OTHERS_CRITERION}" liveChange="_validateForm" placeholder="Descritivo" cols="20"
+											maxLength="255" wrapping="None" enabled="{editPeriodicVisitModel>/isEnable}" required="{editPeriodicVisitModel>/yesOthersCriterion}"
+											visible="{editPeriodicVisitModel>/yesOthersCriterion}"/>
+										<Label text="Qual o Fator mais Relevante para a Tomada de Decisão de Comercialização?" design="Standard" width="100%" required="false"
+											textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<TextArea rows="2" value="{editPeriodicVisitModel>/HCP_DECISION_FACTOR}" liveChange="_validateForm" placeholder="Descritivo" cols="20"
+											maxLength="255" wrapping="None" enabled="{editPeriodicVisitModel>/isEnable}" visible="true"/>
+										<Label text="Relato da Visita?" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										<TextArea placeholder="Descritivo" rows="3" value="{editPeriodicVisitModel>/HCP_REPORT_VISIT}" liveChange="_validateForm" cols="20"
+											maxLength="10000" wrapping="None" visible="true" enabled="{editPeriodicVisitModel>/isEnable}" required="true"/>
+										<Label text="Há necessidade de revisar algum item da ficha anual?" design="Standard" width="100%" required="false" textAlign="Begin"
+											textDirection="Inherit" visible="true"/>
+										<SegmentedButton width="100%" class="sapUiSmallMarginBottom" enabled="{editPeriodicVisitModel>/isEnable}"
+											selectedKey="{editPeriodicVisitModel>/HCP_CHECK_MANUAL_TAB}" selectionChange="_validateForm">
+											<items>
+												<SegmentedButtonItem text="Sim" key="1"/>
+												<SegmentedButtonItem text="Não" key="0"/>
+											</items>
+										</SegmentedButton>
+										<!--<Label text="Deseja agendar a próxima visita?" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"-->
+										<!--	visible="true"/>-->
+										<!--<SegmentedButton width="auto" class="sapUiSmallMarginBottom" selectedKey="{editPeriodicVisitModel>/HCP_SCHEDULE_NEXT_VISIT}"-->
+										<!--	selectionChange="_validateForm">-->
+										<!--	<items>-->
+										<!--		<SegmentedButtonItem text="Sim" key="1"/>-->
+										<!--		<SegmentedButtonItem text="Não" key="0"/>-->
+										<!--	</items>-->
+										<!--</SegmentedButton>-->
+									</form:content>
+								</form:SimpleForm>
+							</VBox>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

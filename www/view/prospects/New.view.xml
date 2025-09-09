@@ -1,0 +1,256 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.sap.build.standard.brfAppDeGraosModoEditar.controller.prospects.New"
+	xmlns:uxap="sap.uxap" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic"
+	xmlns:u="sap.ui.unified" xmlns:custom="com.sap.build.standard.brfAppDeGraosModoEditar.controls" xmlns:l="sap.ui.layout">
+	<uxap:ObjectPageLayout showTitleInHeaderContent="false" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
+		headerContentPinnable="false" isChildPage="true" enableLazyLoading="false">
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle class="displayArrow">
+				<uxap:breadcrumbs>
+					<OverflowToolbarButton type="Transparent" icon="sap-icon://nav-back" tooltip="copy" press="onCancel"/>
+				</uxap:breadcrumbs>
+				<uxap:expandedHeading>
+					<FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<Title text="Novo Prospect" wrapping="true" class="sapUiTinyMarginEnd sapUiTinyMarginTop"/>
+					</FlexBox>
+				</uxap:expandedHeading>
+				<uxap:expandedContent></uxap:expandedContent>
+				<uxap:snappedContent></uxap:snappedContent>
+				<uxap:navigationActions>
+					<Button text="Salvar" type="Emphasized" iconFirst="true" width="auto" enabled="{= ${prospectModel>/rotateProspect} ? false : true}"
+						visible="true" iconDensityAware="false" press="onSave"/>
+				</uxap:navigationActions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>
+		<uxap:sections>
+			<uxap:ObjectPageSection showTitle="true" title="Dados Principais" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Dados Principais" mode="Expanded">
+						<uxap:blocks>
+							<f:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<Label text="Org. Compras" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Purchasing_Org', length: 999999 , sorter: { path: 'EKOTX',descending: false}}"
+										placeholder="Selecione Org. Compras" selectedKey="{prospectModel>/EKORG}" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{EKORG} - {EKOTX}" enabled="true" key="{EKORG}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Pessoa" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<SegmentedButton width="100%" id="segmentedPersonID" selectedKey="{prospectModel>/KTOKK}" class="sapUiSmallMarginBottom"
+										selectionChange="_onPersonTypeSelect">
+										<items>
+											<SegmentedButtonItem text="Física" key="F2"/>
+											<SegmentedButtonItem text="Jurídica" key="F1"/>
+											<SegmentedButtonItem text="Estrangeiro" key="F3"/>
+										</items>
+									</SegmentedButton>
+									<Label text="Nome" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o Nome" type="Text" value="{prospectModel>/NAME1}" showValueHelp="false" enabled="true" visible="true"
+										width="auto" valueHelpOnly="false" maxLength="40" change="_validateForm"/>
+									<Label text="Nome 2" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o Nome 2" type="Text" value="{prospectModel>/NAME2}" showValueHelp="false" enabled="true" visible="true"
+										width="auto" valueHelpOnly="false" maxLength="40" change="_validateForm"/>
+									<Label text="Data de nascimento" required="false"/>
+									<DatePicker placeholder="Dia / Mês / Ano" displayFormat="short"
+										value="{ path: 'prospectModel>/ZDTNASC', type: 'sap.ui.model.type.Date', formatOptions: { style: 'short', UTC: true, pattern: 'dd/MM/yyyy' } }"
+										dateValue="" change="_validateForm"/>
+									<Label text="CPF" design="Standard" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<MaskInput id="CPFInputID" mask="000.000.000-00" value="{prospectModel>/STCD2}" enabled="{= ${prospectModel>/STCD1} !== '' ? false : true}"
+										visible="{= ${prospectModel>/KTOKK} === 'F2' ? true : false}" placeholder="000.000.000-00" width="auto" change="_onCPFChange">
+										<rules>
+											<MaskInputRule maskFormatSymbol="0" regex="[0-9]"/>
+										</rules>
+									</MaskInput>
+									<Label text="CNPJ" design="Standard" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<MaskInput id="CNPJInputID" mask="00.000.000/0000-00" value="{prospectModel>/STCD1}"
+										enabled="{= ${prospectModel>/STCD2} !== '' ? false : true}" visible="{= ${prospectModel>/KTOKK} === 'F1' ? true : false}"
+										placeholder="00.000.000/0000-00" width="auto" change="_onCNPJChange">
+										<rules>
+											<MaskInputRule maskFormatSymbol="0" regex="[0-9]"/>
+										</rules>
+									</MaskInput>
+									<Label text="CPF" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="CPFInputIDF3" placeholder="Digite o CPF" type="Text" value="{prospectModel>/STCD2}" showValueHelp="false"
+										enabled="{= ${prospectModel>/STCD1} !== '' ? false : true}" visible="{= ${prospectModel>/KTOKK} === 'F3' ? true : false}" width="auto"
+										valueHelpOnly="false" maxLength="0" change="_validateForm"/>
+									<Label text="CNPJ" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="CNPJInputIDF3" value="{prospectModel>/STCD1}" enabled="{= ${prospectModel>/STCD2} !== '' ? false : true}"
+										visible="{= ${prospectModel>/KTOKK} === 'F3' ? true : false}" placeholder="Digite aqui o CNPJ" width="auto" change="_validateForm"/>
+									<Label text="Inscrição Estadual" design="Standard" width="100%" required="false"
+										textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite a I.E ou Isento" type="Email" showValueHelp="false" value="{prospectModel>/STCD3}" enabled="true" visible="true"
+										width="auto" valueHelpOnly="false" maxLength="20" change="_validateForm"/>
+									<Label text="Email" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o E-mail" type="Email" showValueHelp="false" value="{prospectModel>/EMAIL}" enabled="true" visible="true"
+										width="auto" valueHelpOnly="false" maxLength="241" change="_validateEmail"/>
+									<Label text="Endereço Internet resp" design="Standard" width="100%" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o E-mail do responsável no parceiro" value="{prospectModel>/INTAD}" type="Text" showValueHelp="false"
+										enabled="true" visible="true" width="auto" valueHelpOnly="false" maxLength="130" change="_validateEmail"/>
+									<Label text="Telefone" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="telefone" placeholder="Digite o telefone" value="{prospectModel>/TELF1}" type="Tel" showValueHelp="false" enabled="true"
+										visible="true" width="auto" valueHelpOnly="false" maxLength="130" change="_validatePhone"/>
+									<Label text="Telefone 2" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o telefone 2" value="{prospectModel>/TELFX}" type="Tel" showValueHelp="false" enabled="true" visible="true"
+										width="auto" valueHelpOnly="false" maxLength="130" change="_validatePhone"/>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+				<uxap:customAnchorBarButton/>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection showTitle="true" title="Dados Principais" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Endereço" mode="Expanded">
+						<uxap:blocks>
+							<f:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="adressSimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<Label text="País" design="Standard" width="100%" textAlign="Begin" required="true" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="countries" items="{ path: '/View_Countries', length: 999999 , sorter: { path: 'LANDX',descending: false}}"
+										placeholder="Selecione País" selectedKey="{prospectModel>/LAND1}" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateCountries">
+										<custom:items>
+											<core:Item text="{LAND1} - {LANDX}" enabled="true" key="{LAND1}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Estado" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox id="states" items="{ path: '/View_States', length: 999999 , sorter : { path : 'BLAND' }}"
+										placeholder="Selecione Estado" selectedKey="{prospectModel>/BLAND}" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{BLAND} - {BEZEI}" enabled="true" key="{BLAND}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Zona" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite a Zona" value="{prospectModel>/ORT02}" type="Text" showValueHelp="false" enabled="true" visible="true"
+										width="auto" valueHelpOnly="false" maxLength="35" change="_validateForm"/>
+									<Label text="Município" design="Standard" width="100%" required="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input id="municipio" placeholder="Digite o Município" value="{prospectModel>/ORT01}" type="Text" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="true" width="auto" valueHelpOnly="false"
+										maxLength="35" change="_validateForm"/>
+									<Label text="Endereço" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o Endereço" value="{prospectModel>/STRAS}" type="Text" showValueHelp="false" enabled="true" visible="true"
+										width="auto" valueHelpOnly="false" maxLength="35" change="_validateForm"/>
+									<Label text="Número" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Input placeholder="Digite o Número" value="{prospectModel>/HOUSE_NUM1}" type="Text" showValueHelp="false" enabled="true" visible="true"
+										width="auto" valueHelpOnly="false" maxLength="10" change="_validateForm"/>
+									<Label text="Rua Complementar" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Switch state="{prospectModel>/AdditionalAdressPress}" customTextOff="Não" customTextOn="Sim" change="onAdditionalAdressPress"/>
+									<Label text="Rua Complementar" design="Standard" width="100%" required="{= ${prospectModel>/AdditionalAdressPress} === true ? true : false}"
+										textAlign="Begin" textDirection="Inherit"/>
+									<Input placeholder="Digite o Endereço" id="additionalAdressID" type="Text" value="{prospectModel>/STRAS2}" showValueHelp="false"
+										enabled="true" width="auto" valueHelpOnly="false" change="_validateForm" maxLength="60"
+										visible="{= ${prospectModel>/AdditionalAdressPress} === true ? true : false}"/>
+									<Label text="CEP" design="Standard" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit" visible="true"/>
+									<MaskInput mask="00000-000" value="{prospectModel>/PSTLZ}" enabled="true" visible="{= ${prospectModel>/KTOKK} !== 'F3' ? true : false}"
+										placeholder="00000-000" width="auto" change="_onCepChange">
+										<rules>
+											<MaskInputRule maskFormatSymbol="0" regex="[0-9]"/>
+										</rules>
+									</MaskInput>
+									<Label text="CEP" design="Standard" width="100%" required="false" textAlign="Begin"
+										textDirection="Inherit" visible="{= ${prospectModel>/KTOKK} === 'F3' ? true : false}"/>
+									<Input placeholder="Digite o CEP" value="{prospectModel>/PSTLZ}" type="Number" showValueHelp="false"
+										editable="{= ${prospectModel>/rotateProspect} ? false : true}" enabled="{= ${prospectModel>/rotateProspect} ? false : true}" visible="{= ${prospectModel>/KTOKK} === 'F3' ? true : false}"
+										width="auto" valueHelpOnly="false" maxLength="60" change="_validateForm"/>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Administração de conta" mode="Expanded">
+						<uxap:blocks>
+							<f:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="accountSimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<Label text="Setor Industrial" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Industrial_Sector', length: 999999 , sorter : { path : 'BRSCH' }}"
+										placeholder="Selecione Setor Industrial" selectedKey="{prospectModel>/BRSCH}" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{BRSCH} - {BRTXT}" enabled="true" key="{BRSCH}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+									<Label text="Grp. De Adm. Tesouraria" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit"
+										visible="true"/>
+									<custom:CustomComboBox items="{ path: '/View_Treasury_Group', length: 999999 , sorter : { path : 'GRUPP' }}"
+										placeholder="Selecione Grp. Tesouraria" selectedKey="{prospectModel>/FDGRV}" editable="true" enabled="true" visible="true" width="auto"
+										valueState="None" maxWidth="100%" selectionChange="_validateForm">
+										<custom:items>
+											<core:Item text="{GRUPP} - {TEXTK}" enabled="true" key="{GRUPP}"/>
+										</custom:items>
+									</custom:CustomComboBox>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Dados Bancários" mode="Expanded">
+						<uxap:blocks>
+							<f:SimpleForm class="simpleForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4" id="bankDataSimpleForm"
+								labelSpanL="3" labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<Label text="Banco" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button text="Adicionar Banco" type="Emphasized" iconFirst="true" enabled="true" visible="true" iconDensityAware="false" press="_onAddBanks"/>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="IRF" mode="Expanded">
+						<uxap:blocks>
+							<f:SimpleForm class="simpleForm" columnsL="1" columnsM="1" columnsXL="1" editable="true" emptySpanL="4" emptySpanM="4" id="irfSimpleForm" labelSpanL="3"
+								labelSpanM="3" labelSpanXL="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="2048"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<Label text="IRF" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button text="Adicionar IRF" type="Emphasized" iconFirst="true" enabled="{= ${prospectModel>/isPY} ? false : true}" visible="true"
+										iconDensityAware="false" press="_onAddIrf"/>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+			<uxap:ObjectPageSection showTitle="true" title="Page Section Title" titleUppercase="true" visible="true">
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection title="Complementos" mode="Expanded">
+						<uxap:blocks>
+							<f:SimpleForm class="simpleForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="CharacteristicsSimpleForm"
+								labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024"
+								title="{= ${viewModel>/mode} === 'edit'? ${i18n>editViewTitle2} : ${i18n>createViewTitle2}}">
+								<f:content>
+									<Label text="Observações" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<TextArea rows="2" value="{prospectModel>/OBSER}" change="_validateForm" placeholder="Adicione Informações Adicionais" cols="20"
+										maxLength="255" wrapping="None" enabled="true" visible="true"/>
+									<Label text="Centro/KM" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+									<Button text="Adicionar Centro/KM" type="Emphasized" iconFirst="true" enabled="true" visible="true" iconDensityAware="false"
+										press="_onAddCharacteristics"/>
+								</f:content>
+							</f:SimpleForm>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+	</uxap:ObjectPageLayout>
+</mvc:View>

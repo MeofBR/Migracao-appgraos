@@ -1,0 +1,103 @@
+{
+  "devDependencies": {
+    "@sap-kapsel/cordova-plugin-privacyscreen": "file:../../../plugins/privacyscreen",
+    "@sap-kapsel/cordova-plugin-statusbar": "file:../../../plugins/statusbar",
+    "@sap-kapsel/de.appplant.cordova.plugin.printer": "file:../../../plugins/print",
+    "@sap-kapsel/kapsel-plugin-apppreferences": "file:../../../plugins/apppreferences",
+    "@sap-kapsel/kapsel-plugin-attachmentviewer": "file:../../../plugins/attachmentviewer",
+    "@sap-kapsel/kapsel-plugin-barcodescanner": "file:../../../plugins/barcodescanner",
+    "@sap-kapsel/kapsel-plugin-cachemanager": "file:../../../plugins/cachemanager",
+    "@sap-kapsel/kapsel-plugin-calendar": "file:../../../plugins/calendar",
+    "@sap-kapsel/kapsel-plugin-cdsprovider": "file:../../../plugins/cdsprovider",
+    "@sap-kapsel/kapsel-plugin-consent": "file:../../../plugins/consent",
+    "@sap-kapsel/kapsel-plugin-encryptedstorage": "file:../../../plugins/encryptedstorage",
+    "@sap-kapsel/kapsel-plugin-fioriclient": "file:../../../plugins/fioriclient",
+    "@sap-kapsel/kapsel-plugin-keychaincertprovider": "file:../../../plugins/keychaincertprovider",
+    "@sap-kapsel/kapsel-plugin-logger": "file:../../../plugins/logger",
+    "@sap-kapsel/kapsel-plugin-settings": "file:../../../plugins/settings",
+    "@sap-kapsel/kapsel-plugin-toolbar": "file:../../../plugins/toolbar",
+    "@sap-kapsel/kapsel-plugin-usage": "file:../../../plugins/usage",
+    "@sap-kapsel/kapsel-plugin-voicerecording": "file:../../../plugins/voicerecording",
+    "cordova-android": "~13.0",
+    "cordova-ios": "~7.0",
+    "cordova-plugin-camera": "^8.0.0",
+    "cordova-plugin-contacts": "3.0.1",
+    "cordova-plugin-customurlscheme": "4.4.0",
+    "cordova-plugin-device": "2.0.1",
+    "cordova-plugin-dialogs": "2.0.1",
+    "cordova-plugin-file": "^8.0.0",
+    "cordova-plugin-geolocation": "4.0.1",
+    "cordova-plugin-network-information": "2.0.1",
+    "cordova-plugin-privacyscreen": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\privacyscreen",
+    "cordova-plugin-screen-orientation": "3.0.1",
+    "cordova-plugin-statusbar": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\statusbar",
+    "de.appplant.cordova.plugin.printer": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\print",
+    "es6-promise-plugin": "^4.2.2",
+    "kapsel-plugin-apppreferences": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\apppreferences",
+    "kapsel-plugin-attachmentviewer": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\attachmentviewer",
+    "kapsel-plugin-authproxy": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\authproxy",
+    "kapsel-plugin-barcodescanner": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\barcodescanner",
+    "kapsel-plugin-cachemanager": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\cachemanager",
+    "kapsel-plugin-calendar": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\calendar",
+    "kapsel-plugin-cdsprovider": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\cdsprovider",
+    "kapsel-plugin-consent": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\consent",
+    "kapsel-plugin-encryptedstorage": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\encryptedstorage",
+    "kapsel-plugin-fioriclient": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\fioriclient",
+    "kapsel-plugin-inappbrowser": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\inappbrowser",
+    "kapsel-plugin-keychaincertprovider": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\keychaincertprovider",
+    "kapsel-plugin-logger": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\logger",
+    "kapsel-plugin-logon": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\logon",
+    "kapsel-plugin-online": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\online",
+    "kapsel-plugin-settings": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\settings",
+    "kapsel-plugin-toolbar": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\toolbar",
+    "kapsel-plugin-usage": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\usage",
+    "kapsel-plugin-voicerecording": "C:\\SAP\\MobileSDK3\\KapselSDK\\plugins\\voicerecording"
+  },
+  "cordova": {
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-camera": {},
+      "cordova-plugin-contacts": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-dialogs": {},
+      "cordova-plugin-file": {},
+      "cordova-plugin-geolocation": {},
+      "cordova-plugin-screen-orientation": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-privacyscreen": {},
+      "de.appplant.cordova.plugin.printer": {},
+      "kapsel-plugin-apppreferences": {},
+      "kapsel-plugin-attachmentviewer": {},
+      "kapsel-plugin-authproxy": {},
+      "kapsel-plugin-barcodescanner": {
+        "CAMERA_USAGE_DESCRIPTION": "App would like to access the camera."
+      },
+      "kapsel-plugin-cachemanager": {},
+      "kapsel-plugin-calendar": {
+        "CALENDARS_USAGE_DESCRIPTION": "App would like to access the calendar."
+      },
+      "kapsel-plugin-cdsprovider": {},
+      "kapsel-plugin-consent": {},
+      "kapsel-plugin-encryptedstorage": {},
+      "kapsel-plugin-fioriclient": {},
+      "kapsel-plugin-inappbrowser": {},
+      "kapsel-plugin-logger": {},
+      "kapsel-plugin-logon": {},
+      "kapsel-plugin-online": {},
+      "kapsel-plugin-settings": {},
+      "kapsel-plugin-toolbar": {},
+      "kapsel-plugin-usage": {},
+      "kapsel-plugin-voicerecording": {
+        "MICROPHONE_USAGE_DESCRIPTION": "App would like to access the microphone."
+      },
+      "kapsel-plugin-keychaincertprovider": {},
+      "cordova-plugin-customurlscheme": {
+        "URL_SCHEME": "com.br.appgraos.xcallbackurl"
+      }
+    }
+  }
+}
